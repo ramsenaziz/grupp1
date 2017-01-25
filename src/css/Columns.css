@@ -1,0 +1,24 @@
+.TopRowList{
+  border: 1px solid gray;
+}
+
+.Columns {
+    border: 1px solid #B0C4DE;
+    margin-top: 20px;
+    margin-bottom: -10px;
+    margin-right: 8px;
+    padding-top: 5px;
+    color:black;
+    text-align: center;
+    border-radius: 3px;
+}
+
+.ColumnList2 div{
+  height: 400px;
+  padding-top: 5px;
+
+}
+
+.ColumnList2{
+    font-weight: bold;
+}

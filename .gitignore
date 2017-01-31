@@ -23,4 +23,5 @@ npm-debug.log
 !.vscode/launch.json
 !.vscode/extensions.json
 
+debug.log
 # End of https://www.gitignore.io/api/vs,visualstudiocode

@@ -1,0 +1,12 @@
+.Card {
+  border: 1px solid #bbb;
+  margin-bottom: 10px;
+}
+
+.head {
+  background-color: #bf8bba;
+}
+
+.Card span {
+  float: right;
+}

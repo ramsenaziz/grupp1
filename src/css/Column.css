@@ -1,0 +1,11 @@
+.Column {
+  border: 2px solid #ccc;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.title {
+  text-align: center;
+  font-weight: bold;
+  background-color: #e8bb79;
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './css/App.css';
 import Column from './Column.js';
 import Card from './Card.js';
+import Dice from './Dice.js';
 
 class App extends Component {
   constructor() {
@@ -92,6 +93,9 @@ class App extends Component {
 
     return (
       <div className='container'>
+        <div className='row'>
+          <Dice />
+        </div>
         <div className='row'>
           <Column key='b' title='Backlog' cards={this.createCards(backlog)} />
           <Column key='a' title='Analysis' cards={this.createCards(analysis)}/>

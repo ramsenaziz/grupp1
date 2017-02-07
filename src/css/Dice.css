@@ -1,0 +1,8 @@
+.Dice {
+ 	float: left;
+ 	margin-top: 10px;
+ 	padding: 5px;
+ 	background: white;
+ 	border: dotted gold 3px;
+ 	outline: none;
+ }

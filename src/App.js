@@ -1,30 +1,60 @@
 import React, { Component } from 'react';
 import './css/App.css';
+import DayRow from './DayRow.js';
+import DayRowColumns from './DayRowColumns';
 import Column from './Column.js';
 import Card from './Card.js';
+import Dice from './Dice.js';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      backlogCards: [{
-        key: 'US1',
-        title: 'US1',
-        money: 231,
-        analysis: 2,
-        development: 5,
-        testing: 3
-      }],
-      analysisCards: [],
-      developmentCards: [],
-      testingCards: [],
-      doneCards: [],
-      unexpectedCards: []
+      backlogCards: [
+        {
+          key: 'US1',
+          title: 'US1',
+          money: 111,
+          analysis: 111,
+          development: 111,
+          testing: 111
+        },
+        {
+          key: 'US2',
+          title: 'US2',
+          money: 222,
+          analysis: 222,
+          development: 222,
+          testing: 222
+        },
+        {
+          key: 'US3',
+          title: 'US3',
+          money: 333,
+          analysis: 333,
+          development: 333,
+          testing: 333
+        },
+        {
+          key: 'US4',
+          title: 'US4',
+          money: 444,
+          analysis: 444,
+          development: 444,
+          testing: 444
+        }
+      ],
+        analysisCards: [],
+        developmentCards: [],
+        testingCards: [],
+        doneCards: [],
+        unexpectedCards: []
     }
     this.handleCardClick = this.handleCardClick.bind(this);
+
   }
   handleCardClick(card) {
-    console.log(card);
+    //console.log(card);
     var targetArray = this.state.analysisCards.slice();
     targetArray.push(card);
 
@@ -81,6 +111,9 @@ class App extends Component {
 
     return cards;
   }
+  //   createCards(backlog)
+  // cardGenerator(8)
+
 
   render() {
     var backlog = this.state.backlogCards;
@@ -93,16 +126,22 @@ class App extends Component {
     return (
       <div className='container'>
         <div className='row'>
+          <Dice />
+        </div>
+      <div className='row'>
+          <DayRow key='day' day='DayRow' />
           <Column key='b' title='Backlog' cards={this.createCards(backlog)} />
           <Column key='a' title='Analysis' cards={this.createCards(analysis)}/>
           <Column key='dev' title='Development' cards={this.createCards(development)}/>
           <Column key='t' title='Testing' cards={this.createCards(testing)}/>
           <Column key='dn' title='Done' cards={this.createCards(done)}/>
           <Column key='un' title='Unexpected' cards={this.createCards(unexpected)}/>
-        </div>
+      </div>
       </div>
     )
   }
 }
+
+
 
 export default App;

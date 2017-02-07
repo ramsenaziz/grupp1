@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './css/App.css';
+import DayRow from './DayRow.js';
+import DayRowColumns from './DayRowColumns';
 import Column from './Column.js';
 import Card from './Card.js';
 import Dice from './Dice.js';
@@ -21,6 +23,7 @@ class App extends Component {
     }
 
     this.handleCardClick = this.handleCardClick.bind(this);
+
   }
 
   reducePoints(array, points, key, pos=0) {
@@ -119,6 +122,9 @@ class App extends Component {
 
     return cards;
   }
+  //   createCards(backlog)
+  // cardGenerator(8)
+
 
   render() {
     var backlog = this.state.backlogCards;
@@ -130,26 +136,32 @@ class App extends Component {
 
     return (
       <div className='container'>
-      <div className="row">
-      <ProgressBar bar={this.state.progress} />
-      </div>
+        <div className="row">
+          <ProgressBar bar={this.state.progress} />
+        </div>
         <div className='row'>
           <Dice roll={this.rollDice.bind(this)}/>
         </div>
         <div className='row'>
-          <Column key='b' title='Backlog' cards={this.createCards(backlog)} />
-          <Column key='a' title='Analysis' cards={this.createCards(analysis)}/>
-          <Column key='dev' title='Development' cards={this.createCards(development)}/>
-          <Column key='t' title='Testing' cards={this.createCards(testing)}/>
-          <Column key='dn' title='Done' cards={this.createCards(done)}/>
-          <Column key='un' title='Unexpected' cards={this.createCards(unexpected)}/>
+          <Dice />
+        </div>
+        <div className='row'>
+            <DayRow key='day' day='DayRow' />
+            <Column key='b' title='Backlog' cards={this.createCards(backlog)} />
+            <Column key='a' title='Analysis' cards={this.createCards(analysis)}/>
+            <Column key='dev' title='Development' cards={this.createCards(development)}/>
+            <Column key='t' title='Testing' cards={this.createCards(testing)}/>
+            <Column key='dn' title='Done' cards={this.createCards(done)}/>
+            <Column key='un' title='Unexpected' cards={this.createCards(unexpected)}/>
         </div>
         <div className="row">
-        <ProgressBtn handleClick={this.nextDay.bind(this)} />
+          <ProgressBtn handleClick={this.nextDay.bind(this)} />
         </div>
       </div>
     )
   }
 }
+
+
 
 export default App;

@@ -11,5 +11,4 @@ class Column extends Component {
     )
   }
 }
-
 export default Column;

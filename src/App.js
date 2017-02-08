@@ -40,7 +40,7 @@ class App extends Component {
           this.reducePoints(array, points, key, nextPos)
         }
   }
-  
+
   init() {
     var backlog = this.state.backlogCards;
     var analysis = this.cardGenerator(10);
@@ -48,7 +48,7 @@ class App extends Component {
     var testing = this.state.testingCards;
     var done = this.state.doneCards;
     var unexpected = this.state.unexpectedCards;
-    this.setState({analysisCards: analysis}) 
+    this.setState({analysisCards: analysis})
   }
 
   nextDay() {
@@ -66,13 +66,19 @@ class App extends Component {
   }
 
   handleCardClick(card) {
-    var targetArray = this.state.analysisCards.slice();
-    targetArray.push(card);
 
+    //Remove the card from the old array
     var filteredArray = this.state.backlogCards.filter((c) => {
-      return c.title !== card.title
+      c.title !== card.title
     })
 
+    //Make a copy of the array the card will get moved to
+    var targetArray = this.state.analysisCards.slice();
+
+    //Add the card to the array copy
+    targetArray.push(card);
+
+    //Update the arrays in this.state
     this.setState ({
       backlogCards: filteredArray,
       analysisCards: targetArray
@@ -137,22 +143,19 @@ class App extends Component {
     return (
       <div className='container'>
         <div className="row">
+          {/*<DayRow key='day' day='DayRow' />*/}
           <ProgressBar bar={this.state.progress} />
         </div>
         <div className='row'>
           <Dice roll={this.rollDice.bind(this)}/>
         </div>
         <div className='row'>
-          <Dice />
-        </div>
-        <div className='row'>
-            <DayRow key='day' day='DayRow' />
-            <Column key='b' title='Backlog' cards={this.createCards(backlog)} />
-            <Column key='a' title='Analysis' cards={this.createCards(analysis)}/>
-            <Column key='dev' title='Development' cards={this.createCards(development)}/>
-            <Column key='t' title='Testing' cards={this.createCards(testing)}/>
-            <Column key='dn' title='Done' cards={this.createCards(done)}/>
-            <Column key='un' title='Unexpected' cards={this.createCards(unexpected)}/>
+            <Column title='Backlog' cards={this.createCards(backlog)} />
+            <Column title='Analysis' cards={this.createCards(analysis)}/>
+            <Column title='Development' cards={this.createCards(development)}/>
+            <Column title='Testing' cards={this.createCards(testing)}/>
+            <Column title='Done' cards={this.createCards(done)}/>
+            <Column title='Unexpected' cards={this.createCards(unexpected)}/>
         </div>
         <div className="row">
           <ProgressBtn handleClick={this.nextDay.bind(this)} />

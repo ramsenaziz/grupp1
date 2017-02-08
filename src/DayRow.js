@@ -3,22 +3,15 @@ import Column from './Column';
 import DayRowColumns from './DayRowColumns';
 
 class DayRow extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      days:['Monday', 'Tuesday', 'Wednesday',
-           'Thursday', 'Friday', 'Weekend']
-      }
-}
-
-renderDays() {
-   return this.state.days.map(day => (<DayRowColumns key={day} day={day} />))
-}
 
   render() {
     return (
       <div className='DayRow' >
-          {this.renderDays()}
+        <DayRowColumns day='Monday' />
+        <DayRowColumns day='Tuesday' />
+        <DayRowColumns day='Wednesday' />
+        <DayRowColumns day='Thursday' />
+        <DayRowColumns day='Friday' />
       </div>
     )
   }

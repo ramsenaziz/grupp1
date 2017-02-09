@@ -9,6 +9,7 @@ import DCard from './DCard.js';
 import Dice from './Dice.js';
 import ProgressBar from './ProgressBar.js';
 import ProgressBtn from './ProgressBtn.js';
+import NewGameBtn from './NewGameBtn.js';
 
 class App extends Component {
   constructor() {
@@ -28,38 +29,34 @@ class App extends Component {
 
   }
 
-  reducePoints(array, points, key, pos=0) {
-    var nextPos = pos +1;
+  reducePoints(array, points, key, pos = 0) {
+    var nextPos = pos + 1;
     var currentPoints = array[pos][key];
-
-      while(currentPoints > 0 && points > 0) {
-       currentPoints --;
-       points --;
-      }
-      array[pos][key] = currentPoints;
-      this.setState({analysisCards: array});
-        if(points > 0 && array[nextPos]) {
-          this.reducePoints(array, points, key, nextPos)
-        }
+    console.log(points);
+    while (currentPoints > 0 && points > 0) {
+      currentPoints--;
+      points--;
+    }
+    array[pos][key] = currentPoints;
+    this.setState({ analysisCards: array });
+    if (points > 0 && array[nextPos]) {
+      this.reducePoints(array, points, key, nextPos)
+    }
   }
 
   init() {
-    var backlog = this.state.backlogCards;
-    var analysis = this.cardGenerator(8);
-    var development = this.state.developmentCards;
-    var testing = this.state.testingCards;
-    var done = this.state.doneCards;
-    var unexpected = this.state.unexpectedCards;
-    this.setState({analysisCards: analysis})
+    var cards = this.cardGenerator(10);
+    this.setState({ backlogCards: cards })
+
   }
 
   nextDay() {
-    var number = this.state.progress + 16;
-    if(number > 80) {
+    var number = this.state.progress + 20;
+    if (number > 100) {
       number = 0;
     }
-    this.init();
-    this.setState({progress: number});
+
+    this.setState({ progress: number });
   }
 
   rollDice() {
@@ -68,22 +65,41 @@ class App extends Component {
   }
 
   handleCardClick(card) {
-    var targetArray = this.state.analysisCards.slice();
-    targetArray.push(card);
+    var cardLoc = card.props.location;
 
-    var filteredArray = this.state.backlogCards.filter((c) => {
-      return c.title !== card.title
-    })
+    var locations = [
+      'backlogCards',
+      'analysisCards',
+      'developmentCards',
+      'testingCards',
+      'doneCards',
+    ];
+    var currentArray = this.state[locations[cardLoc]];
+    var findCard;
 
-    this.setState ({
-      backlogCards: filteredArray,
-      analysisCards: targetArray
+    /*filter currentArray if clicked card is found, put it in var findCard*/
+    var filteredArray = currentArray.filter((c) => {
+      if (c.title === card.props.title) findCard = c;
+      else return c.title !== card.props.title;
+    });
+    findCard.location++;
+
+    /*make a copy of the array the card will move to. Then push the card into that copy*/
+    var nextArray = this.state[locations[cardLoc + 1]].slice();
+    nextArray.push(findCard);
+
+    /*Put both filteredArray (the array the card was in before clicked), and nextArray (the new home of the card)
+    in App.state to save changes made*/
+    this.setState({
+      [locations[cardLoc]]: filteredArray,
+      [locations[cardLoc + 1]]: nextArray
     });
   }
 
   random(maxInt) {
     return Math.floor(Math.random() * maxInt);
   }
+
   createCards(cards) {
 
     var cardComponents = cards.map(card => {
@@ -149,7 +165,7 @@ class App extends Component {
         analysis: this.random(10) + 1,
         development: this.random(10) + 1,
         testing: this.random(10) + 1,
-        location: locations[1]
+        location: 0
       });
     }
 
@@ -167,19 +183,20 @@ class App extends Component {
     return (
       <div className='container'>
         <div className="row">
+          {/*<DayRow key='day' day='DayRow' />*/}
           <ProgressBar bar={this.state.progress} />
         </div>
         <div className='row'>
-          <Dice roll={this.rollDice.bind(this)}/>
+          <NewGameBtn handleClick={this.init.bind(this)} />
+          <Dice roll={this.rollDice.bind(this)} />
         </div>
         <div className='row'>
-            <DayRow key='day' day='DayRow' />
-            <Column key='b' title='Backlog' cards={this.createCards(backlog)} />
-            <Column key='a' title='Analysis' cards={this.createCards(analysis)}/>
-            <Column key='dev' title='Development' cards={this.createCards(development)}/>
-            <Column key='t' title='Testing' cards={this.createCards(testing)}/>
-            <Column key='dn' title='Done' cards={this.createCards(done)}/>
-            <Column key='un' title='Unexpected' cards={this.createCards(unexpected)}/>
+          <Column title='Backlog' cards={this.createCards(backlog)} />
+          <Column title='Analysis' cards={this.createCards(analysis)} />
+          <Column title='Development' cards={this.createCards(development)} />
+          <Column title='Testing' cards={this.createCards(testing)} />
+          <Column title='Done' cards={this.createCards(done)} />
+          <Column title='Unexpected' cards={this.createCards(unexpected)} />
         </div>
         <div className="row">
           <ProgressBtn handleClick={this.nextDay.bind(this)} />
@@ -188,5 +205,7 @@ class App extends Component {
     )
   }
 }
+
+
 
 export default App;

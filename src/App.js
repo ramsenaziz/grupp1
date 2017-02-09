@@ -27,32 +27,35 @@ class App extends Component {
 
   }
 
-  reducePoints(array, points, key, pos=0) {
-    var nextPos = pos +1;
+  reducePoints(array, points, key, pos = 0) {
+    var nextPos = pos + 1;
     var currentPoints = array[pos][key];
     console.log(points);
-      while(currentPoints > 0 && points > 0) {
-       currentPoints --;
-       points --;
-      }
-      array[pos][key] = currentPoints;
-      this.setState({analysisCards: array});
-        if(points > 0 && array[nextPos]) {
-          this.reducePoints(array, points, key, nextPos)
-        }
+    while (currentPoints > 0 && points > 0) {
+      currentPoints--;
+      points--;
+    }
+    array[pos][key] = currentPoints;
+    this.setState({ analysisCards: array });
+    if (points > 0 && array[nextPos]) {
+      this.reducePoints(array, points, key, nextPos)
+    }
   }
 
   init() {
     var cards = this.cardGenerator(10);
-    this.setState({backlogCards: cards})
+    this.setState({ backlogCards: cards })
+
   }
 
   nextDay() {
     var number = this.state.progress + 20;
-    if(number > 100) {
+    if (number > 100) {
       number = 0;
     }
-    this.setState({progress: number});
+
+    this.setState({ progress: number });
+
   }
 
   rollDice() {
@@ -62,21 +65,34 @@ class App extends Component {
 
   handleCardClick(card) {
 
-    //Remove the card from the old array
-    var filteredArray = this.state.backlogCards.filter((c) => {
-      c.title !== card.title
-    })
+    var cardLoc = card.props.location;
 
-    //Make a copy of the array the card will get moved to
-    var targetArray = this.state.analysisCards.slice();
+    var locations = [
+      'backlogCards',
+      'analysisCards',
+      'developmentCards',
+      'testingCards',
+      'doneCards',
+    ];
+    var currentArray = this.state[locations[cardLoc]];
+    var findCard;
 
-    //Add the card to the array copy
-    targetArray.push(card);
+    /*filter currentArray if clicked card is found, put it in var findCard*/
+    var filteredArray = currentArray.filter((c) => {
+      if (c.title === card.props.title) findCard = c;
+      else return c.title !== card.props.title;
+    });
+    findCard.location++;
 
-    //Update the arrays in this.state
-    this.setState ({
-      backlogCards: filteredArray,
-      analysisCards: targetArray
+    /*make a copy of the array the card will move to. Then push the card into that copy*/
+    var nextArray = this.state[locations[cardLoc + 1]].slice();
+    nextArray.push(findCard);
+
+    /*Put both filteredArray (the array the card was in before clicked), and nextArray (the new home of the card)
+    in App.state to save changes made*/
+    this.setState({
+      [locations[cardLoc]]: filteredArray,
+      [locations[cardLoc + 1]]: nextArray
     });
   }
 
@@ -86,15 +102,16 @@ class App extends Component {
 
   createCards(cards) {
     var cardComponents = cards.map(card => {
-        return (<Card
-          key={card.title}
-          title={card.title}
-          money={card.money}
-          analysis={card.analysis}
-          development={card.development}
-          testing={card.testing}
-          Click={this.handleCardClick}
-        />);
+      return (<Card
+        key={card.title}
+        title={card.title}
+        money={card.money}
+        analysis={card.analysis}
+        development={card.development}
+        testing={card.testing}
+        Click={this.handleCardClick}
+        location={card.location}
+      />);
     })
     return cardComponents;
   }
@@ -102,13 +119,7 @@ class App extends Component {
   //Creates objects with random values to simulate data from database
   cardGenerator(nrOfcardsToMake) {
     var cards = [];
-    var locations = [
-      'backlogCards',
-      'analysisCards',
-      'developmentCards',
-      'testingCards',
-      'doneCards',
-    ];
+
 
     for (var i = 0; i < nrOfcardsToMake; i++) {
       cards.push({
@@ -117,7 +128,7 @@ class App extends Component {
         analysis: this.random(10) + 1,
         development: this.random(10) + 1,
         testing: this.random(10) + 1,
-        location: locations[1]
+        location: 0
       });
     }
 
@@ -143,15 +154,16 @@ class App extends Component {
         </div>
         <div className='row'>
           <NewGameBtn handleClick={this.init.bind(this)} />
-          <Dice roll={this.rollDice.bind(this)}/>
+          <Dice roll={this.rollDice.bind(this)} />
         </div>
         <div className='row'>
-            <Column title='Backlog' cards={this.createCards(backlog)} />
-            <Column title='Analysis' cards={this.createCards(analysis)}/>
-            <Column title='Development' cards={this.createCards(development)}/>
-            <Column title='Testing' cards={this.createCards(testing)}/>
-            <Column title='Done' cards={this.createCards(done)}/>
-            <Column title='Unexpected' cards={this.createCards(unexpected)}/>
+          <Column title='Backlog' cards={this.createCards(backlog)} />
+          <Column title='Analysis' cards={this.createCards(analysis)} />
+          <Column title='Development' cards={this.createCards(development)} />
+          <Column title='Testing' cards={this.createCards(testing)} />
+          <Column title='Done' cards={this.createCards(done)} />
+          <Column title='Unexpected' cards={this.createCards(unexpected)} />
+
         </div>
         <div className="row">
           <ProgressBtn handleClick={this.nextDay.bind(this)} />

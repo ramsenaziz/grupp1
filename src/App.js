@@ -1,60 +1,73 @@
 import React, { Component } from 'react';
 import './css/App.css';
 import DayRow from './DayRow.js';
+import DayRowColumns from './DayRowColumns';
 import Column from './Column.js';
 import Card from './Card.js';
+import MCard from './MCard.js';
+import DCard from './DCard.js';
 import Dice from './Dice.js';
-import PlayerRow from './PlayerRow';
+import ProgressBar from './ProgressBar.js';
+import ProgressBtn from './ProgressBtn.js';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      backlogCards: [
-        {
-          key: 'US1',
-          title: 'US1',
-          money: 111,
-          analysis: 111,
-          development: 111,
-          testing: 111
-        },
-        {
-          key: 'US2',
-          title: 'US2',
-          money: 222,
-          analysis: 222,
-          development: 222,
-          testing: 222
-        },
-        {
-          key: 'US3',
-          title: 'US3',
-          money: 333,
-          analysis: 333,
-          development: 333,
-          testing: 333
-        },
-        {
-          key: 'US4',
-          title: 'US4',
-          money: 444,
-          analysis: 444,
-          development: 444,
-          testing: 444
-        }
-      ],
-        analysisCards: [],
-        developmentCards: [],
-        testingCards: [],
-        doneCards: [],
-        unexpectedCards: []
+      backlogCards: [],
+      analysisCards: [],
+      developmentCards: [],
+      testingCards: [],
+      doneCards: [],
+      unexpectedCards: [],
+      progress: 0,
+      diceValue: 0
     }
+
     this.handleCardClick = this.handleCardClick.bind(this);
 
   }
+
+  reducePoints(array, points, key, pos=0) {
+    var nextPos = pos +1;
+    var currentPoints = array[pos][key];
+
+      while(currentPoints > 0 && points > 0) {
+       currentPoints --;
+       points --;
+      }
+      array[pos][key] = currentPoints;
+      this.setState({analysisCards: array});
+        if(points > 0 && array[nextPos]) {
+          this.reducePoints(array, points, key, nextPos)
+        }
+  }
+
+  init() {
+    var backlog = this.state.backlogCards;
+    var analysis = this.cardGenerator(8);
+    var development = this.state.developmentCards;
+    var testing = this.state.testingCards;
+    var done = this.state.doneCards;
+    var unexpected = this.state.unexpectedCards;
+    this.setState({analysisCards: analysis})
+  }
+
+  nextDay() {
+    var number = this.state.progress + 16;
+    if(number > 80) {
+      number = 0;
+    }
+    this.init();
+    this.setState({progress: number});
+  }
+
+  rollDice() {
+    var stateValue = (this.random(6) + 1);
+    this.reducePoints(this.state.analysisCards, stateValue, 'analysis');
+  }
+
   handleCardClick(card) {
-    //console.log(card);
     var targetArray = this.state.analysisCards.slice();
     targetArray.push(card);
 
@@ -71,19 +84,47 @@ class App extends Component {
   random(maxInt) {
     return Math.floor(Math.random() * maxInt);
   }
-
   createCards(cards) {
+
     var cardComponents = cards.map(card => {
-        return (<Card
-          key={card.title}
-          title={card.title}
-          money={card.money}
-          analysis={card.analysis}
-          development={card.development}
-          testing={card.testing}
-          Click={this.handleCardClick}
-        />);
-    })
+      if (card.type === 'us'){
+        return (
+          <Card
+            key={card.title}
+            title={'US' + card.title}
+            money={card.money}
+            analysis={card.analysis}
+            development={card.development}
+            testing={card.testing}
+            Click={this.handleCardClick}
+            />
+          );
+        }
+        else if(card.type === 'm') {
+          return (
+            <MCard
+              key={card.title}
+              title={'M' + card.title}
+              analysis={card.analysis}
+              development={card.development}
+              testing={card.testing}
+              Click={this.handleCardClick}
+            />
+          );
+        }
+        else if(card.type === 'd') {
+          return (
+            <DCard
+              key={card.title}
+              title={'D' + card.title}
+              analysis={card.analysis}
+              development={card.development}
+              testing={card.testing}
+              Click={this.handleCardClick}
+            />
+          );
+        }
+      });
     return cardComponents;
   }
 
@@ -98,22 +139,22 @@ class App extends Component {
       'doneCards',
     ];
 
+    var types = ['us', 'd', 'm'];
+
     for (var i = 0; i < nrOfcardsToMake; i++) {
       cards.push({
-        title: 'US' + (i + 1),
+        title: i + 1,
+        type: types[this.random(3)],
         money: this.random(10) * 5 * 10,
         analysis: this.random(10) + 1,
         development: this.random(10) + 1,
         testing: this.random(10) + 1,
-        location: [locations[0]]
+        location: locations[1]
       });
     }
 
     return cards;
   }
-  //   createCards(backlog)
-  // cardGenerator(8)
-
 
   render() {
     var backlog = this.state.backlogCards;
@@ -125,12 +166,14 @@ class App extends Component {
 
     return (
       <div className='container'>
-        <div className='row'>
-          <Dice />
+        <div className="row">
+          <ProgressBar bar={this.state.progress} />
         </div>
         <div className='row'>
-            <PlayerRow />
-            <DayRow />
+          <Dice roll={this.rollDice.bind(this)}/>
+        </div>
+        <div className='row'>
+            <DayRow key='day' day='DayRow' />
             <Column key='b' title='Backlog' cards={this.createCards(backlog)} />
             <Column key='a' title='Analysis' cards={this.createCards(analysis)}/>
             <Column key='dev' title='Development' cards={this.createCards(development)}/>
@@ -138,11 +181,12 @@ class App extends Component {
             <Column key='dn' title='Done' cards={this.createCards(done)}/>
             <Column key='un' title='Unexpected' cards={this.createCards(unexpected)}/>
         </div>
+        <div className="row">
+          <ProgressBtn handleClick={this.nextDay.bind(this)} />
+        </div>
       </div>
     )
   }
 }
-
-
 
 export default App;

@@ -1,24 +1,14 @@
 import React, { Component } from 'react';
 import './css/Card.css';
+import Card from './Card';
 
-class Card extends Component {
-
-  handleClick() {
-    var obj = {
-      
-      analysis: this.props.analysis,
-      development: this.props.development,
-      testing: this.props.testing
-    }
-    this.props.Click(obj);
-  }
+class DCard extends Card {
 
   render() {
     return (
       <div className='Card row' onClick={this.handleClick.bind(this)}>
         <div className='head'>
           {this.props.title}
-          <span>${this.props.money}</span>
         </div>
         <p>A: {this.props.analysis}</p>
         <p>D: {this.props.development}</p>
@@ -28,4 +18,4 @@ class Card extends Component {
   }
 }
 
-export default Card;
+export default DCard;

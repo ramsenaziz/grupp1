@@ -7,6 +7,7 @@ import Card from './Card.js';
 import Dice from './Dice.js';
 import ProgressBar from './ProgressBar.js';
 import ProgressBtn from './ProgressBtn.js';
+import NewGameBtn from './NewGameBtn.js';
 
 class App extends Component {
   constructor() {
@@ -42,13 +43,8 @@ class App extends Component {
   }
 
   init() {
-    var backlog = this.state.backlogCards;
-    var analysis = this.cardGenerator(10);
-    var development = this.state.developmentCards;
-    var testing = this.state.testingCards;
-    var done = this.state.doneCards;
-    var unexpected = this.state.unexpectedCards;
-    this.setState({analysisCards: analysis})
+    var cards = this.cardGenerator(10);
+    this.setState({backlogCards: cards})
   }
 
   nextDay() {
@@ -56,7 +52,6 @@ class App extends Component {
     if(number > 100) {
       number = 0;
     }
-    this.init();
     this.setState({progress: number});
   }
 
@@ -147,6 +142,7 @@ class App extends Component {
           <ProgressBar bar={this.state.progress} />
         </div>
         <div className='row'>
+          <NewGameBtn handleClick={this.init.bind(this)} />
           <Dice roll={this.rollDice.bind(this)}/>
         </div>
         <div className='row'>

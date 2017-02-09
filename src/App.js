@@ -107,12 +107,13 @@ class App extends Component {
         return (
           <Card
             key={card.title}
-            title={'US' + card.title}
+            title={card.title}
             money={card.money}
             analysis={card.analysis}
             development={card.development}
             testing={card.testing}
             Click={this.handleCardClick}
+            location={card.location}
             />
           );
         }
@@ -120,11 +121,12 @@ class App extends Component {
           return (
             <MCard
               key={card.title}
-              title={'M' + card.title}
+              title={card.title}
               analysis={card.analysis}
               development={card.development}
               testing={card.testing}
               Click={this.handleCardClick}
+              location={card.location}
             />
           );
         }
@@ -132,11 +134,12 @@ class App extends Component {
           return (
             <DCard
               key={card.title}
-              title={'D' + card.title}
+              title={card.title}
               analysis={card.analysis}
               development={card.development}
               testing={card.testing}
               Click={this.handleCardClick}
+              location={card.location}
             />
           );
         }
@@ -147,20 +150,14 @@ class App extends Component {
   //Creates objects with random values to simulate data from database
   cardGenerator(nrOfcardsToMake) {
     var cards = [];
-    var locations = [
-      'backlogCards',
-      'analysisCards',
-      'developmentCards',
-      'testingCards',
-      'doneCards',
-    ];
 
     var types = ['us', 'd', 'm'];
 
     for (var i = 0; i < nrOfcardsToMake; i++) {
+      var type = types[this.random(3)];
       cards.push({
-        title: i + 1,
-        type: types[this.random(3)],
+        title: type  + (i + 1),
+        type: type,
         money: this.random(10) * 5 * 10,
         analysis: this.random(10) + 1,
         development: this.random(10) + 1,

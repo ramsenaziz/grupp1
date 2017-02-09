@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Column from './Column';
 import DayRowColumns from './DayRowColumns';
 
 class DayRow extends Component {

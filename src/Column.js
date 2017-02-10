@@ -1,16 +1,15 @@
+import React, { Component } from 'react';
+import './css/Column.css';
 
-import React,{Component}from"react";
-
-class Column extends Component{
-  constructor(props) {
-    super (props);
-  }
+class Column extends Component {
   render() {
+
     return (
-      <div className='Column'>
-          <h1>{this.props.title}</h1>
+      <div className='col-xs-2 Column'>
+        <div className='row title'>{this.props.title}</div>
+        {this.props.cards}
       </div>
     )
   }
-};
+}
 export default Column;

@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
 import './css/App.css';
 import DayRow from './DayRow.js';
 import DayRowColumns from './DayRowColumns';
@@ -22,31 +24,46 @@ class App extends Component {
       doneCards: [],
       unexpectedCards: [],
       progress: 0,
-      diceValue: 0
+      nrOfDicesA: 1,
+      nrOfDicesD: 4,
+      nrOfDicesT: 1,
+      AScore: 0,
+      DScore: 0,
+      TScore: 0
     }
 
     this.handleCardClick = this.handleCardClick.bind(this);
 
   }
+  //key is analysis, development or testing.
+  //pos is position of the card in the column
+  reducePoints(column, points, key, pos = 0) {
 
-  reducePoints(array, points, key, pos = 0) {
-    var nextPos = pos + 1;
-    var currentPoints = array[pos][key];
-    console.log(points);
+    if (!column[pos]) {
+      return [];
+    }
+
+    var currentPoints = column[pos][key];
+
     while (currentPoints > 0 && points > 0) {
       currentPoints--;
       points--;
     }
-    array[pos][key] = currentPoints;
-    this.setState({ analysisCards: array });
-    if (points > 0 && array[nextPos]) {
-      this.reducePoints(array, points, key, nextPos)
+    column[pos][key] = currentPoints;
+
+    var nextPos = pos + 1;
+
+    if (points > 0 && column[nextPos]) {
+      this.reducePoints(column, points, key, nextPos);
     }
+    return column;
   }
 
   init() {
     var cards = this.cardGenerator(10);
-    this.setState({ backlogCards: cards })
+    this.setState({
+      backlogCards: cards
+    })
 
   }
 
@@ -56,12 +73,31 @@ class App extends Component {
       number = 0;
     }
 
-    this.setState({ progress: number });
+    this.setState({
+      progress: number
+    });
   }
 
   rollDice() {
-    var stateValue = (this.random(6) + 1);
-    this.reducePoints(this.state.analysisCards, stateValue, 'analysis');
+    var AScore = [];
+    for (var i = 0; i < this.state.nrOfDicesA; i++) {
+      AScore.push(this.random(6));
+    }
+    var DScore = this.state.nrOfDicesD * this.random(6);
+    var TScore = this.state.nrOfDicesT * this.random(6);
+
+    var analysis = this.reducePoints(this.state.analysisCards, AScore, 'analysis');
+    var development = this.reducePoints(this.state.developmentCards, DScore, 'development');
+    var testing = this.reducePoints(this.state.testingCards, TScore, 'testing');
+
+    this.setState({
+      AScore: AScore,
+      DScore: DScore,
+      TScore: TScore,
+      analysisCards: analysis,
+      developmentCards: development,
+      testingCards: testing
+    });
   }
 
   handleCardClick(card) {
@@ -96,14 +132,13 @@ class App extends Component {
     });
   }
 
-  random(maxInt) {
-    return Math.floor(Math.random() * maxInt);
+  random(maxInt, minInt = 1) {
+    return Math.floor(Math.random() * maxInt) + minInt;
   }
 
   createCards(cards) {
-
     var cardComponents = cards.map(card => {
-      if (card.type === 'us'){
+      if (card.type === 'us') {
         return (
           <Card
             key={card.title}
@@ -114,36 +149,34 @@ class App extends Component {
             testing={card.testing}
             Click={this.handleCardClick}
             location={card.location}
-            />
-          );
-        }
-        else if(card.type === 'm') {
-          return (
-            <MCard
-              key={card.title}
-              title={card.title}
-              analysis={card.analysis}
-              development={card.development}
-              testing={card.testing}
-              Click={this.handleCardClick}
-              location={card.location}
-            />
-          );
-        }
-        else if(card.type === 'd') {
-          return (
-            <DCard
-              key={card.title}
-              title={card.title}
-              analysis={card.analysis}
-              development={card.development}
-              testing={card.testing}
-              Click={this.handleCardClick}
-              location={card.location}
-            />
-          );
-        }
-      });
+          />
+        );
+      } else if (card.type === 'm') {
+        return (
+          <MCard
+            key={card.title}
+            title={card.title}
+            analysis={card.analysis}
+            development={card.development}
+            testing={card.testing}
+            Click={this.handleCardClick}
+            location={card.location}
+          />
+        );
+      } else if (card.type === 'd') {
+        return (
+          <DCard
+            key={card.title}
+            title={card.title}
+            analysis={card.analysis}
+            development={card.development}
+            testing={card.testing}
+            Click={this.handleCardClick}
+            location={card.location}
+          />
+        );
+      }
+    });
     return cardComponents;
   }
 
@@ -154,14 +187,14 @@ class App extends Component {
     var types = ['us', 'd', 'm'];
 
     for (var i = 0; i < nrOfcardsToMake; i++) {
-      var type = types[this.random(3)];
+      var type = types[this.random(3, 0)];
       cards.push({
-        title: type  + (i + 1),
+        title: type + (i + 1),
         type: type,
-        money: this.random(10) * 5 * 10,
-        analysis: this.random(10) + 1,
-        development: this.random(10) + 1,
-        testing: this.random(10) + 1,
+        money: this.random(10) * 50,
+        analysis: this.random(10),
+        development: this.random(10),
+        testing: this.random(10),
         location: 0
       });
     }
@@ -178,16 +211,18 @@ class App extends Component {
     var unexpected = this.state.unexpectedCards;
 
     return (
-      <div className='container'>
-        <div className="row">
-          {/*<DayRow key='day' day='DayRow' />*/}
-          <ProgressBar bar={this.state.progress} />
+      <div className='container' >
+        <div className="row" > { /*<DayRow key='day' day='DayRow' />*/}
+          < ProgressBar bar={this.state.progress} />
         </div>
-        <div className='row'>
+        <div className='row' >
           <NewGameBtn handleClick={this.init.bind(this)} />
+          <span> analysis : {this.state.AScore}</span>
+          <span> development : {this.state.DScore}</span>
+          <span> testing : {this.state.TScore}</span>
           <Dice roll={this.rollDice.bind(this)} />
-        </div>
-        <div className='row'>
+        </div >
+        <div className='row' >
           <Column title='Backlog' cards={this.createCards(backlog)} />
           <Column title='Analysis' cards={this.createCards(analysis)} />
           <Column title='Development' cards={this.createCards(development)} />
@@ -195,7 +230,7 @@ class App extends Component {
           <Column title='Done' cards={this.createCards(done)} />
           <Column title='Unexpected' cards={this.createCards(unexpected)} />
         </div>
-        <div className="row">
+        <div className="row" >
           <ProgressBtn handleClick={this.nextDay.bind(this)} />
         </div>
       </div>

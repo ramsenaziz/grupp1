@@ -12,6 +12,7 @@ import Dice from './Dice.js';
 import ProgressBar from './ProgressBar.js';
 import ProgressBtn from './ProgressBtn.js';
 import NewGameBtn from './NewGameBtn.js';
+import EmployeeCol from './EmployeeCol.js';
 
 class App extends Component {
   constructor() {
@@ -23,10 +24,15 @@ class App extends Component {
       testingCards: [],
       doneCards: [],
       unexpectedCards: [],
-      progress: 0,
-      nrOfDicesA: 1,
-      nrOfDicesD: 4,
-      nrOfDicesT: 1,
+      progress: 20,
+			employeesA: [{role: 'analyst', img: './images/1.png'}, ],
+			employeesD: [
+				{role: 'developer', img: './images/2.png'},
+				{role: 'developer', img: './images/2.png'},
+				{role: 'developer', img: './images/2.png'},
+				{role: 'developer', img: './images/2.png'},
+			],
+			employeesT: [{role: 'tester', img: './images/3.png'}],
       AScore: 0,
       DScore: 0,
       TScore: 0
@@ -62,7 +68,12 @@ class App extends Component {
   init() {
     var cards = this.cardGenerator(10);
     this.setState({
-      backlogCards: cards
+      backlogCards: cards,
+			analysisCards: [],
+			developmentCards: [],
+			testingCards: [],
+			doneCards: [],
+			unexpectedCards: []
     })
 
   }
@@ -70,7 +81,7 @@ class App extends Component {
   nextDay() {
     var number = this.state.progress + 20;
     if (number > 100) {
-      number = 0;
+      number = 20;
     }
 
     this.setState({
@@ -79,12 +90,9 @@ class App extends Component {
   }
 
   rollDice() {
-    var AScore = [];
-    for (var i = 0; i < this.state.nrOfDicesA; i++) {
-      AScore.push(this.random(6));
-    }
-    var DScore = this.state.nrOfDicesD * this.random(6);
-    var TScore = this.state.nrOfDicesT * this.random(6);
+    var AScore = this.state.employeesA.map(employee => this.random(6)).reduce((a, b) => a + b);
+    var DScore = this.state.employeesD.map(employee => this.random(6)).reduce((a, b) => a + b);
+		var TScore = this.state.employeesT.map(employee => this.random(6)).reduce((a, b) => a + b);
 
     var analysis = this.reducePoints(this.state.analysisCards, AScore, 'analysis');
     var development = this.reducePoints(this.state.developmentCards, DScore, 'development');
@@ -131,9 +139,9 @@ class App extends Component {
       [locations[cardLoc + 1]]: nextArray
     });
   }
-
+		
   random(maxInt, minInt = 1) {
-    return Math.floor(Math.random() * maxInt) + minInt;
+    return Math.floor(Math.random() * (maxInt - minInt + 1) + minInt);
   }
 
   createCards(cards) {
@@ -217,11 +225,23 @@ class App extends Component {
         </div>
         <div className='row' >
           <NewGameBtn handleClick={this.init.bind(this)} />
-          <span> analysis : {this.state.AScore}</span>
-          <span> development : {this.state.DScore}</span>
-          <span> testing : {this.state.TScore}</span>
           <Dice roll={this.rollDice.bind(this)} />
         </div >
+        <div className='row'>
+        	<EmployeeCol
+        		offset='col-xs-offset-2'
+        		employees={this.state.employeesA}
+        		score={this.state.AScore}
+					/>
+        	<EmployeeCol
+        		employees={this.state.employeesD}
+        		score={this.state.DScore}
+        	/>
+        	<EmployeeCol
+        		employees={this.state.employeesT}
+        		score={this.state.TScore}
+					/>
+        </div>
         <div className='row' >
           <Column title='Backlog' cards={this.createCards(backlog)} />
           <Column title='Analysis' cards={this.createCards(analysis)} />

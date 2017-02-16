@@ -25,14 +25,14 @@ class App extends Component {
       doneCards: [],
       unexpectedCards: [],
       progress: 20,
-			employeesA: [{role: 'analyst', img: './images/1.png'}, ],
+			employeesA: [{role: 'analyst'} ],
 			employeesD: [
-				{role: 'developer', img: './images/2.png'},
-				{role: 'developer', img: './images/2.png'},
-				{role: 'developer', img: './images/2.png'},
-				{role: 'developer', img: './images/2.png'},
+				{role: 'developer'},
+				{role: 'developer'},
+				{role: 'developer'},
+				{role: 'developer'},
 			],
-			employeesT: [{role: 'tester', img: './images/3.png'}],
+			employeesT: [{role: 'tester'}],
       AScore: 0,
       DScore: 0,
       TScore: 0
@@ -139,7 +139,7 @@ class App extends Component {
       [locations[cardLoc + 1]]: nextArray
     });
   }
-		
+
   random(maxInt, minInt = 1) {
     return Math.floor(Math.random() * (maxInt - minInt + 1) + minInt);
   }

@@ -10,7 +10,7 @@ class Employee extends Component {
 				<div>
 					<span className="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>
 					{this.props.me.role.toUpperCase()}
-					<span className="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>	
+					<span className="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
 				</div>
 			</div>
 		)

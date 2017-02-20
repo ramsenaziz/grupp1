@@ -9,6 +9,7 @@ renderEmployees() {
      (<Employee me={employee} />))
 }
 
+
   render() {
 		var offset = this.props.offset ? this.props.offset : '';
 		var classes = 'EmployeeCol col-xs-2 ' + offset;

@@ -28,7 +28,7 @@ class App extends Component {
 			//Release plan
 			days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
 			today: 'Monday',
-			sprint: 8,
+			sprint: 1,
 			totalSprints: 8,
       progress: 0,
 			workDone: false,

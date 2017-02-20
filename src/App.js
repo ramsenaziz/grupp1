@@ -11,6 +11,7 @@ import ProgressBar from './ProgressBar.js';
 import ProgressBtn from './ProgressBtn.js';
 import NewGameBtn from './NewGameBtn.js';
 import EmployeeCol from './EmployeeCol.js';
+import Retrospective from './Retrospective.js';
 
 class App extends Component {
   constructor() {
@@ -27,10 +28,11 @@ class App extends Component {
 			//Release plan
 			days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
 			today: 'Monday',
-			sprint: 1,
+			sprint: 8,
 			totalSprints: 8,
       progress: 0,
 			workDone: false,
+			retrospective: false,
 			
 			//Employees and their distribution across the board
 			employeesA: [{role: 'analyst', img: './images/1.png', id: 'a'}, ],
@@ -110,6 +112,7 @@ class App extends Component {
     var progress = this.state.progress + 25;
 		var sprint = this.state.sprint;
 		var totalSprints = this.state.totalSprints;
+		var retrospective = false;
     if (progress > 100) {
       progress = 0;
 			sprint++;
@@ -117,6 +120,7 @@ class App extends Component {
 				this.init();
 				return
 			}
+			retrospective = true;
     }
 		var nextDay = progress / 25;
 		var today = this.state.days[nextDay];
@@ -124,7 +128,9 @@ class App extends Component {
     this.setState({
 			today: today,
 			sprint: sprint,
-      progress: progress
+      progress: progress,
+			workDone: false,
+			retrospective: retrospective
     });
   }
 
@@ -182,7 +188,7 @@ class App extends Component {
   }
 
   random(maxInt, minInt = 1) {
-    return Math.floor(Math.random() * (maxInt - minInt + 1) + minInt);
+    return Math.floor(Math.random() * (maxInt - minInt) + minInt);
   }
 
   createCards(cards) {
@@ -261,6 +267,8 @@ class App extends Component {
 
     return (
       <div className='container'>
+     		
+       <Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
        
         <div className="row">
           <ProgressBar bar={this.state.progress} />
@@ -271,18 +279,15 @@ class App extends Component {
         </div>
         
         <div className='well'>
-        
-					<div className='row'>
-						<div className='btn-group'>
-							<NewGameBtn handleClick={this.init.bind(this)} />
-							<Dice roll={this.rollDice.bind(this)} />
-							<ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
-						</div>
-					</div>
-       	
         	<div className='row'>
+        		<div className='col-xs-2'>
+							<div className='btn-group btn-group-vertical'>
+								<NewGameBtn handleClick={this.init.bind(this)} />
+								<Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
+								<ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
+							</div>
+        		</div>
 						<EmployeeCol
-							offset='col-xs-offset-2'
 							employees={this.state.employeesA}
 							score={this.state.AScore}
 						/>
@@ -295,9 +300,7 @@ class App extends Component {
 							score={this.state.TScore}
 						/>
         	</div>
-        	
         </div>
-        
         
         <div className='row' >
           <Column title='Backlog' cards={this.createCards(backlog)} />
@@ -312,7 +315,5 @@ class App extends Component {
     )
   }
 }
-
-
 
 export default App;

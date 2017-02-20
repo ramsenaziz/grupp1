@@ -12,6 +12,7 @@ import ProgressBtn from './ProgressBtn.js';
 import NewGameBtn from './NewGameBtn.js';
 import EmployeeCol from './EmployeeCol.js';
 import Retrospective from './Retrospective.js';
+import Gameover from './Gameover.js';
 
 class App extends Component {
   constructor() {
@@ -28,7 +29,7 @@ class App extends Component {
 			//Release plan
 			days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
 			today: 'Monday',
-			sprint: 1,
+			sprint: 8,
 			totalSprints: 8,
       progress: 0,
 			workDone: false,
@@ -47,7 +48,8 @@ class App extends Component {
 			//The points rolled with the dice
       AScore: 0,
       DScore: 0,
-      TScore: 0
+      TScore: 0,
+      gameover: false
     }
 
     this.handleCardClick = this.handleCardClick.bind(this);
@@ -104,7 +106,8 @@ class App extends Component {
 			
       AScore: 0,
       DScore: 0,
-      TScore: 0
+      TScore: 0,
+      gameover: false
     })
   }
 
@@ -113,15 +116,17 @@ class App extends Component {
 		var sprint = this.state.sprint;
 		var totalSprints = this.state.totalSprints;
 		var retrospective = false;
+    var gameover = false;
     if (progress > 100) {
-      progress = 0;
+      retrospective = true;
+			progress = 0;
 			sprint++;
 			if (sprint > totalSprints) {
-				this.init();
-				return
+				gameover = true;
+        retrospective = false;
 			}
-			retrospective = true;
-    }
+    }  
+    
 		var nextDay = progress / 25;
 		var today = this.state.days[nextDay];
 
@@ -130,7 +135,8 @@ class App extends Component {
 			sprint: sprint,
       progress: progress,
 			workDone: false,
-			retrospective: retrospective
+			retrospective: retrospective,
+      gameover: gameover
     });
   }
 
@@ -269,7 +275,8 @@ class App extends Component {
       <div className='container'>
      		
        <Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
-       
+       <Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363}/>
+        
         <div className="row">
           <ProgressBar bar={this.state.progress} />
         </div>

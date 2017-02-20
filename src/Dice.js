@@ -5,7 +5,7 @@ class Dice extends Component {
 
   render() {
     return (
-      <button className='Dice btn btn-primary' onClick={this.props.roll}>Roll Dice!</button>
+      <button type='button' className='Dice btn btn-primary' onClick={this.props.roll}>Roll Dice!</button>
     )
   }
 }

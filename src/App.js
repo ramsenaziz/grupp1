@@ -2,8 +2,6 @@ import React, {
   Component
 } from 'react';
 import './css/App.css';
-import DayRow from './DayRow.js';
-import DayRowColumns from './DayRowColumns';
 import Column from './Column.js';
 import Card from './Card.js';
 import MCard from './MCard.js';
@@ -18,21 +16,33 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+			//Arrays representing the board columns. Contain cards
       backlogCards: [],
       analysisCards: [],
       developmentCards: [],
       testingCards: [],
       doneCards: [],
       unexpectedCards: [],
-      progress: 20,
-			employeesA: [{role: 'analyst'} ],
+		
+			//Release plan
+			days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+			today: 'Monday',
+			sprint: 1,
+			totalSprints: 8,
+      progress: 0,
+			workDone: false,
+			
+			//Employees and their distribution across the board
+			employeesA: [{role: 'analyst', img: './images/1.png', id: 'a'}, ],
 			employeesD: [
-				{role: 'developer'},
-				{role: 'developer'},
-				{role: 'developer'},
-				{role: 'developer'},
+				{role: 'developer', img: './images/2.png', id: 'd1'},
+				{role: 'developer', img: './images/2.png', id: 'd2'},
+				{role: 'developer', img: './images/2.png', id: 'd3'},
+				{role: 'developer', img: './images/2.png', id: 'd4'},
 			],
-			employeesT: [{role: 'tester'}],
+			employeesT: [{role: 'tester', img: './images/3.png', id: 't'}],
+			
+			//The points rolled with the dice
       AScore: 0,
       DScore: 0,
       TScore: 0
@@ -69,23 +79,52 @@ class App extends Component {
     var cards = this.cardGenerator(10);
     this.setState({
       backlogCards: cards,
-			analysisCards: [],
-			developmentCards: [],
-			testingCards: [],
-			doneCards: [],
-			unexpectedCards: []
+      analysisCards: [],
+      developmentCards: [],
+      testingCards: [],
+      doneCards: [],
+      unexpectedCards: [],
+			
+			days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+			today: 'Monday',
+			sprint: 1,
+			totalSprints: 8,
+      progress: 0,
+			
+			employeesA: [{role: 'analyst', img: './images/1.png'}, ],
+			employeesD: [
+				{role: 'developer', img: './images/2.png'},
+				{role: 'developer', img: './images/2.png'},
+				{role: 'developer', img: './images/2.png'},
+				{role: 'developer', img: './images/2.png'},
+			],
+			employeesT: [{role: 'tester', img: './images/3.png'}],
+			
+      AScore: 0,
+      DScore: 0,
+      TScore: 0
     })
-
   }
 
   nextDay() {
-    var number = this.state.progress + 20;
-    if (number > 100) {
-      number = 20;
+    var progress = this.state.progress + 25;
+		var sprint = this.state.sprint;
+		var totalSprints = this.state.totalSprints;
+    if (progress > 100) {
+      progress = 0;
+			sprint++;
+			if (sprint > totalSprints) {
+				this.init();
+				return
+			}
     }
+		var nextDay = progress / 25;
+		var today = this.state.days[nextDay];
 
     this.setState({
-      progress: number
+			today: today,
+			sprint: sprint,
+      progress: progress
     });
   }
 
@@ -104,8 +143,10 @@ class App extends Component {
       TScore: TScore,
       analysisCards: analysis,
       developmentCards: development,
-      testingCards: testing
+      testingCards: testing,
+			workDone: true
     });
+		
   }
 
   handleCardClick(card) {
@@ -219,29 +260,45 @@ class App extends Component {
     var unexpected = this.state.unexpectedCards;
 
     return (
-      <div className='container' >
-        <div className="row" > { /*<DayRow key='day' day='DayRow' />*/}
-          < ProgressBar bar={this.state.progress} />
+      <div className='container'>
+       
+        <div className="row">
+          <ProgressBar bar={this.state.progress} />
         </div>
-        <div className='row' >
-          <NewGameBtn handleClick={this.init.bind(this)} />
-          <Dice roll={this.rollDice.bind(this)} />
-        </div >
+        
         <div className='row'>
-        	<EmployeeCol
-        		offset='col-xs-offset-2'
-        		employees={this.state.employeesA}
-        		score={this.state.AScore}
-					/>
-        	<EmployeeCol
-        		employees={this.state.employeesD}
-        		score={this.state.DScore}
-        	/>
-        	<EmployeeCol
-        		employees={this.state.employeesT}
-        		score={this.state.TScore}
-					/>
+        	<h4>{this.state.today}. Sprint {this.state.sprint}/{this.state.totalSprints}</h4>
         </div>
+        
+        <div className='well'>
+        
+					<div className='row'>
+						<div className='btn-group'>
+							<NewGameBtn handleClick={this.init.bind(this)} />
+							<Dice roll={this.rollDice.bind(this)} />
+							<ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
+						</div>
+					</div>
+       	
+        	<div className='row'>
+						<EmployeeCol
+							offset='col-xs-offset-2'
+							employees={this.state.employeesA}
+							score={this.state.AScore}
+						/>
+						<EmployeeCol
+							employees={this.state.employeesD}
+							score={this.state.DScore}
+						/>
+						<EmployeeCol
+							employees={this.state.employeesT}
+							score={this.state.TScore}
+						/>
+        	</div>
+        	
+        </div>
+        
+        
         <div className='row' >
           <Column title='Backlog' cards={this.createCards(backlog)} />
           <Column title='Analysis' cards={this.createCards(analysis)} />
@@ -250,9 +307,7 @@ class App extends Component {
           <Column title='Done' cards={this.createCards(done)} />
           <Column title='Unexpected' cards={this.createCards(unexpected)} />
         </div>
-        <div className="row" >
-          <ProgressBtn handleClick={this.nextDay.bind(this)} />
-        </div>
+        
       </div>
     )
   }

@@ -18,11 +18,14 @@ class Card extends Component {
     }
 
     return (
-      <div className='Card row'>
-        <div className='head'>
-          {this.props.title}
-          <span>${this.props.money}</span>
-        </div>
+      <div className='Card col-xs-12'>
+      	<div className='row head'>
+      		<div className='col-xs-8'>{this.props.title}</div>
+        	<div className='col-xs-2'>
+        		{this.props.money ? '$' + this.props.money: ''}
+					</div>
+      	</div>
+        
         <p>A: {this.props.analysis}</p>
         <p>D: {this.props.development}</p>
         <p>T: {this.props.testing}</p>

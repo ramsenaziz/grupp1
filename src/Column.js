@@ -6,8 +6,8 @@ class Column extends Component {
 
     return (
       <div className='col-xs-2 Column'>
-        <div className='row title'>{this.props.title}</div>
-        {this.props.cards}
+				<div className='row Column-title'>{this.props.title}</div>
+				<div className='row Column-body'>{this.props.cards}</div>
       </div>
     )
   }

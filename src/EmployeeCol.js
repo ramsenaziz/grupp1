@@ -3,7 +3,7 @@ import Employee from './Employee';
 import './css/EmployeeCol.css';
 
 class EmployeeCol extends Component {
-	
+
 renderEmployees() {
    return this.props.employees.map(employee =>
      (<Employee key={employee.id} me={employee} />))

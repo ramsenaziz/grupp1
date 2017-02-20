@@ -23,7 +23,7 @@ class App extends Component {
       testingCards: [],
       doneCards: [],
       unexpectedCards: [],
-			
+		
 			//Release plan
 			days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
 			today: 'Monday',
@@ -180,7 +180,7 @@ class App extends Component {
       [locations[cardLoc + 1]]: nextArray
     });
   }
-		
+
   random(maxInt, minInt = 1) {
     return Math.floor(Math.random() * (maxInt - minInt + 1) + minInt);
   }

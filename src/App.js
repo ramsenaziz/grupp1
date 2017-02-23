@@ -13,6 +13,7 @@ import NewGameBtn from './NewGameBtn.js';
 import EmployeeCol from './EmployeeCol.js';
 import Retrospective from './Retrospective.js';
 import ReleasePlan from './ReleasePlan.js';
+import Gameover from './Gameover.js';
 
 class App extends Component {
   constructor() {
@@ -46,7 +47,8 @@ class App extends Component {
 			//The points rolled with the dice
       AScore: 0,
       DScore: 0,
-      TScore: 0
+      TScore: 0,
+      gameover: false
     }
 
     this.handleCardClick = this.handleCardClick.bind(this);
@@ -101,7 +103,8 @@ class App extends Component {
 			
       AScore: 0,
       DScore: 0,
-      TScore: 0
+      TScore: 0,
+      gameover: false
     })
   }
 
@@ -110,21 +113,23 @@ class App extends Component {
 		var sprint = this.state.sprint;
 		var totalSprints = this.state.totalSprints;
 		var retrospective = false;
+    var gameover = false;
     if (day > 4) {
       day = 0;
+      retrospective = true;
 			sprint++;
 			if (sprint > totalSprints) {
-				this.init();
-				return
+				gameover = true;
+        retrospective = false;
 			}
-			retrospective = true;
-    }
+    }  
 
     this.setState({
 			today: day,
 			sprint: sprint,
 			workDone: false,
-			retrospective: retrospective
+			retrospective: retrospective,
+      gameover: gameover
     });
   }
 
@@ -263,9 +268,10 @@ class App extends Component {
       <div className='container'>
      		
       	<Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
+       	<Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363}/>
        
 				<ReleasePlan day={this.state.today} sprint={this.state.sprint} totalSprints={this.state.totalSprints} />
-       
+
         <div className='well'>
         	<div className='row'>
         		<div className='col-xs-2'>

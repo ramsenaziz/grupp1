@@ -12,6 +12,7 @@ import ProgressBtn from './ProgressBtn.js';
 import NewGameBtn from './NewGameBtn.js';
 import EmployeeCol from './EmployeeCol.js';
 import Retrospective from './Retrospective.js';
+import ReleasePlan from './ReleasePlan.js';
 
 class App extends Component {
   constructor() {
@@ -26,11 +27,9 @@ class App extends Component {
       unexpectedCards: [],
 		
 			//Release plan
-			days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-			today: 'Monday',
+			today: 0,
 			sprint: 1,
 			totalSprints: 8,
-      progress: 0,
 			workDone: false,
 			retrospective: false,
 			
@@ -87,11 +86,9 @@ class App extends Component {
       doneCards: [],
       unexpectedCards: [],
 			
-			days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-			today: 'Monday',
+			today: 0,
 			sprint: 1,
 			totalSprints: 8,
-      progress: 0,
 			
 			employeesA: [{role: 'analyst', img: './images/1.png'}, ],
 			employeesD: [
@@ -109,12 +106,12 @@ class App extends Component {
   }
 
   nextDay() {
-    var progress = this.state.progress + 25;
+    var day = this.state.today + 1;
 		var sprint = this.state.sprint;
 		var totalSprints = this.state.totalSprints;
 		var retrospective = false;
-    if (progress > 100) {
-      progress = 0;
+    if (day > 4) {
+      day = 0;
 			sprint++;
 			if (sprint > totalSprints) {
 				this.init();
@@ -122,13 +119,10 @@ class App extends Component {
 			}
 			retrospective = true;
     }
-		var nextDay = progress / 25;
-		var today = this.state.days[nextDay];
 
     this.setState({
-			today: today,
+			today: day,
 			sprint: sprint,
-      progress: progress,
 			workDone: false,
 			retrospective: retrospective
     });
@@ -268,16 +262,10 @@ class App extends Component {
     return (
       <div className='container'>
      		
-       <Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
+      	<Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
        
-        <div className="row">
-          <ProgressBar bar={this.state.progress} />
-        </div>
-        
-        <div className='row'>
-        	<h4>{this.state.today}. Sprint {this.state.sprint}/{this.state.totalSprints}</h4>
-        </div>
-        
+				<ReleasePlan day={this.state.today} sprint={this.state.sprint} totalSprints={this.state.totalSprints} />
+       
         <div className='well'>
         	<div className='row'>
         		<div className='col-xs-2'>

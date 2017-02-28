@@ -1,5 +1,5 @@
 <?php
-# 
+#
 # Det här är indexfilen som hela API:et utgår från
 
 # Här inkluderar vi två filer som innehåller två classer som behövs för vårt API
@@ -26,4 +26,4 @@ $method = $API->method;
 $resource->$method($API->input, $db);
 
 # Här körs metoden/funktionen output() i det objekt vi skapat
-$resource->output();
+// $resource->output();

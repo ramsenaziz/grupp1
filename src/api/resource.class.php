@@ -20,15 +20,15 @@ class Resource{
 		echo('Not valid');
 	}
 
-	function PUT() {
+	function PUT($input,  $db) {
 		echo('Not valid');
 	}
 
-	function DELETE() {
+	function DELETE($input, $db) {
 		echo('Not valid');
 	}
 
-	function POST() {
+	function POST($input, $db) {
 		echo('Not valid');
 	}
 

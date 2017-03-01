@@ -18,7 +18,8 @@ class API{
 		$this->method = $_SERVER['REQUEST_METHOD'];
 		# Get the input data for POST, PUT and DELETE request
 		$input = [];
-		parse_str(file_get_contents("php://input"), $input); 
+		// echo $_SERVER['QUERY_STRING'];
+		parse_str(file_get_contents("php://input"), $input);
 		$this->input = $input;
 		# Get and split the URL of the request into parts
 		$path = array_keys($_GET)[0];

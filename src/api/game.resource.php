@@ -20,8 +20,11 @@ class _game extends Resource{ // Klassen ärver egenskaper från den generella k
 
 	}
 
-	function POST(){
-		global $db;
+	function POST($input, $db){
+		// $input = array_keys($input);
+		// $input = json_decode($input[0]);
+
+		// $teamname = mysqli_real_escape_string($db, $input->teamname);
 		$query = "INSERT INTO games
 							(teamname, sprint, currentday, highscore, startdate, enddate)
 							VALUES ('laget', 1, 1, 0, NOW(), NULL)
@@ -30,7 +33,8 @@ class _game extends Resource{ // Klassen ärver egenskaper från den generella k
 			echo "New game created!";
 		}
 		else {
-			echo "Something went terribly wrong! Try again later.";
+			printf( "Something went terribly wrong! Try again later.", mysqli_error($db));
+			
 		}
 	}
 }

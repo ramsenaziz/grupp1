@@ -8,9 +8,12 @@ class _actioncard extends Resource{ // Klassen ärver egenskaper från den gener
 	function GET(){
 		global $db;
 
-		#GET /game/<id>
+		// Selects an actioncard that has not already been used in the game
 		$query = "SELECT * FROM actioncards
-		ORDER BY rand() LIMIT 1";
+							WHERE id IN
+								(SELECT cardid FROM actioncards_status
+								WHERE in_play = 0 AND used = 0 AND gameid = 3)
+							ORDER BY RAND() LIMIT 1";
 		$result = mysqli_query($db, $query);
 		$row = mysqli_fetch_assoc($result);
 		echo json_encode($row);

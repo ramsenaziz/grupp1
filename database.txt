@@ -1,0 +1,72 @@
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+DROP TABLE IF EXISTS `actioncards`;
+CREATE TABLE `actioncards` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `text` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+DROP TABLE IF EXISTS `actioncards_status`;
+CREATE TABLE `actioncards_status` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `cardid` int(10) unsigned NOT NULL,
+  `gameid` int(11) unsigned NOT NULL,
+  `in_play` int(11) unsigned NOT NULL,
+  `used` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cardid` (`cardid`),
+  KEY `gameid` (`gameid`),
+  CONSTRAINT `actioncards_status_ibfk_1` FOREIGN KEY (`cardid`) REFERENCES `actioncards` (`id`),
+  CONSTRAINT `actioncards_status_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+DROP TABLE IF EXISTS `cards`;
+CREATE TABLE `cards` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` int(11) unsigned NOT NULL,
+  `number` int(11) unsigned NOT NULL,
+  `value` int(11) unsigned NOT NULL,
+  `apoint` int(11) unsigned NOT NULL,
+  `dpoint` int(11) unsigned NOT NULL,
+  `tpoint` int(11) unsigned NOT NULL,
+  `col-position` int(11) unsigned NOT NULL,
+  `gameid` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `gameid` (`gameid`),
+  CONSTRAINT `cards_ibfk_1` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+DROP TABLE IF EXISTS `employees`;
+CREATE TABLE `employees` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `role` int(10) unsigned NOT NULL,
+  `currentrole` int(10) unsigned NOT NULL,
+  `gameid` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `gameid` (`gameid`),
+  CONSTRAINT `employees_ibfk_1` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+DROP TABLE IF EXISTS `games`;
+CREATE TABLE `games` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `teamname` varchar(50) COLLATE utf8_bin NOT NULL,
+  `sprints` int(11) unsigned NOT NULL,
+  `currentday` int(11) unsigned NOT NULL,
+  `highscore` int(11) unsigned NOT NULL,
+  `start-date` datetime NOT NULL,
+  `end-date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+INSERT INTO `games` (`id`, `teamname`, `sprints`, `currentday`, `highscore`, `start-date`, `end-date`) VALUES
+(2,	'Skägget',	0,	1,	0,	'2017-03-01 15:10:25',	'0000-00-00 00:00:00'),
+(3,	'Troll',	0,	1,	0,	'2017-03-01 15:13:28',	'0000-00-00 00:00:00');

@@ -1,4 +1,4 @@
-SET NAMES utf8;
+﻿SET NAMES utf8;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
@@ -10,6 +10,20 @@ CREATE TABLE `actioncards` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+INSERT INTO `actioncards` (`id`, `text`) VALUES
+(1,	'One of the developers gets a fever and will be away for one dice throw of days.'),
+(2,	'The customer hires a new test manager who decides that all functionality needs to be regression tested. All stories now require double testing effort.'),
+(3,	'The customer fires the new test manager. Testing effort is back to normal.'),
+(4,	'If maintenance task 1 is not completed, the system goes down. According to the contract this means that the downtime will be subtracted from your pay for the sprint. Please subtract $200 from the total and pull M1 with highest priority.'),
+(5,	'A critical defect! Pull in the defect with the highest priority that has not been started yet. If the team manages to fix the defect in this sprint the customer pays $400 for the fix. After sprint end customer will not pay extra.'),
+(6,	'The tester is involved in a traffic incident and will be away for one dice throw of days.'),
+(7,	'The stakeholders request a demo immediately to review the functionality. The story furthest along in the sprint gets rejected due to unclear user interface. Add 2 analysis points, 4 dev points and 2 test points and pull it back to the top of the sprint backlig with the highest priority. No change in money for the US.'),
+(8,	'Management wants team to work with sprint commitment. Decide together how many stories the team can make for the sprint. Team gets $200 extra if they make it.'),
+(9,	'How goes the commitment? Team can decide to work during the weekend to be ready in time. However they will then lose one day of the next sprint. Team decides.'),
+(10,	'Oh no! System is depending on finishing M5 at the end of this sprint. Unfortunately M5 is dependent on M2, M3 and M4. Let us hope that team has been working with them during previous sprints. If not - pull all remaining maintenance tasks into sprint. If M5 is not finished by end of sprint fine is -$800.'),
+(11,	'Oh no! The competition went public with the same thing we are developing, so business decided to pull the plug on all current development and start fresh with something new. Remove all user stories in test, development and analysis.'),
+(12,	'Oh no! One of the developers got the diagnosis dengue fever and quit to take care of himself. You have recieved a replacement developer but that person will need to sit next to another developer for the rest of the sprint. Remove a developer dice for the remainder of the sprint.'),
+(13,	'Roll the dice and put as many defects as the dice shows on top of backlog. If team has already completed some defects, pull in what is left. If all are completed, team recieves a bonus of $400.');
 
 DROP TABLE IF EXISTS `actioncards_status`;
 CREATE TABLE `actioncards_status` (
@@ -25,6 +39,33 @@ CREATE TABLE `actioncards_status` (
   CONSTRAINT `actioncards_status_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+INSERT INTO `actioncards_status` (`id`, `cardid`, `gameid`, `in_play`, `used`) VALUES
+(6,	1,	2,	0,	0),
+(7,	2,	2,	0,	0),
+(8,	3,	2,	0,	0),
+(9,	4,	2,	0,	0),
+(10,	5,	2,	0,	0),
+(11,	6,	2,	0,	0),
+(12,	7,	2,	0,	0),
+(13,	8,	2,	0,	0),
+(14,	9,	2,	0,	0),
+(15,	10,	2,	0,	0),
+(16,	11,	2,	0,	0),
+(17,	12,	2,	0,	0),
+(18,	13,	2,	0,	0),
+(19,	1,	3,	0,	0),
+(20,	2,	3,	0,	0),
+(21,	3,	3,	0,	0),
+(22,	4,	3,	0,	0),
+(23,	5,	3,	0,	0),
+(24,	6,	3,	0,	0),
+(25,	7,	3,	0,	0),
+(26,	8,	3,	0,	0),
+(27,	9,	3,	0,	0),
+(28,	10,	3,	0,	0),
+(29,	11,	3,	0,	0),
+(30,	12,	3,	0,	0),
+(31,	13,	3,	0,	0);
 
 DROP TABLE IF EXISTS `cards`;
 CREATE TABLE `cards` (

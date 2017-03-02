@@ -16,7 +16,7 @@ class Resource{
 
 		$this->request = $request;
 	}
-	function GET() {
+	function GET($input,  $db) {
 		echo('Not valid');
 	}
 

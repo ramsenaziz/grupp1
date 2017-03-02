@@ -1,4 +1,6 @@
-﻿SET NAMES utf8;
+﻿-- Adminer 4.2.5 MySQL dump
+
+SET NAMES utf8;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
@@ -42,7 +44,7 @@ CREATE TABLE `actioncards_status` (
 INSERT INTO `actioncards_status` (`id`, `cardid`, `gameid`, `in_play`, `used`) VALUES
 (6,	1,	2,	0,	0),
 (7,	2,	2,	0,	0),
-(8,	3,	2,	0,	0),
+(8,	3,	2,	1,	0),
 (9,	4,	2,	0,	0),
 (10,	5,	2,	0,	0),
 (11,	6,	2,	0,	0),
@@ -58,14 +60,27 @@ INSERT INTO `actioncards_status` (`id`, `cardid`, `gameid`, `in_play`, `used`) V
 (21,	3,	3,	0,	0),
 (22,	4,	3,	0,	0),
 (23,	5,	3,	0,	0),
-(24,	6,	3,	0,	0),
+(24,	6,	3,	0,	1),
 (25,	7,	3,	0,	0),
 (26,	8,	3,	0,	0),
 (27,	9,	3,	0,	0),
 (28,	10,	3,	0,	0),
 (29,	11,	3,	0,	0),
 (30,	12,	3,	0,	0),
-(31,	13,	3,	0,	0);
+(31,	13,	3,	0,	0),
+(32,	1,	12,	0,	0),
+(33,	2,	12,	0,	0),
+(34,	3,	12,	0,	0),
+(35,	4,	12,	0,	0),
+(36,	5,	12,	0,	0),
+(37,	6,	12,	0,	0),
+(38,	7,	12,	0,	0),
+(39,	8,	12,	0,	0),
+(40,	9,	12,	0,	0),
+(41,	10,	12,	0,	0),
+(42,	11,	12,	0,	0),
+(43,	12,	12,	0,	0),
+(44,	13,	12,	0,	0);
 
 DROP TABLE IF EXISTS `cards`;
 CREATE TABLE `cards` (
@@ -100,14 +115,36 @@ DROP TABLE IF EXISTS `games`;
 CREATE TABLE `games` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `teamname` varchar(50) COLLATE utf8_bin NOT NULL,
-  `sprints` int(11) unsigned NOT NULL,
+  `sprint` int(11) unsigned NOT NULL,
   `currentday` int(11) unsigned NOT NULL,
   `highscore` int(11) unsigned NOT NULL,
-  `start-date` datetime NOT NULL,
-  `end-date` datetime NOT NULL,
+  `startdate` datetime NOT NULL,
+  `enddate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `games` (`id`, `teamname`, `sprints`, `currentday`, `highscore`, `start-date`, `end-date`) VALUES
+INSERT INTO `games` (`id`, `teamname`, `sprint`, `currentday`, `highscore`, `startdate`, `enddate`) VALUES
 (2,	'Skägget',	0,	1,	0,	'2017-03-01 15:10:25',	'0000-00-00 00:00:00'),
-(3,	'Troll',	0,	1,	0,	'2017-03-01 15:13:28',	'0000-00-00 00:00:00');
+(3,	'Troll',	0,	1,	0,	'2017-03-01 15:13:28',	'0000-00-00 00:00:00'),
+(4,	'laget',	1,	1,	0,	'2017-03-02 13:38:43',	NULL),
+(5,	'polisen',	1,	1,	0,	'2017-03-02 13:46:47',	NULL),
+(6,	'polisen',	1,	1,	0,	'2017-03-02 13:56:32',	NULL),
+(7,	'polisen',	1,	1,	0,	'2017-03-02 14:19:31',	NULL),
+(8,	'polisen',	1,	1,	0,	'2017-03-02 14:20:22',	NULL),
+(9,	'polisen',	1,	1,	0,	'2017-03-02 14:24:33',	NULL),
+(10,	'polisen',	1,	1,	0,	'2017-03-02 14:28:00',	NULL),
+(11,	'polisen',	1,	1,	0,	'2017-03-02 14:28:20',	NULL),
+(12,	'polisen',	1,	1,	0,	'2017-03-02 14:33:43',	NULL);
+
+DROP TABLE IF EXISTS `relations`;
+CREATE TABLE `relations` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `aid` int(11) unsigned NOT NULL,
+  `gid` int(11) unsigned NOT NULL,
+  `in-play` int(11) unsigned NOT NULL,
+  `used` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+-- 2017-03-02 15:29:17

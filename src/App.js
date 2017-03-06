@@ -35,7 +35,7 @@ class App extends Component {
     this.handleCardClick = this.handleCardClick.bind(this);
 
   }
-  //key is analysis, development or testing.
+  //key is A:, D: or T: on the card.
   //pos is position of the card in the column
   reducePoints(column, points, key, pos = 0) {
 

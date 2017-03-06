@@ -2,6 +2,7 @@ import React, {
   Component
 } from 'react';
 import './css/App.css';
+import axios from 'axios';
 import Column from './Column.js';
 import Card from './Card.js';
 import MCard from './MCard.js';
@@ -19,32 +20,33 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-			//Arrays representing the board columns. Contain cards
+      gameID: "",
+      //Arrays representing the board columns. Contain cards
       backlogCards: [],
       analysisCards: [],
       developmentCards: [],
       testingCards: [],
       doneCards: [],
       unexpectedCards: [],
-		
-			//Release plan
-			today: 0,
-			sprint: 1,
-			totalSprints: 8,
-			workDone: false,
-			retrospective: false,
-			
-			//Employees and their distribution across the board
-			employeesA: [{role: 'analyst', img: './images/1.png', id: 'a'}, ],
-			employeesD: [
-				{role: 'developer', img: './images/2.png', id: 'd1'},
-				{role: 'developer', img: './images/2.png', id: 'd2'},
-				{role: 'developer', img: './images/2.png', id: 'd3'},
-				{role: 'developer', img: './images/2.png', id: 'd4'},
-			],
-			employeesT: [{role: 'tester', img: './images/3.png', id: 't'}],
-			
-			//The points rolled with the dice
+
+      //Release plan
+      today: 0,
+      sprint: 1,
+      totalSprints: 8,
+      workDone: false,
+      retrospective: false,
+
+      //Employees and their distribution across the board
+      employeesA: [{ role: 'analyst', img: './images/1.png', id: 'a' },],
+      employeesD: [
+        { role: 'developer', img: './images/2.png', id: 'd1' },
+        { role: 'developer', img: './images/2.png', id: 'd2' },
+        { role: 'developer', img: './images/2.png', id: 'd3' },
+        { role: 'developer', img: './images/2.png', id: 'd4' },
+      ],
+      employeesT: [{ role: 'tester', img: './images/3.png', id: 't' }],
+
+      //The points rolled with the dice
       AScore: 0,
       DScore: 0,
       TScore: 0,
@@ -54,6 +56,42 @@ class App extends Component {
     this.handleCardClick = this.handleCardClick.bind(this);
 
   }
+
+  componentDidMount() {
+    axios.get("http://localhost:8080/grupp1/src/api/?/highscore").then((response) => {
+      console.log(response);
+      /* this.setState({
+         backlogCards: response.data,
+         analysisCards: response.data,
+         developmentCards: response.data,
+         testingCards: response.data,
+         doneCards: response.data,
+         unexpectedCards: response.data,
+ 
+         //Release plan
+         today: response.data,
+         sprint: response.data,
+         totalSprints: response.data,
+         workDone: response.data,
+         retrospective: response.data,
+ 
+         //Employees and their distribution across the board
+         employeesA: response.data,
+         employeesD: response.data,
+         employeesT: response.data,
+ 
+         //The points rolled with the dice
+         AScore: response.data,
+         DScore: response.data,
+         TScore: response.data,
+         gameover: response.data
+       });*/
+    });
+    axios.get("http://localhost:8080/grupp1/src/api/?/game/" + this.state.gameID).then((response) => {
+      console.log(response);
+    });
+  }
+
   //key is analysis, development or testing.
   //pos is position of the card in the column
   reducePoints(column, points, key, pos = 0) {
@@ -87,20 +125,20 @@ class App extends Component {
       testingCards: [],
       doneCards: [],
       unexpectedCards: [],
-			
-			today: 0,
-			sprint: 1,
-			totalSprints: 8,
-			
-			employeesA: [{role: 'analyst', img: './images/1.png'}, ],
-			employeesD: [
-				{role: 'developer', img: './images/2.png'},
-				{role: 'developer', img: './images/2.png'},
-				{role: 'developer', img: './images/2.png'},
-				{role: 'developer', img: './images/2.png'},
-			],
-			employeesT: [{role: 'tester', img: './images/3.png'}],
-			
+
+      today: 0,
+      sprint: 1,
+      totalSprints: 8,
+
+      employeesA: [{ role: 'analyst', img: './images/1.png' },],
+      employeesD: [
+        { role: 'developer', img: './images/2.png' },
+        { role: 'developer', img: './images/2.png' },
+        { role: 'developer', img: './images/2.png' },
+        { role: 'developer', img: './images/2.png' },
+      ],
+      employeesT: [{ role: 'tester', img: './images/3.png' }],
+
       AScore: 0,
       DScore: 0,
       TScore: 0,
@@ -110,25 +148,25 @@ class App extends Component {
 
   nextDay() {
     var day = this.state.today + 1;
-		var sprint = this.state.sprint;
-		var totalSprints = this.state.totalSprints;
-		var retrospective = false;
+    var sprint = this.state.sprint;
+    var totalSprints = this.state.totalSprints;
+    var retrospective = false;
     var gameover = false;
     if (day > 4) {
       day = 0;
       retrospective = true;
-			sprint++;
-			if (sprint > totalSprints) {
-				gameover = true;
+      sprint++;
+      if (sprint > totalSprints) {
+        gameover = true;
         retrospective = false;
-			}
-    }  
+      }
+    }
 
     this.setState({
-			today: day,
-			sprint: sprint,
-			workDone: false,
-			retrospective: retrospective,
+      today: day,
+      sprint: sprint,
+      workDone: false,
+      retrospective: retrospective,
       gameover: gameover
     });
   }
@@ -136,7 +174,7 @@ class App extends Component {
   rollDice() {
     var AScore = this.state.employeesA.map(employee => this.random(6)).reduce((a, b) => a + b);
     var DScore = this.state.employeesD.map(employee => this.random(6)).reduce((a, b) => a + b);
-		var TScore = this.state.employeesT.map(employee => this.random(6)).reduce((a, b) => a + b);
+    var TScore = this.state.employeesT.map(employee => this.random(6)).reduce((a, b) => a + b);
 
     var analysis = this.reducePoints(this.state.analysisCards, AScore, 'analysis');
     var development = this.reducePoints(this.state.developmentCards, DScore, 'development');
@@ -149,9 +187,9 @@ class App extends Component {
       analysisCards: analysis,
       developmentCards: development,
       testingCards: testing,
-			workDone: true
+      workDone: true
     });
-		
+
   }
 
   handleCardClick(card) {
@@ -243,16 +281,27 @@ class App extends Component {
     for (var i = 0; i < nrOfcardsToMake; i++) {
       var type = types[this.random(3, 0)];
       cards.push({
-        title: type + (i + 1),
         type: type,
+        number: i + 1,
         money: this.random(10) * 50,
-        analysis: this.random(10),
-        development: this.random(10),
-        testing: this.random(10),
+        apoint: this.random(10),
+        dpoint: this.random(10),
+        tpoint: this.random(10),
         location: 0
       });
     }
-
+    JSON.stringify(cards);
+    axios.post("http://localhost:8080/grupp1/src/api/api.php?cards=" + cards).then((response) => {
+      console.log(response.data);
+      this.setState({
+        backlogCards: response.data,
+        analysisCards: response.data,
+        developmentCards: response.data,
+        testingCards: response.data,
+        doneCards: response.data,
+        unexpectedCards: response.data
+      });
+    });
     return cards;
   }
 
@@ -266,36 +315,36 @@ class App extends Component {
 
     return (
       <div className='container'>
-     		
-      	<Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
-       	<Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363}/>
-       
-				<ReleasePlan day={this.state.today} sprint={this.state.sprint} totalSprints={this.state.totalSprints} />
+
+        <Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
+        <Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363} />
+
+        <ReleasePlan day={this.state.today} sprint={this.state.sprint} totalSprints={this.state.totalSprints} />
 
         <div className='well'>
-        	<div className='row'>
-        		<div className='col-xs-2'>
-							<div className='btn-group btn-group-vertical'>
-								<NewGameBtn handleClick={this.init.bind(this)} />
-								<Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
-								<ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
-							</div>
-        		</div>
-						<EmployeeCol
-							employees={this.state.employeesA}
-							score={this.state.AScore}
-						/>
-						<EmployeeCol
-							employees={this.state.employeesD}
-							score={this.state.DScore}
-						/>
-						<EmployeeCol
-							employees={this.state.employeesT}
-							score={this.state.TScore}
-						/>
-        	</div>
+          <div className='row'>
+            <div className='col-xs-2'>
+              <div className='btn-group btn-group-vertical'>
+                <NewGameBtn handleClick={this.init.bind(this)} />
+                <Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
+                <ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
+              </div>
+            </div>
+            <EmployeeCol
+              employees={this.state.employeesA}
+              score={this.state.AScore}
+            />
+            <EmployeeCol
+              employees={this.state.employeesD}
+              score={this.state.DScore}
+            />
+            <EmployeeCol
+              employees={this.state.employeesT}
+              score={this.state.TScore}
+            />
+          </div>
         </div>
-        
+
         <div className='row' >
           <Column title='Backlog' cards={this.createCards(backlog)} />
           <Column title='Analysis' cards={this.createCards(analysis)} />
@@ -304,7 +353,7 @@ class App extends Component {
           <Column title='Done' cards={this.createCards(done)} />
           <Column title='Unexpected' cards={this.createCards(unexpected)} />
         </div>
-        
+
       </div>
     )
   }

@@ -11,7 +11,7 @@ class Resource{
 	# En generell konstruktor som gör samma sak som vår konstruktor i _user klassen
 	function __construct($resource_id, $request){
 
-		if(is_numeric($resource_id))
+		if(is_string($resource_id))
 			$this->id = $resource_id;
 
 		$this->request = $request;

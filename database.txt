@@ -31,56 +31,29 @@ DROP TABLE IF EXISTS `actioncards_status`;
 CREATE TABLE `actioncards_status` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `cardid` int(10) unsigned NOT NULL,
-  `gameid` int(11) unsigned NOT NULL,
+  `game_id` varchar(5) COLLATE utf8_bin NOT NULL,
   `in_play` int(11) unsigned NOT NULL,
   `used` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `cardid` (`cardid`),
-  KEY `gameid` (`gameid`),
-  CONSTRAINT `actioncards_status_ibfk_1` FOREIGN KEY (`cardid`) REFERENCES `actioncards` (`id`),
-  CONSTRAINT `actioncards_status_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
+  KEY `game_id` (`game_id`),
+  CONSTRAINT `actioncards_status_ibfk_1` FOREIGN KEY (`cardid`) REFERENCES `actioncards` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `actioncards_status` (`id`, `cardid`, `gameid`, `in_play`, `used`) VALUES
-(6,	1,	2,	0,	0),
-(7,	2,	2,	0,	0),
-(8,	3,	2,	1,	0),
-(9,	4,	2,	0,	0),
-(10,	5,	2,	0,	0),
-(11,	6,	2,	0,	0),
-(12,	7,	2,	0,	0),
-(13,	8,	2,	0,	0),
-(14,	9,	2,	0,	0),
-(15,	10,	2,	0,	0),
-(16,	11,	2,	0,	0),
-(17,	12,	2,	0,	0),
-(18,	13,	2,	0,	0),
-(19,	1,	3,	0,	0),
-(20,	2,	3,	0,	0),
-(21,	3,	3,	0,	0),
-(22,	4,	3,	0,	0),
-(23,	5,	3,	0,	0),
-(24,	6,	3,	0,	1),
-(25,	7,	3,	0,	0),
-(26,	8,	3,	0,	0),
-(27,	9,	3,	0,	0),
-(28,	10,	3,	0,	0),
-(29,	11,	3,	0,	0),
-(30,	12,	3,	0,	0),
-(31,	13,	3,	0,	0),
-(32,	1,	12,	0,	0),
-(33,	2,	12,	0,	0),
-(34,	3,	12,	0,	0),
-(35,	4,	12,	0,	0),
-(36,	5,	12,	0,	0),
-(37,	6,	12,	0,	0),
-(38,	7,	12,	0,	0),
-(39,	8,	12,	0,	0),
-(40,	9,	12,	0,	0),
-(41,	10,	12,	0,	0),
-(42,	11,	12,	0,	0),
-(43,	12,	12,	0,	0),
-(44,	13,	12,	0,	0);
+INSERT INTO `actioncards_status` (`id`, `cardid`, `game_id`, `in_play`, `used`) VALUES
+(188,	1,	'dQygM',	0,	0),
+(189,	2,	'dQygM',	0,	0),
+(190,	3,	'dQygM',	0,	0),
+(191,	4,	'dQygM',	0,	0),
+(192,	5,	'dQygM',	0,	0),
+(193,	6,	'dQygM',	0,	0),
+(194,	7,	'dQygM',	0,	0),
+(195,	8,	'dQygM',	0,	0),
+(196,	9,	'dQygM',	0,	0),
+(197,	10,	'dQygM',	0,	0),
+(198,	11,	'dQygM',	0,	0),
+(199,	12,	'dQygM',	0,	0),
+(200,	13,	'dQygM',	0,	0);
 
 DROP TABLE IF EXISTS `cards`;
 CREATE TABLE `cards` (
@@ -92,10 +65,8 @@ CREATE TABLE `cards` (
   `dpoint` int(11) unsigned NOT NULL,
   `tpoint` int(11) unsigned NOT NULL,
   `col-position` int(11) unsigned NOT NULL,
-  `gameid` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `gameid` (`gameid`),
-  CONSTRAINT `cards_ibfk_1` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
+  `game_id` varchar(5) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 
@@ -104,47 +75,45 @@ CREATE TABLE `employees` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `role` int(10) unsigned NOT NULL,
   `currentrole` int(10) unsigned NOT NULL,
-  `gameid` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `gameid` (`gameid`),
-  CONSTRAINT `employees_ibfk_1` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
+  `game_id` varchar(5) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 
 DROP TABLE IF EXISTS `games`;
 CREATE TABLE `games` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `game_id` varchar(5) COLLATE utf8_bin NOT NULL,
   `teamname` varchar(50) COLLATE utf8_bin NOT NULL,
   `sprint` int(11) unsigned NOT NULL,
   `currentday` int(11) unsigned NOT NULL,
   `highscore` int(11) unsigned NOT NULL,
   `startdate` datetime NOT NULL,
   `enddate` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `game_id` (`game_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `games` (`id`, `teamname`, `sprint`, `currentday`, `highscore`, `startdate`, `enddate`) VALUES
-(2,	'Skägget',	0,	1,	0,	'2017-03-01 15:10:25',	'0000-00-00 00:00:00'),
-(3,	'Troll',	0,	1,	0,	'2017-03-01 15:13:28',	'0000-00-00 00:00:00'),
-(4,	'laget',	1,	1,	0,	'2017-03-02 13:38:43',	NULL),
-(5,	'polisen',	1,	1,	0,	'2017-03-02 13:46:47',	NULL),
-(6,	'polisen',	1,	1,	0,	'2017-03-02 13:56:32',	NULL),
-(7,	'polisen',	1,	1,	0,	'2017-03-02 14:19:31',	NULL),
-(8,	'polisen',	1,	1,	0,	'2017-03-02 14:20:22',	NULL),
-(9,	'polisen',	1,	1,	0,	'2017-03-02 14:24:33',	NULL),
-(10,	'polisen',	1,	1,	0,	'2017-03-02 14:28:00',	NULL),
-(11,	'polisen',	1,	1,	0,	'2017-03-02 14:28:20',	NULL),
-(12,	'polisen',	1,	1,	0,	'2017-03-02 14:33:43',	NULL);
+INSERT INTO `games` (`id`, `game_id`, `teamname`, `sprint`, `currentday`, `highscore`, `startdate`, `enddate`) VALUES
+(2,	'',	'Skägget',	0,	1,	0,	'2017-03-01 15:10:25',	'0000-00-00 00:00:00'),
+(3,	'',	'Troll',	0,	1,	0,	'2017-03-01 15:13:28',	'0000-00-00 00:00:00'),
+(4,	'',	'laget',	1,	1,	0,	'2017-03-02 13:38:43',	NULL),
+(5,	'',	'polisen',	1,	1,	0,	'2017-03-02 13:46:47',	NULL),
+(6,	'',	'polisen',	1,	1,	0,	'2017-03-02 13:56:32',	NULL),
+(7,	'',	'polisen',	1,	1,	0,	'2017-03-02 14:19:31',	NULL),
+(8,	'',	'polisen',	1,	1,	0,	'2017-03-02 14:20:22',	NULL),
+(9,	'',	'polisen',	1,	1,	0,	'2017-03-02 14:24:33',	NULL),
+(10,	'',	'polisen',	1,	1,	0,	'2017-03-02 14:28:00',	NULL),
+(11,	'',	'polisen',	1,	1,	0,	'2017-03-02 14:28:20',	NULL),
+(12,	'',	'polisen',	1,	1,	0,	'2017-03-02 14:33:43',	NULL),
+(13,	'ySpCd',	'polisen',	1,	1,	0,	'2017-03-06 10:58:40',	NULL),
+(14,	'aXNI3',	'polisen',	1,	1,	0,	'2017-03-06 11:06:23',	NULL),
+(15,	'DhSqP',	'polisen',	1,	1,	0,	'2017-03-06 11:07:40',	NULL),
+(16,	'uc3OW',	'polisen',	1,	1,	0,	'2017-03-06 11:17:40',	NULL),
+(17,	'RaBC1',	'polisen',	1,	1,	0,	'2017-03-06 11:19:36',	NULL),
+(18,	'ySpCd',	'polisen',	1,	1,	0,	'2017-03-06 10:58:40',	NULL),
+(19,	'HwLBd',	'polisen',	1,	1,	0,	'2017-03-06 11:47:50',	NULL),
+(20,	'mgLie',	'polisen',	1,	1,	0,	'2017-03-06 11:50:44',	NULL),
+(21,	'dQygM',	'polisen',	1,	1,	0,	'2017-03-06 11:51:39',	NULL);
 
-DROP TABLE IF EXISTS `relations`;
-CREATE TABLE `relations` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `aid` int(11) unsigned NOT NULL,
-  `gid` int(11) unsigned NOT NULL,
-  `in-play` int(11) unsigned NOT NULL,
-  `used` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
--- 2017-03-02 15:29:17
+-- 2017-03-06 11:05:42

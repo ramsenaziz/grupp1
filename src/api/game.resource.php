@@ -6,7 +6,6 @@
 class _game extends Resource{ // Klassen ärver egenskaper från den generella klassen Resource som finns i resource.class.php
 
 	function GET($input, $db){
-		echo $this-> id;
 		#GET /game/<id>
 		$query = "SELECT * FROM games WHERE game_id = '$this->id' ORDER BY id desc LIMIT 1";
 		$result = mysqli_query($db, $query);

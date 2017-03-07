@@ -1,6 +1,7 @@
 import React, {
   Component
 } from 'react';
+import axios from 'axios';
 import './css/App.css';
 import Column from './Column.js';
 import Card from './Card.js';
@@ -241,17 +242,29 @@ class App extends Component {
     var types = ['us', 'd', 'm'];
 
     for (var i = 0; i < nrOfcardsToMake; i++) {
-      var type = types[this.random(3, 0)];
+      var type = this.random(3, 0);
       cards.push({
-        title: type + (i + 1),
+        number: (i + 1),
         type: type,
         money: this.random(10) * 50,
-        analysis: this.random(10),
-        development: this.random(10),
-        testing: this.random(10),
+        apoint: this.random(10),
+        dpoint: this.random(10),
+        tpoint: this.random(10),
         location: 0
       });
     }
+    var querystring = require('querystring');
+    axios.post("http://localhost/grupp1/src/api/?/card",
+      querystring.stringify({
+        cards: JSON.stringify(cards),
+        game_id: 'ySpCd'
+      }), {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    }).then(function(response) {
+      console.log(response.data);
+    })
 
     return cards;
   }

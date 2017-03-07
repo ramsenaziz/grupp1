@@ -2,6 +2,7 @@ import React, {
   Component
 } from 'react';
 import axios from 'axios';
+import querystring from 'querystring';
 import './css/App.css';
 import Column from './Column.js';
 import Card from './Card.js';
@@ -124,36 +125,43 @@ class App extends Component {
   }
 
   init(val) {
-    var cards = this.cardGenerator(10);
-    axios.post("http://localhost:8080/grupp1/src/api/?/game/vadsomhelst/teamname=" + val).then((response) => {
 
-    });
-    this.setState({
-      backlogCards: cards,
-      analysisCards: [],
-      developmentCards: [],
-      testingCards: [],
-      doneCards: [],
-      unexpectedCards: [],
+    axios.post("http://localhost:8080/grupp1/src/api/?/game",
+      querystring.stringify({
+        teamname: val
+      })).then((response) => {
+        console.log(response);
+        this.setState({
+          gameID: response.data,
+          teamname: false,
+          backlogCards: [],
+          analysisCards: [],
+          developmentCards: [],
+          testingCards: [],
+          doneCards: [],
+          unexpectedCards: [],
 
-      today: 0,
-      sprint: 1,
-      totalSprints: 8,
+          today: 0,
+          sprint: 1,
+          totalSprints: 8,
 
-      employeesA: [{ role: 'analyst', img: './images/1.png' },],
-      employeesD: [
-        { role: 'developer', img: './images/2.png' },
-        { role: 'developer', img: './images/2.png' },
-        { role: 'developer', img: './images/2.png' },
-        { role: 'developer', img: './images/2.png' },
-      ],
-      employeesT: [{ role: 'tester', img: './images/3.png' }],
+          employeesA: [{ role: 'analyst', img: './images/1.png' },],
+          employeesD: [
+            { role: 'developer', img: './images/2.png' },
+            { role: 'developer', img: './images/2.png' },
+            { role: 'developer', img: './images/2.png' },
+            { role: 'developer', img: './images/2.png' },
+          ],
+          employeesT: [{ role: 'tester', img: './images/3.png' }],
 
-      AScore: 0,
-      DScore: 0,
-      TScore: 0,
-      gameover: false
-    })
+          AScore: 0,
+          DScore: 0,
+          TScore: 0,
+          gameover: false
+        })
+        this.cardGenerator(10);
+      });
+
   }
 
   nextDay() {
@@ -300,17 +308,20 @@ class App extends Component {
         location: 0
       });
     }
-    var querystring = require('querystring');
-    axios.post("http://localhost/grupp1/src/api/?/card",
+    /*var querystring = require('querystring');*/
+    axios.post("http://localhost:8080/grupp1/src/api/?/card",
       querystring.stringify({
         cards: JSON.stringify(cards),
-        game_id: 'ySpCd'
+        game_id: this.state.gameID
       }), {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
-      }).then(function (response) {
-        console.log(response.data);
+      }).then((response) => {
+        axios.get("http://localhost:8080/grupp1/src/api/?/game/" + this.state.gameID + "/cards/0").then((response) => {
+          console.log(response.data);
+          this.setState({ backlogCards: response.data });
+        });
       })
 
     return cards;
@@ -326,7 +337,7 @@ class App extends Component {
 
     return (
       <div className='container'>
-        <TeamName newgame={() => { this.init(); this.setState({ teamname: false }) }} visible={this.state.teamname} />
+        <TeamName startgame={this.init.bind(this)} visible={this.state.teamname} />
         <Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
         <Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363} />
 

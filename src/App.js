@@ -62,32 +62,6 @@ class App extends Component {
   componentDidMount() {
     axios.get("http://localhost:8080/grupp1/src/api/?/highscore").then((response) => {
       console.log(response);
-      /* this.setState({
-         backlogCards: response.data,
-         analysisCards: response.data,
-         developmentCards: response.data,
-         testingCards: response.data,
-         doneCards: response.data,
-         unexpectedCards: response.data,
- 
-         //Release plan
-         today: response.data,
-         sprint: response.data,
-         totalSprints: response.data,
-         workDone: response.data,
-         retrospective: response.data,
- 
-         //Employees and their distribution across the board
-         employeesA: response.data,
-         employeesD: response.data,
-         employeesT: response.data,
- 
-         //The points rolled with the dice
-         AScore: response.data,
-         DScore: response.data,
-         TScore: response.data,
-         gameover: response.data
-       });*/
     });
     axios.get("http://localhost:8080/grupp1/src/api/?/game/" + this.state.gameID).then((response) => {
       console.log(response);
@@ -95,7 +69,7 @@ class App extends Component {
     axios.get("http://localhost:8080/grupp1/src/api/?/actioncard/vadsomhelst/game/" + this.state.gameID).then((response) => {
       console.log(response);
     });
-    axios.get("http://localhost:8080/grupp1/src/api/?/game/vadsomhelst/employees").then((response) => {
+    axios.get("http://localhost:8080/grupp1/src/api/?/game/" + this.state.gameID + "/employees").then((response) => {
       console.log(response);
     });
   }
@@ -247,40 +221,41 @@ class App extends Component {
   }
 
   createCards(cards) {
+    var types = ['us', 'd', 'm'];
     var cardComponents = cards.map(card => {
-      if (card.type === 'us') {
+      if (card.type == 0) {
         return (
           <Card
-            key={card.title}
-            title={card.title}
+            key={card.id}
+            title={types[0] + card.number}
             money={card.money}
-            analysis={card.analysis}
-            development={card.development}
-            testing={card.testing}
+            analysis={card.apoint}
+            development={card.dpoint}
+            testing={card.tpoint}
             Click={this.handleCardClick}
             location={card.location}
           />
         );
-      } else if (card.type === 'm') {
+      } else if (card.type == 1) {
         return (
           <MCard
-            key={card.title}
-            title={card.title}
-            analysis={card.analysis}
-            development={card.development}
-            testing={card.testing}
+            key={card.id}
+            title={types[1] + card.number}
+            analysis={card.apoint}
+            development={card.dpoint}
+            testing={card.tpoint}
             Click={this.handleCardClick}
             location={card.location}
           />
         );
-      } else if (card.type === 'd') {
+      } else if (card.type == 2) {
         return (
           <DCard
-            key={card.title}
-            title={card.title}
-            analysis={card.analysis}
-            development={card.development}
-            testing={card.testing}
+            key={card.id}
+            title={types[2] + card.number}
+            analysis={card.apoint}
+            development={card.dpoint}
+            testing={card.tpoint}
             Click={this.handleCardClick}
             location={card.location}
           />
@@ -294,7 +269,7 @@ class App extends Component {
   cardGenerator(nrOfcardsToMake) {
     var cards = [];
 
-    var types = ['us', 'd', 'm'];
+
 
     for (var i = 0; i < nrOfcardsToMake; i++) {
       var type = this.random(3, 0);

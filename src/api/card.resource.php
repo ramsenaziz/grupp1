@@ -27,11 +27,15 @@ class _card extends Resource{
     function put($input, $db) {
         $array = [];
         foreach($input as $key => $value) {
-            array_push($array, "$key=$value")
+            if($key != "id" and $key != "game_id") {
+                 array_push($array, "$key=$value");
+            }   
         }
         $string = implode(",", $array);
         $game_id = $input["game_id"];
-        $query = "UPDATE cards SET '$string'
+        $id = $input["id"];
+
+        $query = "UPDATE cards SET $string
 			WHERE id = $id AND game_id = '$game_id'";
 			mysqli_query ($db, $query);
     } 

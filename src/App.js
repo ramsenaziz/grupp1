@@ -1,8 +1,8 @@
 import React, {
   Component
 } from 'react';
-import './css/App.css';
 import axios from 'axios';
+import './css/App.css';
 import Column from './Column.js';
 import Card from './Card.js';
 import MCard from './MCard.js';
@@ -289,7 +289,7 @@ class App extends Component {
     var types = ['us', 'd', 'm'];
 
     for (var i = 0; i < nrOfcardsToMake; i++) {
-      var type = types[this.random(3, 0)];
+      var type = this.random(3, 0);
       cards.push({
         type: type,
         number: i + 1,
@@ -300,11 +300,19 @@ class App extends Component {
         location: 0
       });
     }
-    /*  JSON.stringify(cards);
-      axios.post("http://localhost:8080/grupp1/src/api/?/cards", { cards: cards, game_id: this.state.gameID }).then((response) => {
+    var querystring = require('querystring');
+    axios.post("http://localhost/grupp1/src/api/?/card",
+      querystring.stringify({
+        cards: JSON.stringify(cards),
+        game_id: 'ySpCd'
+      }), {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }).then(function (response) {
         console.log(response.data);
-  
-      });*/
+      })
+
     return cards;
   }
 

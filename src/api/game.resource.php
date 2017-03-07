@@ -7,14 +7,27 @@ class _game extends Resource{ // Klassen ärver egenskaper från den generella k
     
     function GET($input, $db){
         #GET /game/<id>
-        $query = "SELECT * FROM games WHERE game_id = '$this->id' ORDER BY id desc LIMIT 1";
-        $result = mysqli_query($db, $query);
-        while ($row = mysqli_fetch_assoc($result)) {
-            $rows[] = $row;
+        if(count($this->request)>0) {
+            
+            $query = "SELECT * FROM {$this->request[0]} WHERE game_id = '$this->id'";
+            if(count($this->request)>1) {
+                $query.= " AND location = {$this->request[1]}";
+            }
+            $result = mysqli_query($db, $query);
+            while ($row = mysqli_fetch_assoc($result)) {
+                $rows[] = $row;
+                
+                
+            }
+            echo json_encode($rows);
+        } else {
+            $query = "SELECT * FROM games WHERE game_id = '$this->id' ORDER BY id desc LIMIT 1";
+            $result = mysqli_query($db, $query);
+            while ($row = mysqli_fetch_assoc($result)) {
+                $rows[] = $row;
+            }
+            echo json_encode($rows);
         }
-        echo json_encode($rows);
-        
-        #GET /game/<id>/<collection>
         
     }
     function generate_id () {
@@ -58,6 +71,7 @@ class _game extends Resource{ // Klassen ärver egenskaper från den generella k
         }
         //save to DB
         $pairing = implode(",", $pairing);
+        echo $pairing;
         $query = "INSERT INTO actioncards_status (cardid, game_id) VALUES " .$pairing;
         mysqli_query($db, $query);
     }

@@ -15,8 +15,7 @@ class TeamName extends Component {
 
 
                     <button className='btn btn-success' onClick={() => {
-                        this.props.newgame
-                        init(input.value);
+                        this.props.startgame(input.value);
                     }}> New Game
                     </button>
                 </div>

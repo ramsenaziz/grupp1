@@ -8,13 +8,13 @@ import Card from './Card.js';
 import MCard from './MCard.js';
 import DCard from './DCard.js';
 import Dice from './Dice.js';
-import ProgressBar from './ProgressBar.js';
 import ProgressBtn from './ProgressBtn.js';
 import NewGameBtn from './NewGameBtn.js';
 import EmployeeCol from './EmployeeCol.js';
 import Retrospective from './Retrospective.js';
 import ReleasePlan from './ReleasePlan.js';
 import Gameover from './Gameover.js';
+import TeamName from './TeamName.js';
 
 class App extends Component {
   constructor() {
@@ -35,6 +35,7 @@ class App extends Component {
       totalSprints: 8,
       workDone: false,
       retrospective: false,
+      teamname: true,
 
       //Employees and their distribution across the board
       employeesA: [{ role: 'analyst', img: './images/1.png', id: 'a' },],
@@ -90,6 +91,12 @@ class App extends Component {
     axios.get("http://localhost:8080/grupp1/src/api/?/game/" + this.state.gameID).then((response) => {
       console.log(response);
     });
+    axios.get("http://localhost:8080/grupp1/src/api/?/actioncard/vadsomhelst/game/" + this.state.gameID).then((response) => {
+      console.log(response);
+    });
+    axios.get("http://localhost:8080/grupp1/src/api/?/game/vadsomhelst/employees").then((response) => {
+      console.log(response);
+    });
   }
 
   //key is analysis, development or testing.
@@ -116,8 +123,11 @@ class App extends Component {
     return column;
   }
 
-  init() {
+  init(val) {
     var cards = this.cardGenerator(10);
+    axios.post("http://localhost:8080/grupp1/src/api/?/game/vadsomhelst/teamname=" + val).then((response) => {
+
+    });
     this.setState({
       backlogCards: cards,
       analysisCards: [],
@@ -290,18 +300,11 @@ class App extends Component {
         location: 0
       });
     }
-    JSON.stringify(cards);
-    axios.post("http://localhost:8080/grupp1/src/api/api.php?cards=" + cards).then((response) => {
-      console.log(response.data);
-      this.setState({
-        backlogCards: response.data,
-        analysisCards: response.data,
-        developmentCards: response.data,
-        testingCards: response.data,
-        doneCards: response.data,
-        unexpectedCards: response.data
-      });
-    });
+    /*  JSON.stringify(cards);
+      axios.post("http://localhost:8080/grupp1/src/api/?/cards", { cards: cards, game_id: this.state.gameID }).then((response) => {
+        console.log(response.data);
+  
+      });*/
     return cards;
   }
 
@@ -315,7 +318,7 @@ class App extends Component {
 
     return (
       <div className='container'>
-
+        <TeamName newgame={() => { this.init(); this.setState({ teamname: false }) }} visible={this.state.teamname} />
         <Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
         <Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363} />
 

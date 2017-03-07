@@ -59,7 +59,7 @@ class _game extends Resource{ // Klassen ärver egenskaper från den generella k
         }
         //save to DB
         $pairing = implode(",", $pairing);
-        echo $pairing;
+        
         $query = "INSERT INTO actioncards_status (cardid, game_id) VALUES " .$pairing;
         mysqli_query($db, $query);
     }

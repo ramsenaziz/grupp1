@@ -60,16 +60,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:8080/grupp1/src/api/?/highscore").then((response) => {
+    axios.get("http://localhost/grupp1/src/api/?/highscore").then((response) => {
       console.log(response);
     });
-    axios.get("http://localhost:8080/grupp1/src/api/?/game/" + this.state.gameID).then((response) => {
+    axios.get("http://localhost/grupp1/src/api/?/game/" + this.state.gameID).then((response) => {
       console.log(response);
     });
-    axios.get("http://localhost:8080/grupp1/src/api/?/actioncard/vadsomhelst/game/" + this.state.gameID).then((response) => {
+    axios.get("http://localhost/grupp1/src/api/?/actioncard/vadsomhelst/game/" + this.state.gameID).then((response) => {
       console.log(response);
     });
-    axios.get("http://localhost:8080/grupp1/src/api/?/game/" + this.state.gameID + "/employees").then((response) => {
+    axios.get("http://localhost/grupp1/src/api/?/game/" + this.state.gameID + "/employees").then((response) => {
       console.log(response);
     });
   }
@@ -100,11 +100,10 @@ class App extends Component {
 
   init(val) {
 
-    axios.post("http://localhost:8080/grupp1/src/api/?/game",
+    axios.post("http://localhost/grupp1/src/api/?/game",
       querystring.stringify({
         teamname: val
       })).then((response) => {
-        console.log(response);
         this.setState({
           gameID: response.data,
           teamname: false,
@@ -133,7 +132,9 @@ class App extends Component {
           TScore: 0,
           gameover: false
         })
-        this.cardGenerator(10);
+        this.cardGenerator(20, 0);
+				this.cardGenerator(7, 1);
+				this.cardGenerator(5, 2);
       });
 
   }
@@ -168,9 +169,9 @@ class App extends Component {
     var DScore = this.state.employeesD.map(employee => this.random(6)).reduce((a, b) => a + b);
     var TScore = this.state.employeesT.map(employee => this.random(6)).reduce((a, b) => a + b);
 
-    var analysis = this.reducePoints(this.state.analysisCards, AScore, 'analysis');
-    var development = this.reducePoints(this.state.developmentCards, DScore, 'development');
-    var testing = this.reducePoints(this.state.testingCards, TScore, 'testing');
+    var analysis = this.reducePoints(this.state.analysisCards, AScore, 'apoint');
+    var development = this.reducePoints(this.state.developmentCards, DScore, 'dpoint');
+    var testing = this.reducePoints(this.state.testingCards, TScore, 'tpoint');
 
     this.setState({
       AScore: AScore,
@@ -185,7 +186,7 @@ class App extends Component {
   }
 
   handleCardClick(card) {
-    var cardLoc = card.props.location;
+    var cardLoc = Number(card.props.location);
 
     var locations = [
       'backlogCards',
@@ -199,8 +200,10 @@ class App extends Component {
 
     /*filter currentArray if clicked card is found, put it in var findCard*/
     var filteredArray = currentArray.filter((c) => {
-      if (c.title === card.props.title) findCard = c;
-      else return c.title !== card.props.title;
+      if (c.id == card.props.id) {
+				findCard = c;
+			}
+      else return c.id !== card.props.id;
     });
     findCard.location++;
 
@@ -228,6 +231,7 @@ class App extends Component {
           <Card
             key={card.id}
             title={types[0] + card.number}
+            id={card.id}
             money={card.money}
             analysis={card.apoint}
             development={card.dpoint}
@@ -240,6 +244,7 @@ class App extends Component {
         return (
           <MCard
             key={card.id}
+            id={card.id}
             title={types[1] + card.number}
             analysis={card.apoint}
             development={card.dpoint}
@@ -252,6 +257,7 @@ class App extends Component {
         return (
           <DCard
             key={card.id}
+            id={card.id}
             title={types[2] + card.number}
             analysis={card.apoint}
             development={card.dpoint}
@@ -266,15 +272,11 @@ class App extends Component {
   }
 
   //Creates objects with random values to simulate data from database
-  cardGenerator(nrOfcardsToMake) {
+  cardGenerator(nrOfcardsToMake, cardType) {
     var cards = [];
-
-
-
     for (var i = 0; i < nrOfcardsToMake; i++) {
-      var type = this.random(3, 0);
       cards.push({
-        type: type,
+        type: cardType,
         number: i + 1,
         money: this.random(10) * 50,
         apoint: this.random(10),
@@ -284,7 +286,7 @@ class App extends Component {
       });
     }
     /*var querystring = require('querystring');*/
-    axios.post("http://localhost:8080/grupp1/src/api/?/card",
+    axios.post("http://localhost/grupp1/src/api/?/card",
       querystring.stringify({
         cards: JSON.stringify(cards),
         game_id: this.state.gameID
@@ -293,8 +295,7 @@ class App extends Component {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then((response) => {
-        axios.get("http://localhost:8080/grupp1/src/api/?/game/" + this.state.gameID + "/cards/0").then((response) => {
-          console.log(response.data);
+        axios.get("http://localhost/grupp1/src/api/?/game/" + this.state.gameID + "/cards/0").then((response) => {
           this.setState({ backlogCards: response.data });
         });
       })

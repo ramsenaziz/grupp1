@@ -2,20 +2,25 @@
   height: 400px;
   border-radius: 7px;
 	overflow: hidden;
+  border: 1px solid darkslategray;
 }
 
 .Column-title {
   text-align: center;
   font-weight: bold;
-  background-color: #62a2da;
+  font-family:Courier New, Courier, monospace;
+  font-size: 20px;
+  background-color:  #46a28d;
 	height: 40px;
 	box-shadow: 0 3px 5px #555;
+  color:white;
+  padding-top:7px;
 }
 
 .Column-body {
 	padding-top: 5px;
 	height: 90%;
-  overflow-y: scroll;	
+  overflow-y: scroll;
 }
 
 /*

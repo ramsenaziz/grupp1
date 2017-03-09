@@ -1,14 +1,36 @@
 .Card {
-  border: 2px solid #969696;
+  border: 1px solid #969696;
   margin-bottom: 10px;
 	border-radius: 5px;
 }
 
 .head {
-  background-color: #50aed7;
+  background-color:goldenrod;
 }
 
 .head > div {
 	font-weight: 600;
 	text-transform: uppercase;
+}
+.btn-success {
+  margin-bottom: 5px;
+}
+/* New game button */
+.btn-secondary{
+  margin-bottom:5px;
+  color:gray;
+  border: 1px solid black;
+}
+
+/* Roll dice button */
+.btn-primary {
+ margin-bottom:5px;
+ border: 1px solid black;
+}
+
+/* Next day button */
+.btn-success {
+ border: 1px solid black;
+ color:black;
+ background-color:#46a28d;
 }

@@ -4,6 +4,8 @@ import React, {
 import axios from 'axios';
 import querystring from 'querystring';
 import './css/App.css';
+import './css/index.css';
+import './css/Card.css';
 import Column from './Column.js';
 import Card from './Card.js';
 import MCard from './MCard.js';
@@ -248,7 +250,7 @@ class App extends Component {
             title={types[1] + card.number}
             analysis={card.apoint}
             development={card.dpoint}
-            testing={card.tpoint}
+            testing={card.tpoint}c
             Click={this.handleCardClick}
             location={card.location}
           />

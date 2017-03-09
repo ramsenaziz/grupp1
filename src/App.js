@@ -250,7 +250,7 @@ class App extends Component {
             title={types[1] + card.number}
             analysis={card.apoint}
             development={card.dpoint}
-            testing={card.tpoint}c
+            testing={card.tpoint}
             Click={this.handleCardClick}
             location={card.location}
           />

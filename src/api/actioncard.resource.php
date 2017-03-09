@@ -16,6 +16,26 @@ class _actioncard extends Resource{ // Klassen ärver egenskaper från den gener
 		$row = mysqli_fetch_assoc($result);
 		echo json_encode($row);
 	}
+	
+	function POST($input, $db) {
+		$game_id = escape($input['game_id']);
+		//create actioncards
+        $query = "SELECT id FROM actioncards";
+        $result = mysqli_query($db, $query);
+        $pairing = [];
+        // get all existing actioncards
+        while ($card = mysqli_fetch_assoc($result)) {
+            $cardid = $card['id'];
+			if (is_numeric($cardid)) {
+            	array_push($pairing,"($cardid, '$game_id')");
+			}
+        }
+        //save to DB
+        $pairing = implode(",", $pairing);
+        $query = "INSERT INTO actioncards_status (cardid, game_id) VALUES " .$pairing;
+        mysqli_query($db, $query);
+	}
+	
 	function PUT($input, $db) {
 		$gameid = $this->request[1];
 		if ($this->id){

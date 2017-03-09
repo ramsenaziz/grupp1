@@ -8,8 +8,12 @@ class _highscore extends Resource{ // Klassen ärver egenskaper från den genere
     function GET($input, $db){
         
         #GET /game/<id>
-        $query = "SELECT highscore, teamname FROM games
-        ORDER BY highscore DESC LIMIT 10";
+        $query = "SELECT m1.teamname, m1.highscore
+			FROM games m1 LEFT JOIN games m2
+			ON (m1.game_id = m2.game_id AND m1.id < m2.id)
+			WHERE m2.id IS NULL
+			ORDER BY highscore DESC
+			LIMIT 10";
         $result = mysqli_query($db, $query);
         while ($row = mysqli_fetch_assoc($result)) {
             $rows[] = $row;

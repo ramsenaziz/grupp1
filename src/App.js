@@ -226,7 +226,7 @@ class App extends Component {
   }
 
   createCards(cards) {
-    var types = ['us', 'd', 'm'];
+    var types = ['us', 'm', 'd'];
     var cardComponents = cards.map(card => {
       if (card.type == 0) {
         return (

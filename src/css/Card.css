@@ -1,7 +1,9 @@
 .Card {
   border: 1px solid #969696;
-  margin-bottom: 10px;
+  margin-top: 5px;
 	border-radius: 5px;
+  width:90%;
+  margin-left:10px;
 }
 
 .head {

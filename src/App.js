@@ -306,7 +306,7 @@ class App extends Component {
   }
 
   render() {
-    var backlog = this.state.backlogCards;
+    var backlog = this.state.backlogCards ;
     var analysis = this.state.analysisCards;
     var development = this.state.developmentCards;
     var testing = this.state.testingCards;
@@ -346,7 +346,7 @@ class App extends Component {
         </div>
 
         <div className='row' >
-          <Column title='Backlog' cards={this.createCards(backlog)} />
+          <Column  style={{backgroundColor:'black'}} title='Backlog' cards={this.createCards(backlog) } />
           <Column title='Analysis' cards={this.createCards(analysis)} />
           <Column title='Development' cards={this.createCards(development)} />
           <Column title='Testing' cards={this.createCards(testing)} />

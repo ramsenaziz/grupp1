@@ -29,9 +29,10 @@ class Card extends Component {
         <p style={{
           width: 67,
           marginTop: 5,
+          marginLeft:0,
           // border: '1px solid black',
           borderRadius: 5,
-          paddingLeft: 10,
+          paddingLeft: 20,
           backgroundColor: 'gray',
           color: 'white',
         }}> A: {this.props.analysis} </p>
@@ -39,9 +40,10 @@ class Card extends Component {
         <p style={{
           width:67,
           marginTop: 5,
+          marginLeft: 0,
           // border: '5px dotted black',
           borderRadius: 5,
-          paddingLeft: 10,
+          paddingLeft: 20,
           backgroundColor: 'goldenrod',
           color: 'white',
         }}>D: {this.props.development}</p>
@@ -49,9 +51,11 @@ class Card extends Component {
         <p style={{
           width: 67,
           marginTop: 5,
+          marginLeft: 0,
+          marginBottom:20,
           // border: '1px dotted black',
           borderRadius: 5,
-          paddingLeft: 10,
+          paddingLeft: 20,
           background: 'coral',
           color: 'white',
         }}>T: {this.props.testing}</p>

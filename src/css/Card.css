@@ -7,7 +7,8 @@
 }
 
 .head {
-  background-color:goldenrod;
+  background-color: #46a28d;
+  color: white;
 }
 
 .head > div {
@@ -31,8 +32,8 @@
 }
 
 /* Next day button */
-.btn-success {
+.move {
  border: 1px solid black;
- color:black;
- background-color:#46a28d;
+ color:white;
+ background-color:green;
 }

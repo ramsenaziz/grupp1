@@ -19,17 +19,44 @@ class Card extends Component {
 
     return (
       <div className='Card col-xs-12'>
-      	<div className='row head'>
-      		<div className='col-xs-8'>{this.props.title}</div>
-        	<div className='col-xs-2'>
-        		{this.props.money ? '$' + this.props.money: ''}
-					</div>
-      	</div>
-        
-        <p>A: {this.props.analysis}</p>
-        <p>D: {this.props.development}</p>
-        <p>T: {this.props.testing}</p>
-        <button className="btn btn-xs btn-success"
+        <div className='row head'>
+          <div className='col-xs-8'>{this.props.title}</div>
+          <div className='col-xs-2'>
+            {this.props.money ? '$' + this.props.money : ''}
+          </div>
+        </div>
+
+        <p style={{
+          width: 67,
+          marginTop: 5,
+          // border: '1px solid black',
+          borderRadius: 5,
+          paddingLeft: 10,
+          backgroundColor: 'gray',
+          color: 'white',
+        }}> A: {this.props.analysis} </p>
+
+        <p style={{
+          width:67,
+          marginTop: 5,
+          // border: '5px dotted black',
+          borderRadius: 5,
+          paddingLeft: 10,
+          backgroundColor: 'goldenrod',
+          color: 'white',
+        }}>D: {this.props.development}</p>
+
+        <p style={{
+          width: 67,
+          marginTop: 5,
+          // border: '1px dotted black',
+          borderRadius: 5,
+          paddingLeft: 10,
+          background: 'coral',
+          color: 'white',
+        }}>T: {this.props.testing}</p>
+
+        <button className="btn btn-xs btn-success move"
           style={btnStyle} onClick={() => this.props.Click(this)}>move card</button>
       </div>
     )

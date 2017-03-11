@@ -61,7 +61,8 @@ class Card extends Component {
         }}>T: {this.props.testing}</p>
 
         <button className="btn btn-xs btn-success move"
-          style={btnStyle} onClick={() => this.props.Click(this)}>move card</button>
+          style={btnStyle} onClick={() => this.props.Click(this)}>move  <span className="glyphicon glyphicon-arrow-right"></span></button>
+         
       </div>
     )
   }

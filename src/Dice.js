@@ -12,7 +12,7 @@ class Dice extends Component {
   render() {
 		var isDisabled = this.props.disabled;
     return (
-      <button disabled={isDisabled} type='button' className='Dice btn btn-primary' onClick={this.handleClick.bind(this)}>Roll Dice!</button>
+      <button disabled={isDisabled} type='button' className='Dice btn btn-secondary' onClick={this.handleClick.bind(this)}><strong>Roll Dice!</strong></button>
     )
   }
 }

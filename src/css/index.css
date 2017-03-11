@@ -4,9 +4,9 @@ body {
   font-family: sans-serif;
 }
 .well {
-  -moz-box-shadow:    inset 0 0 20px #000000;
+  /*-moz-box-shadow:    inset 0 0 20px #000000;
   -webkit-box-shadow: inset 0 0 20px #000000;
-   box-shadow:         inset 0 0 20px #000000;
+   box-shadow:         inset 0 0 20px #000000;*/
    border-radius:20px;
    width:100%;
    margin-left:-15px;

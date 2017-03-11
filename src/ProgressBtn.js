@@ -13,7 +13,7 @@ class ProgressBtn extends Component {
 		var isDisabled = !this.props.enabled;
 		
 		return (
-			<button disabled={isDisabled} type='button' className="btn btn-success" onClick={this.handleClick.bind(this)}>
+			<button disabled={isDisabled} type='button' className="btn btn-secondary" onClick={this.handleClick.bind(this)}>
 				<strong>Next day</strong>
 				<span className="glyphicon glyphicon-triangle-right"></span>
 			</button>

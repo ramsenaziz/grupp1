@@ -11,12 +11,12 @@ body {
    width:100%;
    margin-left:-15px;
    padding-bottom:5px;
-   /*border: solid 1px black;*/
+   border: solid 1px black;
    background-color: white;
 }
 .progress {
   margin-top:25px;
-  background-color:black;
+  background-color:greenyellow;
   height:10px;
 }
 h4 {

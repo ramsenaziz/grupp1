@@ -37,7 +37,7 @@ class Retrospective extends Component {
 					border: '5px white solid',
 
 				}} className='retrospective well well-lg'>
-					<h1>Time for a retrospective!</h1>
+					<h2>Time for a retrospective!</h2>
 					<p>
 						How did this sprint go? <br />
 						What things could you improve in the next sprint?<br />

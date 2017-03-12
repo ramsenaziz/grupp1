@@ -17,7 +17,7 @@ class EmployeeCol extends Component {
       <div className={classes}>
         <h4
           style={{
-            borderRadius:'15px',
+            borderRadius:'10px',
             width:'110px',
             paddingTop:'3px',
             background: 'red',

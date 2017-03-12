@@ -5,11 +5,11 @@ class Employee extends Component {
 		return (
 			<div>
 				<div>
-					<span className="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>
+					<span className="glyphicon glyphicon-arrow-left " aria-hidden="true"></span>
 					{this.props.me.role.toUpperCase()}
 
 					{/*{this.props.me.img}*/}
-					<span className="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+					<span className="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
 				</div>
 			</div>
 		)

@@ -21,6 +21,14 @@ body {
 }
 h4 {
   margin-top:-10px;
-  margin-bottom:10px;
+  margin-bottom:10px; 
+}
+#releaseSquare {
+    -webkittransform: rotate(5deg); /* Chrome, Safari, Opera */
+    transform: rotate(5deg);
+        position: fixed;
+    bottom: 540px;
+    right: 70px;
+
 }
 

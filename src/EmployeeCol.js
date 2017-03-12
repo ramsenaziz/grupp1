@@ -15,7 +15,7 @@ renderEmployees() {
 		var classes = 'EmployeeCol col-xs-2 ' + offset;
     return (
       <div className={classes}>
-      	<h4> Score: {this.props.score}</h4>
+      	<h4><strong> Score: {this.props.score}</strong></h4>
 				{this.renderEmployees()}
       </div>
     )

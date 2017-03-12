@@ -17,7 +17,7 @@ class RelasePlan extends Component {
 				</div>
 
 				<div className='row'>
-					<h4>{this.state.days[this.props.day]}. Sprint {this.props.sprint}/{this.props.totalSprints}</h4>
+					<h4><strong>{this.state.days[this.props.day]}. Sprint {this.props.sprint}/{this.props.totalSprints}</strong></h4>
 				</div>
 			</div>
 		)

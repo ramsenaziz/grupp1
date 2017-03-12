@@ -10,12 +10,17 @@ body {
    border-radius:20px;
    width:100%;
    margin-left:-15px;
+   padding-bottom:5px;
    /*border: solid 1px black;*/
    background-color: white;
 }
 .progress {
   margin-top:25px;
-  background-color:goldenrod;
+  background-color:black;
   height:10px;
+}
+h4 {
+  margin-top:-10px;
+  margin-bottom:20px;
 }
 

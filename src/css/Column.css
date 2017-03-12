@@ -3,18 +3,21 @@
   border-radius: 7px;
 	overflow: hidden;
   border: 1px solid gray;
+  background-color:white;
 }
 
 .Column-title {
   text-align: center;
   font-weight: bold;
   font-family:Courier New, Courier, monospace;
-  font-size: 25px;
+  font-size: 20px;
   background-color: white;  /*#46a28d;*/
 	height: 40px;
 	box-shadow: 0 3px 5px #555;
-  color:gray;
-  padding-top:7px;
+  color:black;
+  padding-bottom: 5px;
+  border: 5px solid black;
+  margin-top: 0px;
 }
 
 .Column-body {
@@ -23,7 +26,19 @@
   overflow-y: scroll;
 }
 
-div.row.Column-body {
+/*div.row.Column-body {
   background-color: white;
+}*/
+
+/*[title~='Analysis'] {
+  color: black;
+  margin-bottom: 45px;
+  padding-top: 30px;
+}*/
+
+div.row.Column-title [title~=Analysis] {
+  color: black;
+  margin-bottom: 4000px;
+
 }
 

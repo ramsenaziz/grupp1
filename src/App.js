@@ -41,14 +41,14 @@ class App extends Component {
       teamname: true,
 
       //Employees and their distribution across the board
-      employeesA: [{ role: 'analyst', img: './images/1.png', id: 'a' },],
+      employeesA: [{ role: 'analyst', img: './images/ana.png', id: 'a' },],
       employeesD: [
-        { role: 'developer', img: './images/2.png', id: 'd1' },
-        { role: 'developer', img: './images/2.png', id: 'd2' },
-        { role: 'developer', img: './images/2.png', id: 'd3' },
-        { role: 'developer', img: './images/2.png', id: 'd4' },
+        { role: 'developer', img: './images/dev.png', id: 'd1' },
+        { role: 'developer', img: './images/dev.png', id: 'd2' },
+        { role: 'developer', img: './images/dev.png', id: 'd3' },
+        { role: 'developer', img: './images/dev.png', id: 'd4' },
       ],
-      employeesT: [{ role: 'tester', img: './images/3.png', id: 't' }],
+      employeesT: [{ role: 'tester', img: './images/test.png', id: 't' }],
 
       //The points rolled with the dice
       AScore: 0,
@@ -120,14 +120,14 @@ class App extends Component {
           sprint: 1,
           totalSprints: 8,
 
-          employeesA: [{ role: 'analyst', img: './images/1.png' },],
+          employeesA: [{ role: 'analyst', img: './images/ana.png' },],
           employeesD: [
-            { role: 'developer', img: './images/2.png' },
-            { role: 'developer', img: './images/2.png' },
-            { role: 'developer', img: './images/2.png' },
-            { role: 'developer', img: './images/2.png' },
+            { role: 'developer', img: './images/dev.png' },
+            { role: 'developer', img: './images/dev.png' },
+            { role: 'developer', img: './images/dev.png' },
+            { role: 'developer', img: './images/dev.png' },
           ],
-          employeesT: [{ role: 'tester', img: './images/3.png' }],
+          employeesT: [{ role: 'tester', img: './images/test.png' }],
 
           AScore: 0,
           DScore: 0,
@@ -346,7 +346,7 @@ class App extends Component {
         </div>
 
         <div className='row' >
-          <Column  style={{backgroundColor:'black'}} title='Backlog' cards={this.createCards(backlog) } />
+          <Column title='Backlog' cards={this.createCards(backlog) } />
           <Column title='Analysis' cards={this.createCards(analysis)} />
           <Column title='Development' cards={this.createCards(development)} />
           <Column title='Testing' cards={this.createCards(testing)} />

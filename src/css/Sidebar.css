@@ -1,0 +1,122 @@
+.sidebar {
+    color: black;
+    font-size: 40px;
+    right: 25px;
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    z-index: 200;
+    background-color: #79d6ea;
+    transition: 0.4s;
+    padding: 60px 0 0 10px;
+    top: 0;
+}
+
+.sb-open {
+    right: 0;
+}
+
+.sb-close {
+    right: -300px;
+}
+
+.sidebarBtn {
+    position: absolute;
+    z-index: 200;
+    top: 20%;
+    left: -100px;
+    height: 180px;
+    background-color: #79d6ea;
+    border: none;
+    border-radius: 30px 0 0 30px;
+}
+
+.sidebarBtn:focus {
+    outline: none;
+}
+
+
+/*----------hamburger--------------------------------*/
+
+.c-hamburger {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    cursor: pointer;
+}
+
+.c-hamburger span {
+    display: block;
+    position: absolute;
+    top: 44px;
+    left: 18px;
+    right: 18px;
+    height: 8px;
+    background: white;
+}
+
+.c-hamburger span::before,
+.c-hamburger span::after {
+    position: absolute;
+    display: block;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: #fff;
+    content: "";
+}
+
+.c-hamburger span::before {
+    top: -20px;
+}
+
+.c-hamburger span::after {
+    bottom: -20px;
+}
+
+
+/**********************/
+
+.c-hamburger--htx {
+    background-color: #79d6ea;
+}
+
+.c-hamburger--htx span::before,
+.c-hamburger--htx span::after {
+    transition-duration: 0.3s, 0.3s;
+    transition-delay: 0.3s, 0s;
+}
+
+.c-hamburger--htx span::before {
+    transition-property: top, transform;
+}
+
+.c-hamburger--htx span::after {
+    transition-property: bottom, transform;
+}
+
+
+/* active state, i.e. menu open */
+
+.c-hamburger--htx.is-active {
+    background-color: #79d6ea;
+}
+
+.c-hamburger--htx.is-active span {
+    background: none;
+}
+
+.c-hamburger--htx.is-active span::before {
+    top: 0;
+    transform: rotate(45deg);
+}
+
+.c-hamburger--htx.is-active span::after {
+    bottom: 0;
+    transform: rotate(-45deg);
+}
+
+.c-hamburger--htx.is-active span::before,
+.c-hamburger--htx.is-active span::after {
+    transition-delay: 0s, 0.3s;
+}

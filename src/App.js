@@ -6,6 +6,7 @@ import querystring from 'querystring';
 import './css/App.css';
 import './css/index.css';
 import './css/Card.css';
+import Sidebar from './Sidebar.js';
 import Column from './Column.js';
 import Card from './Card.js';
 import MCard from './MCard.js';
@@ -76,6 +77,8 @@ class App extends Component {
     });
   }
 
+
+
   //key is analysis, development or testing.
   //pos is position of the card in the column
   reducePoints(column, points, key, pos = 0) {
@@ -135,8 +138,8 @@ class App extends Component {
           gameover: false
         })
         this.cardGenerator(20, 0);
-				this.cardGenerator(7, 1);
-				this.cardGenerator(5, 2);
+        this.cardGenerator(7, 1);
+        this.cardGenerator(5, 2);
       });
 
   }
@@ -203,8 +206,8 @@ class App extends Component {
     /*filter currentArray if clicked card is found, put it in var findCard*/
     var filteredArray = currentArray.filter((c) => {
       if (c.id == card.props.id) {
-				findCard = c;
-			}
+        findCard = c;
+      }
       else return c.id !== card.props.id;
     });
     findCard.location++;
@@ -306,7 +309,7 @@ class App extends Component {
   }
 
   render() {
-    var backlog = this.state.backlogCards ;
+    var backlog = this.state.backlogCards;
     var analysis = this.state.analysisCards;
     var development = this.state.developmentCards;
     var testing = this.state.testingCards;
@@ -318,7 +321,7 @@ class App extends Component {
         <TeamName startgame={this.init.bind(this)} visible={this.state.teamname} />
         <Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
         <Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363} />
-
+        <Sidebar />
         <ReleasePlan day={this.state.today} sprint={this.state.sprint} totalSprints={this.state.totalSprints} />
 
         <div className='well'>
@@ -346,7 +349,7 @@ class App extends Component {
         </div>
 
         <div className='row' >
-          <Column title='Backlog' cards={this.createCards(backlog) } />
+          <Column title='Backlog' cards={this.createCards(backlog)} />
           <Column title='Analysis' cards={this.createCards(analysis)} />
           <Column title='Development' cards={this.createCards(development)} />
           <Column title='Testing' cards={this.createCards(testing)} />

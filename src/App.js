@@ -122,7 +122,7 @@ class App extends Component {
 
           employeesA: [{ role: 'analyst', img: './images/ana.png' },],
           employeesD: [
-            { role: 'developer', img: './images/dev.png' },
+            { role: 'developer', img: './images/dev.png' },// <img src={require('./images/2.png')} />
             { role: 'developer', img: './images/dev.png' },
             { role: 'developer', img: './images/dev.png' },
             { role: 'developer', img: './images/dev.png' },

@@ -6,9 +6,9 @@ class Employee extends Component {
 			<div>
 				<div>
 					<span className="glyphicon glyphicon-arrow-left " aria-hidden="true"></span>
-					{this.props.me.role.toUpperCase()}
+					{/*{this.props.me.role.toUpperCase()}*/}
 
-					{/*{this.props.me.img}*/}
+					<img src ={require(this.props.me.img)} />
 					<span className="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
 				</div>
 			</div>

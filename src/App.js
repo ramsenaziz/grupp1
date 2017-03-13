@@ -30,7 +30,6 @@ class App extends Component {
       developmentCards: [],
       testingCards: [],
       doneCards: [],
-      unexpectedCards: [],
 
       //Release plan
       today: 0,
@@ -63,9 +62,6 @@ class App extends Component {
 
   componentDidMount() {
     axios.get("http://localhost/grupp1/src/api/?/highscore").then((response) => {
-      console.log(response);
-    });
-    axios.get("http://localhost/grupp1/src/api/?/game/" + this.state.gameID).then((response) => {
       console.log(response);
     });
     axios.get("http://localhost/grupp1/src/api/?/actioncard/vadsomhelst/game/" + this.state.gameID).then((response) => {
@@ -114,7 +110,6 @@ class App extends Component {
           developmentCards: [],
           testingCards: [],
           doneCards: [],
-          unexpectedCards: [],
 
           today: 0,
           sprint: 1,
@@ -122,7 +117,7 @@ class App extends Component {
 
           employeesA: [{ role: 'analyst', img: './images/ana.png' },],
           employeesD: [
-            { role: 'developer', img: './images/dev.png' },
+            { role: 'developer', img: './images/dev.png' },// <img src={require('./images/2.png')} />
             { role: 'developer', img: './images/dev.png' },
             { role: 'developer', img: './images/dev.png' },
             { role: 'developer', img: './images/dev.png' },
@@ -311,7 +306,6 @@ class App extends Component {
     var development = this.state.developmentCards;
     var testing = this.state.testingCards;
     var done = this.state.doneCards;
-    var unexpected = this.state.unexpectedCards;
 
     return (
       <div className='container'>
@@ -346,12 +340,11 @@ class App extends Component {
         </div>
 
         <div className='row' >
-          <Column title='Backlog' cards={this.createCards(backlog) } />
-          <Column title='Analysis' cards={this.createCards(analysis)} />
+          <Column title='Backlog' cards={this.createCards(backlog)} offset='col-xs-offset-1' />
+          <Column title='Analysis' cards={this.createCards(analysis)} color='#FFF546'/>
           <Column title='Development' cards={this.createCards(development)} />
           <Column title='Testing' cards={this.createCards(testing)} />
           <Column title='Done' cards={this.createCards(done)} />
-          <Column title='Unexpected' cards={this.createCards(unexpected)} />
         </div>
 
       </div>

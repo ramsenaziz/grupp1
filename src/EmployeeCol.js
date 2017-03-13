@@ -11,7 +11,7 @@ class EmployeeCol extends Component {
 
 
   render() {
-    var offset = this.props.offset ? this.props.offset : '';
+    var offset = this.props.offset;
     var classes = 'EmployeeCol col-xs-2 ' + offset;
     return (
       <div className={classes}>

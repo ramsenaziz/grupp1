@@ -97,7 +97,7 @@ class App extends Component {
   }
 
   init(val) {
-
+		console.log(val);
     axios.post("http://localhost/grupp1/src/api/?/game",
       querystring.stringify({
         teamname: val

@@ -13,7 +13,6 @@ class _game extends Resource{ // Klassen ärver egenskaper från den generella k
             if(count($this->request)>1) {
                 $location = check_number($this->request[1]);
                 $query.= " AND location = '$location'"; 
-                echo ($query);
             }
             $result = mysqli_query($db, $query);
             while ($row = mysqli_fetch_assoc($result)) {
@@ -66,7 +65,7 @@ class _game extends Resource{ // Klassen ärver egenskaper från den generella k
 		else {
 		  	$sprint     = check_number(escape($input['sprint']));
 		  	$currentday = check_number(escape($input['currentday']));
-		  	$highscore  = check_number(escape($input['highscore']);
+		  	$highscore  = check_number(escape($input['highscore']));
 		  	$startdate  = escape($input['startdate']);
 		  	$enddate    = escape($input['enddate']);
 		

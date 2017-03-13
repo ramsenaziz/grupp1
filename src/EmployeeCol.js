@@ -6,12 +6,12 @@ class EmployeeCol extends Component {
 
   renderEmployees() {
     return this.props.employees.map(employee =>
-      (<Employee key={employee.id} me={employee} />))
+      (<Employee key={employee.id} me={employee} move={this.props.move} />))
   }
 
 
   render() {
-    var offset = this.props.offset ? this.props.offset : '';
+    var offset = this.props.offset;
     var classes = 'EmployeeCol col-xs-2 ' + offset;
     return (
       <div className={classes}>

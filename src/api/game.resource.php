@@ -11,7 +11,8 @@ class _game extends Resource{ // Klassen ärver egenskaper från den generella k
             
             $query = "SELECT * FROM {$this->request[0]} WHERE game_id = '$this->id'";
             if(count($this->request)>1) {
-                $query.= " AND location = {$this->request[1]}";
+                $location = check_number($this->request[1]);
+                $query.= " AND location = '$location'"; 
             }
             $result = mysqli_query($db, $query);
             while ($row = mysqli_fetch_assoc($result)) {
@@ -43,14 +44,14 @@ class _game extends Resource{ // Klassen ärver egenskaper från den generella k
     }
     
     function POST($input, $db){
-		$teamname = mysqli_real_escape_string($db, $input['teamname']);
+		$teamname = escape($input['teamname']);
 		if (!$this->id) {
 			//komplitera koden; gör skillnad på om man gör /game eller /game/id (ny tabel rad)
         	//creat and insert new game with a teamname
         	$game_id = $this->generate_id();
         	$query = "INSERT INTO games
         		(game_id, teamname, sprint, currentday, highscore, startdate, enddate)
-        		VALUES ('$game_id', '$teamname', 1, 1, 0, NOW(), NULL)
+        		VALUES ('$game_id', '$teamname', 1, 0, 0, NOW(), NULL)
         	";
         
         	if (mysqli_query($db, $query)) {
@@ -62,11 +63,11 @@ class _game extends Resource{ // Klassen ärver egenskaper från den generella k
         	}
 		}
 		else {
-		  	$sprint = $input['sprint'];
-		  	$currentday = $input['currentday'];
-		  	$highscore = $input['highscore'];
-		  	$startdate = $input['startdate'];
-		  	$enddate = $input['enddate'];
+		  	$sprint     = check_number(escape($input['sprint']));
+		  	$currentday = check_number(escape($input['currentday']));
+		  	$highscore  = check_number(escape($input['highscore']));
+		  	$startdate  = escape($input['startdate']);
+		  	$enddate    = escape($input['enddate']);
 		
 			$query =  "INSERT INTO games
 				(game_id, teamname, sprint, currentday, highscore, startdate, enddate)

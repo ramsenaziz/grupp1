@@ -7,7 +7,7 @@ class _actioncard extends Resource{ // Klassen ärver egenskaper från den gener
 
 	function GET($input,$db){//$input is empty
 	
-	$gameid = $this->request[1];
+	$gameid = escape ($this->request[1]);
 		// Selects an actioncard that has not already been used in the game
 		$query = "SELECT * FROM actioncards WHERE id IN
 				(SELECT cardid FROM actioncards_status WHERE in_play = 0 AND used = 0 AND game_id = '$gameid')
@@ -37,10 +37,10 @@ class _actioncard extends Resource{ // Klassen ärver egenskaper från den gener
 	}
 	
 	function PUT($input, $db) {
-		$gameid = $this->request[1];
+		$gameid = escape($this->request[1]);
 		if ($this->id){
-			$inplay = mysqli_real_escape_string($db, $input['in_play']);
-			$used = mysqli_real_escape_string($db, $input['used']);
+			$inplay = check_number(escape($input['in_play']));
+			$used = check_number(escape($input['used']));
 			$query = "UPDATE actioncards_status SET in_play = $inplay, used = $used
 			WHERE cardid = {$this->id} AND game_id = '$gameid'";
 			mysqli_query ($db, $query);

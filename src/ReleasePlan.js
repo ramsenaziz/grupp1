@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ProgressBar from './ProgressBar';
-import ProgressBtn from './ProgressBtn';
 class RelasePlan extends Component {
 	constructor() {
 		super();

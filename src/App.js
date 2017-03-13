@@ -347,7 +347,7 @@ class App extends Component {
 
         <div className='row' >
           <Column title='Backlog' cards={this.createCards(backlog) } />
-          <Column title='Analysis' cards={this.createCards(analysis)} />
+          <Column title='Analysis' cards={this.createCards(analysis)} color='#FFF546'/>
           <Column title='Development' cards={this.createCards(development)} />
           <Column title='Testing' cards={this.createCards(testing)} />
           <Column title='Done' cards={this.createCards(done)} />

@@ -215,11 +215,6 @@ class App extends Component {
       [locations[cardLoc + 1]]: nextArray
     });
   }
-	
-	moveEmployee(emp) {
-		var currentCol = emp;
-		console.log(emp);
-	}
 
   random(maxInt, minInt = 1) {
     return Math.floor(Math.random() * (maxInt - minInt) + minInt);
@@ -332,17 +327,14 @@ class App extends Component {
             <EmployeeCol
               employees={this.state.employeesA}
               score={this.state.AScore}
-              move={this.moveEmployee}
             />
             <EmployeeCol
               employees={this.state.employeesD}
               score={this.state.DScore}
-              move={this.moveEmployee}
             />
             <EmployeeCol
               employees={this.state.employeesT}
               score={this.state.TScore}
-              move={this.moveEmployee}
             />
           </div>
         </div>

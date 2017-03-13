@@ -1,3 +1,4 @@
+import React from 'react';
 import './css/Card.css';
 import Card from './Card';
 

@@ -9,7 +9,6 @@ class EmployeeCol extends Component {
       (<Employee key={employee.id} me={employee} move={this.props.move} allowedToMove={this.props.allowedToMove}/>))
   }
 
-
   render() {
     var offset = this.props.offset;
     var classes = 'EmployeeCol col-xs-2 ' + offset;

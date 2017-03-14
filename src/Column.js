@@ -3,10 +3,10 @@ import './css/Column.css';
 
 class Column extends Component {
 	
-	//columnTotal() {
-	//	var total = this.props.cards.reduce((a, b) => {
-	//		
-	//	})
+	columnTotal() {
+		var total = this.props.cards.reduce((a, b) => {
+			
+		})
 	}
 	
   render() {

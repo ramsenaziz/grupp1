@@ -25,7 +25,7 @@ class App extends Component {
     super();
     this.state = {
       gameID: '',
-			teamname: '',
+      teamname: '',
       //Arrays representing the board columns. Contain cards
       backlogCards: [],
       analysisCards: [],
@@ -51,8 +51,8 @@ class App extends Component {
       DScore: 0,
       TScore: 0,
       gameover: false,
-			
-			totalScore: 0
+
+      totalScore: 0
     }
 
     this.handleCardClick = this.handleCardClick.bind(this);
@@ -60,9 +60,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-		//axios.get("http://localhost/grupp1/src/api/?/game/MRAtn").then(response => {
-		//	this.setState( {gameID: response.data} );
-		//})
+    //axios.get("http://localhost/grupp1/src/api/?/game/MRAtn").then(response => {
+    //	this.setState( {gameID: response.data} );
+    //})
     //axios.get("http://localhost/grupp1/src/api/?/highscore").then((response) => {
     //  console.log(response);
     //});
@@ -108,53 +108,54 @@ class App extends Component {
         this.setState({
           gameID: response.data,
 
-					startScreen: false
+          startScreen: false
         }, this.setupGame)
 
       });
   }
-	
-	getGame() {
-		axios.get("http://localhost/grupp1/src/api/?/game/"+this.state.gameID)
-			.then(response => {
-				var data = response.data[0];
-				this.setState({
-					teamname: data.teamname,
-					startDate: data.startdate,
-					today: Number(data.currentday),
-					sprint: Number(data.sprint),
-					totalScore: Number(data.highscore)
-				})
-		})
-	}
-	
-	setupGame() {
-		var id = this.state.gameID;
-		this.cardGenerator(20, 0);
-		this.cardGenerator(7, 1);
-		this.cardGenerator(5, 2);
-		
-		this.getGame();
-		
-		axios.post("http://localhost/grupp1/src/api/?/employees",
-			querystring.stringify({
-				game_id: id
-		})).then(response => {
-			axios.get("http://localhost/grupp1/src/api/?/game/"+id+"/employees")
-				.then(response => {
-					var analytics = response.data.filter(emp => emp.currentrole == 1);
-					var devs = response.data.filter(emp => emp.currentrole == 2);
-					var tests = response.data.filter(emp => emp.currentrole == 3);
-				
-					this.setState({
-						employeesA: analytics,
-						employeesD: devs,
-						employeesT: tests
-					})
-				}
-			)
-		})
-	}
+
+
+  getGame() {
+    axios.get("http://localhost/grupp1/src/api/?/game/" + this.state.gameID)
+      .then(response => {
+        var data = response.data[0];
+        this.setState({
+          teamname: data.teamname,
+          startDate: data.startdate,
+          today: Number(data.currentday),
+          sprint: Number(data.sprint),
+          totalScore: Number(data.highscore)
+        })
+      })
+  }
+
+  setupGame() {
+    var id = this.state.gameID;
+    this.cardGenerator(20, 0);
+    this.cardGenerator(7, 1);
+    this.cardGenerator(5, 2);
+
+    this.getGame();
+
+    axios.post("http://localhost/grupp1/src/api/?/employees",
+      querystring.stringify({
+        game_id: id
+      })).then(response => {
+        axios.get("http://localhost/grupp1/src/api/?/game/" + id + "/employees")
+          .then(response => {
+            var analytics = response.data.filter(emp => emp.currentrole == 1);
+            var devs = response.data.filter(emp => emp.currentrole == 2);
+            var tests = response.data.filter(emp => emp.currentrole == 3);
+
+            this.setState({
+              employeesA: analytics,
+              employeesD: devs,
+              employeesT: tests
+            })
+          }
+          )
+      })
+  }
 
   nextDay() {
     var day = this.state.today + 1;
@@ -179,17 +180,17 @@ class App extends Component {
       retrospective: retrospective,
       gameover: gameover
     });
-		
-		axios.post("http://localhost/grupp1/src/api/?/game/"+this.state.gameID,
-			querystring.stringify({
-				teamname: this.state.teamname,
-				sprint: sprint,
-				currentday: day,
-				highscore: this.state.totalScore,
-				startdate: this.state.startDate,
-				enddate: 'NULL'
-			})
-	 	).then(this.getGame.bind(this))	
+
+    axios.post("http://localhost/grupp1/src/api/?/game/" + this.state.gameID,
+      querystring.stringify({
+        teamname: this.state.teamname,
+        sprint: sprint,
+        currentday: day,
+        highscore: this.state.totalScore,
+        startdate: this.state.startDate,
+        enddate: 'NULL'
+      })
+    ).then(this.getGame.bind(this))
   }
 
   rollDice() {
@@ -246,38 +247,38 @@ class App extends Component {
       [locations[cardLoc + 1]]: nextArray
     });
   }
-	
-	moveEmployee(emp, dir) {
-		var employee = emp.props.me;
-		var newRole = Number(employee.currentrole);
-		newRole += dir;
-		
-		if (employee.role != 2 && newRole == 2) {
-			newRole += dir;
-		}
-		
-		axios.put("http://localhost/grupp1/src/api/?/employees",
-			querystring.stringify({
-				game_id: this.state.gameID,
-				id: employee.id,
-				currentrole: newRole
-			})
-		).then(response => {
-			axios.get("http://localhost/grupp1/src/api/?/game/"+this.state.gameID+"/employees")
-				.then(response => {
-					var analytics = response.data.filter(emp => emp.currentrole == 1);
-					var devs = response.data.filter(emp => emp.currentrole == 2);
-					var tests = response.data.filter(emp => emp.currentrole == 3);
-				
-					this.setState({
-						employeesA: analytics,
-						employeesD: devs,
-						employeesT: tests
-					})
-				}
-			)
-		})
-	}
+
+  moveEmployee(emp, dir) {
+    var employee = emp.props.me;
+    var newRole = Number(employee.currentrole);
+    newRole += dir;
+
+    if (employee.role != 2 && newRole == 2) {
+      newRole += dir;
+    }
+
+    axios.put("http://localhost/grupp1/src/api/?/employees",
+      querystring.stringify({
+        game_id: this.state.gameID,
+        id: employee.id,
+        currentrole: newRole
+      })
+    ).then(response => {
+      axios.get("http://localhost/grupp1/src/api/?/game/" + this.state.gameID + "/employees")
+        .then(response => {
+          var analytics = response.data.filter(emp => emp.currentrole == 1);
+          var devs = response.data.filter(emp => emp.currentrole == 2);
+          var tests = response.data.filter(emp => emp.currentrole == 3);
+
+          this.setState({
+            employeesA: analytics,
+            employeesD: devs,
+            employeesT: tests
+          })
+        }
+        )
+    })
+  }
 
   random(maxInt, minInt = 1) {
     return Math.floor(Math.random() * (maxInt - minInt) + minInt);
@@ -381,16 +382,16 @@ class App extends Component {
         <div className='well'>
           <div className='row'>
             <div className='col-xs-3'>
-            	<div className='row'>
-            		<div className='btn-group btn-group-vertical'>
-                	<NewGameBtn handleClick={this.init.bind(this)} />
-                	<Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
-                	<ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
-              	</div>
-            	</div>
               <div className='row'>
-          			<h3>{this.state.teamname}</h3>
-          		</div>
+                <div className='btn-group btn-group-vertical'>
+                  <NewGameBtn handleClick={this.init.bind(this)} />
+                  <Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
+                  <ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
+                </div>
+              </div>
+              <div className='row'>
+                <h3>{this.state.teamname}</h3>
+              </div>
             </div>
             <EmployeeCol
               employees={this.state.employeesA}
@@ -412,7 +413,7 @@ class App extends Component {
 
         <div className='row' >
           <Column title='Backlog' cards={this.createCards(backlog)} offset='col-xs-offset-1' />
-          <Column title='Analysis' cards={this.createCards(analysis)} color='#FFF546'/>
+          <Column title='Analysis' cards={this.createCards(analysis)} color='#FFF546' />
           <Column title='Development' cards={this.createCards(development)} />
           <Column title='Testing' cards={this.createCards(testing)} />
           <Column title='Done' cards={this.createCards(done)} />

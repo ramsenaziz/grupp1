@@ -428,9 +428,9 @@ class App extends Component {
 
         <div className='row' >
           <Column title='Backlog' cards={this.createCards(backlog)} offset='col-xs-offset-1' />
-          <Column title='Analysis' cards={this.createCards(analysis)} color='#FFF546'/>
-          <Column title='Development' cards={this.createCards(development)} />
-          <Column title='Testing' cards={this.createCards(testing)} />
+          <Column title='Analysis' cards={this.createCards(analysis)} color='#79d6ea'/>
+          <Column title='Development' cards={this.createCards(development)} color='lightgray' />
+          <Column title='Testing' cards={this.createCards(testing)} color='lightpink' />
           <Column title='Done' cards={this.createCards(done)} targetVal='money'/>
         </div>
 

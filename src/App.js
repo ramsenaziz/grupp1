@@ -117,7 +117,7 @@ class App extends Component {
 
           employeesA: [{ role: 'analyst', img: './images/ana.png' },],
           employeesD: [
-            { role: 'developer', img: './images/dev.png' },// <img src={require('./images/2.png')} />
+            { role: 'developer', img: './images/dev.png' },
             { role: 'developer', img: './images/dev.png' },
             { role: 'developer', img: './images/dev.png' },
             { role: 'developer', img: './images/dev.png' },
@@ -341,9 +341,9 @@ class App extends Component {
 
         <div className='row' >
           <Column title='Backlog' cards={this.createCards(backlog)} offset='col-xs-offset-1' />
-          <Column title='Analysis' cards={this.createCards(analysis)} color='#FFF546'/>
-          <Column title='Development' cards={this.createCards(development)} />
-          <Column title='Testing' cards={this.createCards(testing)} />
+          <Column title='Analysis' cards={this.createCards(analysis)} color='gray'/>
+          <Column title='Development' cards={this.createCards(development)} color='darkgoldenrod' />
+          <Column title='Testing' cards={this.createCards(testing)} color='coral' />
           <Column title='Done' cards={this.createCards(done)} />
         </div>
 

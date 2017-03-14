@@ -49,7 +49,7 @@ class Retrospective extends Component {
 					style={{
 						width:'330px',
 					}}
-						onClick={this.props.done} className='btn btn-secondary'>Next Sprint!</button>
+						onClick={this.props.done} className='btn btn-primary'>Next Sprint!</button>
 				</div>
 			</div>
 

@@ -34,7 +34,7 @@ class TeamName extends Component {
                         marginTop:'5px',
                         marginLeft:'10px',
                     }}
-                    className='btn btn-secondary' onClick={() => {
+                    className='btn btn-primary' onClick={() => {
                         this.props.startgame(input.value);
                     }}> New Game
                     </button>

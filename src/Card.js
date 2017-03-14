@@ -33,8 +33,8 @@ class Card extends Component {
           // border: '1px solid black',
           borderRadius: 5,
           paddingLeft: 20,
-          backgroundColor: 'gray',
-          color: 'white',
+          backgroundColor: 'lightblue',
+          color: 'black',
         }}> A: {this.props.analysis} </p>
 
         <p style={{
@@ -44,8 +44,8 @@ class Card extends Component {
           // border: '5px dotted black',
           borderRadius: 5,
           paddingLeft: 20,
-          backgroundColor: 'goldenrod',
-          color: 'white',
+          backgroundColor: 'lightgray',
+          color: 'black',
         }}>D: {this.props.development}</p>
 
         <p style={{
@@ -56,8 +56,8 @@ class Card extends Component {
           // border: '1px dotted black',
           borderRadius: 5,
           paddingLeft: 20,
-          background: 'coral',
-          color: 'white',
+          background: 'lightpink',
+          color: 'black',
         }}>T: {this.props.testing}</p>
 
         <button className="btn btn-xs btn-success move"

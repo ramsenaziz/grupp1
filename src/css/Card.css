@@ -5,8 +5,8 @@
 	border-radius: 8px;
   width:80%;
   margin-left:20px;
-  box-shadow: 7px 7px 5px gray;
-  background-color: black;
+  /*box-shadow: 7px 7px 5px #999999;*/
+  background-color: #999;
   
 }
 
@@ -30,9 +30,9 @@
 .btn-secondary{
   height:35px;
   margin-bottom:5px;
-  color:white;
-  border: 6px solid black;
-  background-color: red;
+  color:black;
+  /*border: 1px solid black;*/
+  background-color:#79d6ea;
   margin-top: -7px;
   padding-top:3px;
 }

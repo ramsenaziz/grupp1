@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import './css/Employee.css';
 
 class Employee extends Component {
-	handleClick(clickedDude, direction) {
-		this.props.move(clickedDude, direction);
+	handleClick(clickedDude) {
+		if (this.props.allowedToMove) {
+			this.props.move(clickedDude);
+		}
 	}
 	render() {
 		var source = './images/';
@@ -19,13 +22,14 @@ class Employee extends Component {
 			default:
 				source += 'ana.png';
 		}
+		
 		return (
-			<div>
-				<div>
-					<span className="glyphicon glyphicon-arrow-left " aria-hidden="true" onClick={() => {this.handleClick(this, -1)}}></span>
-					<img src={require(source)} />
-					<span className="glyphicon glyphicon-arrow-right" aria-hidden="true" onClick={() => {this.handleClick(this, 1)}}></span>
-				</div>
+			<div className='Employee'>
+				<img
+					src={require(source)}
+					style={{opacity: this.props.allowedToMove ? '1' : '0.6'}}
+					onClick={() => {this.handleClick(this)}}
+				/>
 			</div>
 		)
 	}

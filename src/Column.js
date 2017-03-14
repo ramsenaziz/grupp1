@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import './css/Column.css';
 
 class Column extends Component {
+	
+	columnTotal() {
+		var total = this.props.cards.reduce((a, b) => {
+			
+		})
+	}
+	
   render() {
-		var style = {backgroundColor: this.props.color};
+		var style = {backgroundColor: this.props.color, color:'black'};
 		var className = 'col-xs-2 Column ' + this.props.offset;
 	return (
       <div className={className}>

@@ -6,7 +6,7 @@ class EmployeeCol extends Component {
 
   renderEmployees() {
     return this.props.employees.map(employee =>
-      (<Employee key={employee.id} me={employee} />))
+      (<Employee key={employee.id} me={employee} move={this.props.move} />))
   }
 
 

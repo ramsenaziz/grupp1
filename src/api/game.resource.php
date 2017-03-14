@@ -51,7 +51,7 @@ class _game extends Resource{ // Klassen ärver egenskaper från den generella k
         	$game_id = $this->generate_id();
         	$query = "INSERT INTO games
         		(game_id, teamname, sprint, currentday, highscore, startdate, enddate)
-        		VALUES ('$game_id', '$teamname', 1, 1, 0, NOW(), NULL)
+        		VALUES ('$game_id', '$teamname', 1, 0, 0, NOW(), NULL)
         	";
         
         	if (mysqli_query($db, $query)) {

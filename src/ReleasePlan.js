@@ -18,18 +18,20 @@ class RelasePlan extends Component {
 
 				<div className='row' id='releaseSquare'>
 					<h4 style={{
-						borderRadius:'10px',
-						background: 'black', 
-						color:'white',
-						width: '250px',
-						heigth: '80px',
-						border: 'red solid 4px',
+						borderRadius:'5px',
+						background: '#79d6ea', 
+						color:'black',
+						width: '210px',
+						heigth: '40px',
+						// border: 'red solid 2px',
 						paddingLeft: '10px',
 						paddingTop: '5px',
 						paddingBottom: '5px',
-						marginLeft:'-370px',
-						marginTop:'-60px',
-						fontSize:'40px',
+						marginLeft:'95px',
+						marginTop:'-10px',
+						marginBottom:'10px',
+						fontSize:'18px',
+						
 						// marginBottom:'500px',
 						
 					}} ><strong>{this.state.days[this.props.day]} Sprint {this.props.sprint}/{this.props.totalSprints}</strong></h4>

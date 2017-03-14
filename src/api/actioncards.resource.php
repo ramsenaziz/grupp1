@@ -3,7 +3,7 @@
 # Den här klassen ska köras om vi anropat resursen game i vårt API genom /?/game
 #
 
-class _actioncard extends Resource{ // Klassen ärver egenskaper från den generella klassen Resource som finns i resource.class.php
+class _actioncards extends Resource{ // Klassen ärver egenskaper från den generella klassen Resource som finns i resource.class.php
 
 	function GET($input,$db){//$input is empty
 	

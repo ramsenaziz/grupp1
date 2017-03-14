@@ -1,5 +1,5 @@
 <?php
-class _card extends Resource{
+class _cards extends Resource{
     
     function post($input, $db) { // Klassen ärver egenskaper från den generella klassen Resource som finns i resource.class.php
         $cards = json_decode($input['cards']);

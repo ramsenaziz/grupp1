@@ -101,7 +101,7 @@ class App extends Component {
   }
 
   init(val) {
-    axios.post("http://localhost/grupp1/src/api/?/game",
+    axios.post("http://localhost/grupp1/src/api/?/games",
       querystring.stringify({
         teamname: val
       })).then((response) => {
@@ -115,7 +115,7 @@ class App extends Component {
   }
 	
 	getGame() {
-		axios.get("http://localhost/grupp1/src/api/?/game/"+this.state.gameID)
+		axios.get("http://localhost/grupp1/src/api/?/games/"+this.state.gameID)
 			.then(response => {
 				var data = response.data[0];
 				this.setState({
@@ -140,7 +140,7 @@ class App extends Component {
 			querystring.stringify({
 				game_id: id
 		})).then(response => {
-			axios.get("http://localhost/grupp1/src/api/?/game/"+id+"/employees")
+			axios.get("http://localhost/grupp1/src/api/?/games/"+id+"/employees")
 				.then(response => {
 					var analytics = response.data.filter(emp => emp.currentrole == 1);
 					var devs = response.data.filter(emp => emp.currentrole == 2);
@@ -180,7 +180,7 @@ class App extends Component {
       gameover: gameover
     });
 		
-		axios.post("http://localhost/grupp1/src/api/?/game/"+this.state.gameID,
+		axios.post("http://localhost/grupp1/src/api/?/games/"+this.state.gameID,
 			querystring.stringify({
 				teamname: this.state.teamname,
 				sprint: sprint,
@@ -193,9 +193,18 @@ class App extends Component {
   }
 
   rollDice() {
-    var AScore = this.state.employeesA.map(employee => this.random(6)).reduce((a, b) => a + b);
-    var DScore = this.state.employeesD.map(employee => this.random(6)).reduce((a, b) => a + b);
-    var TScore = this.state.employeesT.map(employee => this.random(6)).reduce((a, b) => a + b);
+    var AScore = this.state.employeesA.map(employee => this.random(6));
+		if (AScore.length > 0) {
+			AScore = AScore.reduce((a, b) => a + b);
+		}
+    var DScore = this.state.employeesD.map(employee => this.random(6));
+		if (DScore.length > 0) {
+			DScore = DScore.reduce((a, b) => a + b);
+		}
+    var TScore = this.state.employeesT.map(employee => this.random(6));
+		if (TScore.length > 0) {
+			TScore = TScore.reduce((a, b) => a + b);
+		}
 
     var analysis = this.reducePoints(this.state.analysisCards, AScore, 'apoint');
     var development = this.reducePoints(this.state.developmentCards, DScore, 'dpoint');
@@ -247,13 +256,17 @@ class App extends Component {
     });
   }
 	
-	moveEmployee(emp, dir) {
+	moveEmployee(emp) {
 		var employee = emp.props.me;
 		var newRole = Number(employee.currentrole);
-		newRole += dir;
+		newRole += 1;
 		
 		if (employee.role != 2 && newRole == 2) {
-			newRole += dir;
+			newRole += 1;
+		}
+		
+		if (newRole > 3) {
+			newRole = 1;
 		}
 		
 		axios.put("http://localhost/grupp1/src/api/?/employees",
@@ -263,7 +276,7 @@ class App extends Component {
 				currentrole: newRole
 			})
 		).then(response => {
-			axios.get("http://localhost/grupp1/src/api/?/game/"+this.state.gameID+"/employees")
+			axios.get("http://localhost/grupp1/src/api/?/games/"+this.state.gameID+"/employees")
 				.then(response => {
 					var analytics = response.data.filter(emp => emp.currentrole == 1);
 					var devs = response.data.filter(emp => emp.currentrole == 2);
@@ -346,7 +359,7 @@ class App extends Component {
       });
     }
     /*var querystring = require('querystring');*/
-    axios.post("http://localhost/grupp1/src/api/?/card",
+    axios.post("http://localhost/grupp1/src/api/?/cards",
       querystring.stringify({
         cards: JSON.stringify(cards),
         game_id: this.state.gameID
@@ -355,7 +368,7 @@ class App extends Component {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then((response) => {
-        axios.get("http://localhost/grupp1/src/api/?/game/" + this.state.gameID + "/cards/0").then((response) => {
+        axios.get("http://localhost/grupp1/src/api/?/games/" + this.state.gameID + "/cards/0").then((response) => {
           this.setState({ backlogCards: response.data });
         });
       })
@@ -396,16 +409,19 @@ class App extends Component {
               employees={this.state.employeesA}
               score={this.state.AScore}
               move={this.moveEmployee.bind(this)}
+              allowedToMove={!this.state.workDone}
             />
             <EmployeeCol
               employees={this.state.employeesD}
               score={this.state.DScore}
               move={this.moveEmployee.bind(this)}
+              allowedToMove={!this.state.workDone}
             />
             <EmployeeCol
               employees={this.state.employeesT}
               score={this.state.TScore}
               move={this.moveEmployee.bind(this)}
+              allowedToMove={!this.state.workDone}
             />
           </div>
         </div>
@@ -415,7 +431,7 @@ class App extends Component {
           <Column title='Analysis' cards={this.createCards(analysis)} color='#FFF546'/>
           <Column title='Development' cards={this.createCards(development)} />
           <Column title='Testing' cards={this.createCards(testing)} />
-          <Column title='Done' cards={this.createCards(done)} />
+          <Column title='Done' cards={this.createCards(done)} targetVal='money'/>
         </div>
 
       </div>

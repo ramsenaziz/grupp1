@@ -19,6 +19,7 @@ import Retrospective from './Retrospective.js';
 import ReleasePlan from './ReleasePlan.js';
 import Gameover from './Gameover.js';
 import TeamName from './TeamName.js';
+import DoneColumn from './DoneColumn';
 
 class App extends Component {
   constructor() {
@@ -436,11 +437,15 @@ class App extends Component {
 
     return (
       <div className='container'>
-        <TeamName startgame={this.init.bind(this)} visible={this.state.startScreen} />
-        <Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
-        <Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363} />
-        <Sidebar />
-        <ReleasePlan day={this.state.today} sprint={this.state.sprint} totalSprints={this.state.totalSprints} />
+      	<div className='row'>
+      		<div className='col-xs-10 col-xs-offset-1'>
+						<TeamName startgame={this.init.bind(this)} visible={this.state.startScreen} />
+						<Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
+						<Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363} />
+						<Sidebar />
+						<ReleasePlan day={this.state.today} sprint={this.state.sprint} totalSprints={this.state.totalSprints} />
+					</div>
+				</div>
 
         <div className='well'>
           <div className='row'>
@@ -482,7 +487,7 @@ class App extends Component {
           <Column title='Analysis' cards={this.createCards(analysis)} color='#79d6ea' targetVal='analysis'/>
           <Column title='Development' cards={this.createCards(development)} color='lightgray' targetVal='development'/>
           <Column title='Testing' cards={this.createCards(testing)} color = 'lightpink' targetVal='testing'/>
-          <Column title='Done' cards={this.createCards(done)} targetVal='money' update={this.updateTotalScore.bind(this)}/>
+          <DoneColumn title='Done' cards={this.createCards(done)} targetVal='money' update={this.updateTotalScore.bind(this)} points={this.state.totalScore} />
         </div>
 
       </div>

@@ -256,6 +256,10 @@ class App extends Component {
     });
   }
 	
+	updateTotalScore(score) {
+		this.setState({ totalScore: score });
+	}
+	
 	moveEmployee(emp) {
 		var employee = emp.props.me;
 		var newRole = Number(employee.currentrole);
@@ -427,11 +431,11 @@ class App extends Component {
         </div>
 
         <div className='row' >
-          <Column title='Backlog' cards={this.createCards(backlog)} offset='col-xs-offset-1' />
-          <Column title='Analysis' cards={this.createCards(analysis)} color='#FFF546'/>
-          <Column title='Development' cards={this.createCards(development)} />
-          <Column title='Testing' cards={this.createCards(testing)} />
-          <Column title='Done' cards={this.createCards(done)} targetVal='money'/>
+          <Column title='Backlog' cards={this.createCards(backlog)} offset='col-xs-offset-1'/>
+          <Column title='Analysis' cards={this.createCards(analysis)} color='#FFF546' targetVal='analysis'/>
+          <Column title='Development' cards={this.createCards(development)} targetVal='development'/>
+          <Column title='Testing' cards={this.createCards(testing)} targetVal='testing'/>
+          <Column title='Done' cards={this.createCards(done)} targetVal='money' update={this.updateTotalScore.bind(this)}/>
         </div>
 
       </div>

@@ -252,6 +252,7 @@ class App extends Component {
       [locations[cardLoc]]: filteredArray,
       [locations[cardLoc + 1]]: nextArray
     });
+	}
 	
 	updateTotalScore(score) {
 		this.setState({ totalScore: score });

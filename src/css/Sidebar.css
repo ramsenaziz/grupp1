@@ -1,14 +1,13 @@
 .sidebar {
     color: black;
-    font-size: 40px;
     right: 25px;
     height: 100%;
-    width: 300px;
+    width: 500px;
     position: fixed;
     z-index: 200;
     background-color: #79d6ea;
     transition: 0.4s;
-    padding: 60px 0 0 10px;
+    padding: 60px 0 0 30px;
     top: 0;
 }
 
@@ -17,14 +16,14 @@
 }
 
 .sb-close {
-    right: -300px;
+    right: -500px;
 }
 
 .sidebarBtn {
     position: absolute;
     z-index: 200;
     top: 20%;
-    left: -100px;
+    left: -125px;
     height: 180px;
     background-color: #79d6ea;
     border: none;
@@ -75,7 +74,7 @@
 }
 
 
-/**********************/
+/**********making the x************/
 
 .c-hamburger--htx {
     background-color: #79d6ea;

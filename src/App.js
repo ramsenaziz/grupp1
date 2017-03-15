@@ -25,7 +25,7 @@ class App extends Component {
     super();
     this.state = {
       gameID: '',
-			teamname: '',
+      teamname: '',
       //Arrays representing the board columns. Contain cards
       backlogCards: [],
       analysisCards: [],
@@ -51,8 +51,8 @@ class App extends Component {
       DScore: 0,
       TScore: 0,
       gameover: false,
-			
-			totalScore: 0
+
+      totalScore: 0
     }
 
     this.handleCardClick = this.handleCardClick.bind(this);
@@ -60,9 +60,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-		//axios.get("http://localhost/grupp1/src/api/?/game/MRAtn").then(response => {
-		//	this.setState( {gameID: response.data} );
-		//})
+    //axios.get("http://localhost/grupp1/src/api/?/game/MRAtn").then(response => {
+    //	this.setState( {gameID: response.data} );
+    //})
     //axios.get("http://localhost/grupp1/src/api/?/highscore").then((response) => {
     //  console.log(response);
     //});
@@ -105,56 +105,55 @@ class App extends Component {
       querystring.stringify({
         teamname: val
       })).then((response) => {
-        this.setState({
-          gameID: response.data,
+      this.setState({
+        gameID: response.data,
 
-					startScreen: false
-        }, this.setupGame)
+        startScreen: false
+      }, this.setupGame)
 
-      });
+    });
   }
-	
-	getGame() {
-		axios.get("http://localhost/grupp1/src/api/?/games/"+this.state.gameID)
-			.then(response => {
-				var data = response.data[0];
-				this.setState({
-					teamname: data.teamname,
-					startDate: data.startdate,
-					today: Number(data.currentday),
-					sprint: Number(data.sprint),
-					totalScore: Number(data.highscore)
-				})
-		})
-	}
-	
-	setupGame() {
-		var id = this.state.gameID;
-		this.cardGenerator(20, 0);
-		this.cardGenerator(7, 1);
-		this.cardGenerator(5, 2);
-		
-		this.getGame();
-		
-		axios.post("http://localhost/grupp1/src/api/?/employees",
-			querystring.stringify({
-				game_id: id
-		})).then(response => {
-			axios.get("http://localhost/grupp1/src/api/?/games/"+id+"/employees")
-				.then(response => {
-					var analytics = response.data.filter(emp => emp.currentrole == 1);
-					var devs = response.data.filter(emp => emp.currentrole == 2);
-					var tests = response.data.filter(emp => emp.currentrole == 3);
-				
-					this.setState({
-						employeesA: analytics,
-						employeesD: devs,
-						employeesT: tests
-					})
-				}
-			)
-		})
-	}
+
+  getGame() {
+    axios.get("http://localhost/grupp1/src/api/?/games/" + this.state.gameID)
+      .then(response => {
+        var data = response.data[0];
+        this.setState({
+          teamname: data.teamname,
+          startDate: data.startdate,
+          today: Number(data.currentday),
+          sprint: Number(data.sprint),
+          totalScore: Number(data.highscore)
+        })
+      })
+  }
+
+  setupGame() {
+    var id = this.state.gameID;
+    this.cardGenerator(20, 0);
+    this.cardGenerator(7, 1);
+    this.cardGenerator(5, 2);
+
+    this.getGame();
+
+    axios.post("http://localhost/grupp1/src/api/?/employees",
+      querystring.stringify({
+        game_id: id
+      })).then(response => {
+      axios.get("http://localhost/grupp1/src/api/?/games/" + id + "/employees")
+        .then(response => {
+          var analytics = response.data.filter(emp => emp.currentrole == 1);
+          var devs = response.data.filter(emp => emp.currentrole == 2);
+          var tests = response.data.filter(emp => emp.currentrole == 3);
+
+          this.setState({
+            employeesA: analytics,
+            employeesD: devs,
+            employeesT: tests
+          })
+        })
+    })
+  }
 
   nextDay() {
     var day = this.state.today + 1;
@@ -179,32 +178,32 @@ class App extends Component {
       retrospective: retrospective,
       gameover: gameover
     });
-		
-		axios.post("http://localhost/grupp1/src/api/?/games/"+this.state.gameID,
-			querystring.stringify({
-				teamname: this.state.teamname,
-				sprint: sprint,
-				currentday: day,
-				highscore: this.state.totalScore,
-				startdate: this.state.startDate,
-				enddate: 'NULL'
-			})
-	 	).then(this.getGame.bind(this))	
+
+    axios.post("http://localhost/grupp1/src/api/?/games/" + this.state.gameID,
+      querystring.stringify({
+        teamname: this.state.teamname,
+        sprint: sprint,
+        currentday: day,
+        highscore: this.state.totalScore,
+        startdate: this.state.startDate,
+        enddate: 'NULL'
+      })
+    ).then(this.getGame.bind(this))
   }
 
   rollDice() {
     var AScore = this.state.employeesA.map(employee => this.random(6));
-		if (AScore.length > 0) {
-			AScore = AScore.reduce((a, b) => a + b);
-		}
+    if (AScore.length > 0) {
+      AScore = AScore.reduce((a, b) => a + b);
+    }
     var DScore = this.state.employeesD.map(employee => this.random(6));
-		if (DScore.length > 0) {
-			DScore = DScore.reduce((a, b) => a + b);
-		}
+    if (DScore.length > 0) {
+      DScore = DScore.reduce((a, b) => a + b);
+    }
     var TScore = this.state.employeesT.map(employee => this.random(6));
-		if (TScore.length > 0) {
-			TScore = TScore.reduce((a, b) => a + b);
-		}
+    if (TScore.length > 0) {
+      TScore = TScore.reduce((a, b) => a + b);
+    }
 
     var analysis = this.reducePoints(this.state.analysisCards, AScore, 'apoint');
     var development = this.reducePoints(this.state.developmentCards, DScore, 'dpoint');
@@ -239,8 +238,7 @@ class App extends Component {
     var filteredArray = currentArray.filter((c) => {
       if (c.id == card.props.id) {
         findCard = c;
-      }
-      else return c.id !== card.props.id;
+      } else return c.id !== card.props.id;
     });
     findCard.location++;
 
@@ -254,7 +252,6 @@ class App extends Component {
       [locations[cardLoc]]: filteredArray,
       [locations[cardLoc + 1]]: nextArray
     });
-  }
 	
 	updateTotalScore(score) {
 		this.setState({ totalScore: score });
@@ -304,43 +301,90 @@ class App extends Component {
     var types = ['us', 'm', 'd'];
     var cardComponents = cards.map(card => {
       if (card.type == 0) {
-        return (
-          <Card
-            key={card.id}
-            title={types[0] + card.number}
-            id={card.id}
-            money={card.money}
-            analysis={card.apoint}
-            development={card.dpoint}
-            testing={card.tpoint}
-            Click={this.handleCardClick}
-            location={card.location}
+        return ( <
+          Card key = {
+            card.id
+          }
+          title = {
+            types[0] + card.number
+          }
+          id = {
+            card.id
+          }
+          money = {
+            card.money
+          }
+          analysis = {
+            card.apoint
+          }
+          development = {
+            card.dpoint
+          }
+          testing = {
+            card.tpoint
+          }
+          Click = {
+            this.handleCardClick
+          }
+          location = {
+            card.location
+          }
           />
         );
       } else if (card.type == 1) {
-        return (
-          <MCard
-            key={card.id}
-            id={card.id}
-            title={types[1] + card.number}
-            analysis={card.apoint}
-            development={card.dpoint}
-            testing={card.tpoint}
-            Click={this.handleCardClick}
-            location={card.location}
+        return ( <
+          MCard key = {
+            card.id
+          }
+          id = {
+            card.id
+          }
+          title = {
+            types[1] + card.number
+          }
+          analysis = {
+            card.apoint
+          }
+          development = {
+            card.dpoint
+          }
+          testing = {
+            card.tpoint
+          }
+          Click = {
+            this.handleCardClick
+          }
+          location = {
+            card.location
+          }
           />
         );
       } else if (card.type == 2) {
-        return (
-          <DCard
-            key={card.id}
-            id={card.id}
-            title={types[2] + card.number}
-            analysis={card.apoint}
-            development={card.dpoint}
-            testing={card.tpoint}
-            Click={this.handleCardClick}
-            location={card.location}
+        return ( <
+          DCard key = {
+            card.id
+          }
+          id = {
+            card.id
+          }
+          title = {
+            types[2] + card.number
+          }
+          analysis = {
+            card.apoint
+          }
+          development = {
+            card.dpoint
+          }
+          testing = {
+            card.tpoint
+          }
+          Click = {
+            this.handleCardClick
+          }
+          location = {
+            card.location
+          }
           />
         );
       }
@@ -372,10 +416,12 @@ class App extends Component {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then((response) => {
-        axios.get("http://localhost/grupp1/src/api/?/games/" + this.state.gameID + "/cards/0").then((response) => {
-          this.setState({ backlogCards: response.data });
+      axios.get("http://localhost/grupp1/src/api/?/games/" + this.state.gameID + "/cards/0").then((response) => {
+        this.setState({
+          backlogCards: response.data
         });
-      })
+      });
+    })
 
     return cards;
   }
@@ -432,9 +478,9 @@ class App extends Component {
 
         <div className='row' >
           <Column title='Backlog' cards={this.createCards(backlog)} offset='col-xs-offset-1'/>
-          <Column title='Analysis' cards={this.createCards(analysis)} color='#FFF546' targetVal='analysis'/>
-          <Column title='Development' cards={this.createCards(development)} targetVal='development'/>
-          <Column title='Testing' cards={this.createCards(testing)} targetVal='testing'/>
+          <Column title='Analysis' cards={this.createCards(analysis)} color='#79d6ea' targetVal='analysis'/>
+          <Column title='Development' cards={this.createCards(development)} color='lightgray' targetVal='development'/>
+          <Column title='Testing' cards={this.createCards(testing)} color = 'lightpink' targetVal='testing'/>
           <Column title='Done' cards={this.createCards(done)} targetVal='money' update={this.updateTotalScore.bind(this)}/>
         </div>
 

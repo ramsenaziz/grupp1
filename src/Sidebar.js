@@ -1,5 +1,6 @@
 import "./css/Sidebar.css";
 import axios from 'axios';
+import NewGameBtn from './NewGameBtn.js';
 import React, { Component } from 'react';
 
 class Sidebar extends Component {
@@ -40,6 +41,7 @@ class Sidebar extends Component {
                     className={hamburgericon}>
                     <span></span>
                 </button>
+                <NewGameBtn handleClick={this.props.handleClick} />
                 <h2>Highscore</h2>
                 <div className='well'>
                     <ol>{highscore}</ol>

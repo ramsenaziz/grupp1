@@ -13,13 +13,14 @@ import MCard from './MCard.js';
 import DCard from './DCard.js';
 import Dice from './Dice.js';
 import ProgressBtn from './ProgressBtn.js';
-import NewGameBtn from './NewGameBtn.js';
 import EmployeeCol from './EmployeeCol.js';
 import Retrospective from './Retrospective.js';
 import ReleasePlan from './ReleasePlan.js';
 import Gameover from './Gameover.js';
 import TeamName from './TeamName.js';
 import DoneColumn from './DoneColumn';
+import Instructions from './Instructions';
+
 
 class App extends Component {
   constructor() {
@@ -106,13 +107,13 @@ class App extends Component {
       querystring.stringify({
         teamname: val
       })).then((response) => {
-      this.setState({
-        gameID: response.data,
+        this.setState({
+          gameID: response.data,
 
-        startScreen: false
-      }, this.setupGame)
+          startScreen: false
+        }, this.setupGame)
 
-    });
+      });
   }
 
   getGame() {
@@ -141,19 +142,19 @@ class App extends Component {
       querystring.stringify({
         game_id: id
       })).then(response => {
-      axios.get("http://localhost/grupp1/src/api/?/games/" + id + "/employees")
-        .then(response => {
-          var analytics = response.data.filter(emp => emp.currentrole == 1);
-          var devs = response.data.filter(emp => emp.currentrole == 2);
-          var tests = response.data.filter(emp => emp.currentrole == 3);
+        axios.get("http://localhost/grupp1/src/api/?/games/" + id + "/employees")
+          .then(response => {
+            var analytics = response.data.filter(emp => emp.currentrole == 1);
+            var devs = response.data.filter(emp => emp.currentrole == 2);
+            var tests = response.data.filter(emp => emp.currentrole == 3);
 
-          this.setState({
-            employeesA: analytics,
-            employeesD: devs,
-            employeesT: tests
+            this.setState({
+              employeesA: analytics,
+              employeesD: devs,
+              employeesT: tests
+            })
           })
-        })
-    })
+      })
   }
 
   nextDay() {
@@ -253,47 +254,49 @@ class App extends Component {
       [locations[cardLoc]]: filteredArray,
       [locations[cardLoc + 1]]: nextArray
     });
-	}
-	
-	updateTotalScore(score) {
-		this.setState({ totalScore: score });
-	}
-	
-	moveEmployee(emp) {
-		var employee = emp.props.me;
-		var newRole = Number(employee.currentrole);
-		newRole += 1;
-		
-		if (employee.role != 2 && newRole == 2) {
-			newRole += 1;
-		}
-		
-		if (newRole > 3) {
-			newRole = 1;
-		}
-		
-		axios.put("http://localhost/grupp1/src/api/?/employees",
-			querystring.stringify({
-				game_id: this.state.gameID,
-				id: employee.id,
-				currentrole: newRole
-			})
-		).then(response => {
-			axios.get("http://localhost/grupp1/src/api/?/games/"+this.state.gameID+"/employees")
-				.then(response => {
-					var analytics = response.data.filter(emp => emp.currentrole == 1);
-					var devs = response.data.filter(emp => emp.currentrole == 2);
-					var tests = response.data.filter(emp => emp.currentrole == 3);
-				
-					this.setState({
-						employeesA: analytics,
-						employeesD: devs,
-						employeesT: tests
-					})
-				}
-			)
-		})
-	}
+
+  }
+
+  updateTotalScore(score) {
+    this.setState({
+      totalScore: score
+    });
+  }
+
+  moveEmployee(emp) {
+    var employee = emp.props.me;
+    var newRole = Number(employee.currentrole);
+    newRole += 1;
+
+    if (employee.role != 2 && newRole == 2) {
+      newRole += 1;
+    }
+
+    if (newRole > 3) {
+      newRole = 1;
+    }
+
+    axios.put("http://localhost/grupp1/src/api/?/employees",
+      querystring.stringify({
+        game_id: this.state.gameID,
+        id: employee.id,
+        currentrole: newRole
+      })
+    ).then(response => {
+      axios.get("http://localhost/grupp1/src/api/?/games/" + this.state.gameID + "/employees")
+        .then(response => {
+          var analytics = response.data.filter(emp => emp.currentrole == 1);
+          var devs = response.data.filter(emp => emp.currentrole == 2);
+          var tests = response.data.filter(emp => emp.currentrole == 3);
+
+          this.setState({
+            employeesA: analytics,
+            employeesD: devs,
+            employeesT: tests
+          })
+        })
+    })
+  }
 
   random(maxInt, minInt = 1) {
     return Math.floor(Math.random() * (maxInt - minInt) + minInt);
@@ -303,90 +306,39 @@ class App extends Component {
     var types = ['us', 'm', 'd'];
     var cardComponents = cards.map(card => {
       if (card.type == 0) {
-        return ( <
-          Card key = {
-            card.id
-          }
-          title = {
-            types[0] + card.number
-          }
-          id = {
-            card.id
-          }
-          money = {
-            card.money
-          }
-          analysis = {
-            card.apoint
-          }
-          development = {
-            card.dpoint
-          }
-          testing = {
-            card.tpoint
-          }
-          Click = {
-            this.handleCardClick
-          }
-          location = {
-            card.location
-          }
-          />
+        return (
+          <Card key={card.id}
+            title={types[0] + card.number}
+            id={card.id}
+            money={card.money}
+            analysis={card.apoint}
+            development={card.dpoint}
+            testing={card.tpoint}
+            Click={this.handleCardClick}
+            location={card.location} />
         );
       } else if (card.type == 1) {
-        return ( <
-          MCard key = {
-            card.id
-          }
-          id = {
-            card.id
-          }
-          title = {
-            types[1] + card.number
-          }
-          analysis = {
-            card.apoint
-          }
-          development = {
-            card.dpoint
-          }
-          testing = {
-            card.tpoint
-          }
-          Click = {
-            this.handleCardClick
-          }
-          location = {
-            card.location
-          }
+        return (
+          <MCard key={card.id}
+            id={card.id}
+            title={types[1] + card.number}
+            analysis={card.apoint}
+            development={card.dpoint}
+            testing={card.tpoint}
+            Click={this.handleCardClick}
+            location={card.location}
           />
         );
       } else if (card.type == 2) {
-        return ( <
-          DCard key = {
-            card.id
-          }
-          id = {
-            card.id
-          }
-          title = {
-            types[2] + card.number
-          }
-          analysis = {
-            card.apoint
-          }
-          development = {
-            card.dpoint
-          }
-          testing = {
-            card.tpoint
-          }
-          Click = {
-            this.handleCardClick
-          }
-          location = {
-            card.location
-          }
+        return (
+          <DCard key={card.id}
+            id={card.id}
+            title={types[2] + card.number}
+            analysis={card.apoint}
+            development={card.dpoint}
+            testing={card.tpoint}
+            Click={this.handleCardClick}
+            location={card.location}
           />
         );
       }
@@ -418,12 +370,12 @@ class App extends Component {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then((response) => {
-      axios.get("http://localhost/grupp1/src/api/?/games/" + this.state.gameID + "/cards/0").then((response) => {
-        this.setState({
-          backlogCards: response.data
+        axios.get("http://localhost/grupp1/src/api/?/games/" + this.state.gameID + "/cards/0").then((response) => {
+          this.setState({
+            backlogCards: response.data
+          });
         });
-      });
-    })
+      })
 
     return cards;
   }
@@ -489,13 +441,15 @@ class App extends Component {
 			</div>
 
         <div className='row' >
-          <Column title='Backlog' cards={this.createCards(backlog)} offset='col-xs-offset-1'/>
-          <Column title='Analysis' cards={this.createCards(analysis)} color='#79d6ea' targetVal='analysis'/>
-          <Column title='Development' cards={this.createCards(development)} color='lightgray' targetVal='development'/>
-          <Column title='Testing' cards={this.createCards(testing)} color = 'lightpink' targetVal='testing'/>
+
+          <Column title='Backlog' cards={this.createCards(backlog)} offset='col-xs-offset-1' />
+          <Column title='Analysis' cards={this.createCards(analysis)} color='#79d6ea' targetVal='analysis' />
+          <Column title='Development' cards={this.createCards(development)} color='lightgray' targetVal='development' />
+          <Column title='Testing' cards={this.createCards(testing)} color='lightpink' targetVal='testing' />
           <DoneColumn title='Done' cards={this.createCards(done)} targetVal='money' update={this.updateTotalScore.bind(this)} points={this.state.totalScore} />
         </div>
-
+        <Instructions />
+        
       </div>
     )
   }

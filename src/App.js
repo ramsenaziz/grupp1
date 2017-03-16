@@ -13,7 +13,6 @@ import MCard from './MCard.js';
 import DCard from './DCard.js';
 import Dice from './Dice.js';
 import ProgressBtn from './ProgressBtn.js';
-import NewGameBtn from './NewGameBtn.js';
 import EmployeeCol from './EmployeeCol.js';
 import Retrospective from './Retrospective.js';
 import ReleasePlan from './ReleasePlan.js';
@@ -106,13 +105,13 @@ class App extends Component {
       querystring.stringify({
         teamname: val
       })).then((response) => {
-      this.setState({
-        gameID: response.data,
+        this.setState({
+          gameID: response.data,
 
-        startScreen: false
-      }, this.setupGame)
+          startScreen: false
+        }, this.setupGame)
 
-    });
+      });
   }
 
   getGame() {
@@ -141,19 +140,19 @@ class App extends Component {
       querystring.stringify({
         game_id: id
       })).then(response => {
-      axios.get("http://localhost/grupp1/src/api/?/games/" + id + "/employees")
-        .then(response => {
-          var analytics = response.data.filter(emp => emp.currentrole == 1);
-          var devs = response.data.filter(emp => emp.currentrole == 2);
-          var tests = response.data.filter(emp => emp.currentrole == 3);
+        axios.get("http://localhost/grupp1/src/api/?/games/" + id + "/employees")
+          .then(response => {
+            var analytics = response.data.filter(emp => emp.currentrole == 1);
+            var devs = response.data.filter(emp => emp.currentrole == 2);
+            var tests = response.data.filter(emp => emp.currentrole == 3);
 
-          this.setState({
-            employeesA: analytics,
-            employeesD: devs,
-            employeesT: tests
+            this.setState({
+              employeesA: analytics,
+              employeesD: devs,
+              employeesT: tests
+            })
           })
-        })
-    })
+      })
   }
 
   nextDay() {
@@ -305,90 +304,39 @@ class App extends Component {
     var types = ['us', 'm', 'd'];
     var cardComponents = cards.map(card => {
       if (card.type == 0) {
-        return ( <
-          Card key = {
-            card.id
-          }
-          title = {
-            types[0] + card.number
-          }
-          id = {
-            card.id
-          }
-          money = {
-            card.money
-          }
-          analysis = {
-            card.apoint
-          }
-          development = {
-            card.dpoint
-          }
-          testing = {
-            card.tpoint
-          }
-          Click = {
-            this.handleCardClick
-          }
-          location = {
-            card.location
-          }
-          />
+        return (
+          <Card key={card.id}
+            title={types[0] + card.number}
+            id={card.id}
+            money={card.money}
+            analysis={card.apoint}
+            development={card.dpoint}
+            testing={card.tpoint}
+            Click={this.handleCardClick}
+            location={card.location} />
         );
       } else if (card.type == 1) {
-        return ( <
-          MCard key = {
-            card.id
-          }
-          id = {
-            card.id
-          }
-          title = {
-            types[1] + card.number
-          }
-          analysis = {
-            card.apoint
-          }
-          development = {
-            card.dpoint
-          }
-          testing = {
-            card.tpoint
-          }
-          Click = {
-            this.handleCardClick
-          }
-          location = {
-            card.location
-          }
+        return (
+          <MCard key={card.id}
+            id={card.id}
+            title={types[1] + card.number}
+            analysis={card.apoint}
+            development={card.dpoint}
+            testing={card.tpoint}
+            Click={this.handleCardClick}
+            location={card.location}
           />
         );
       } else if (card.type == 2) {
-        return ( <
-          DCard key = {
-            card.id
-          }
-          id = {
-            card.id
-          }
-          title = {
-            types[2] + card.number
-          }
-          analysis = {
-            card.apoint
-          }
-          development = {
-            card.dpoint
-          }
-          testing = {
-            card.tpoint
-          }
-          Click = {
-            this.handleCardClick
-          }
-          location = {
-            card.location
-          }
+        return (
+          <DCard key={card.id}
+            id={card.id}
+            title={types[2] + card.number}
+            analysis={card.apoint}
+            development={card.dpoint}
+            testing={card.tpoint}
+            Click={this.handleCardClick}
+            location={card.location}
           />
         );
       }
@@ -420,12 +368,12 @@ class App extends Component {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then((response) => {
-      axios.get("http://localhost/grupp1/src/api/?/games/" + this.state.gameID + "/cards/0").then((response) => {
-        this.setState({
-          backlogCards: response.data
+        axios.get("http://localhost/grupp1/src/api/?/games/" + this.state.gameID + "/cards/0").then((response) => {
+          this.setState({
+            backlogCards: response.data
+          });
         });
-      });
-    })
+      })
 
     return cards;
   }
@@ -437,180 +385,47 @@ class App extends Component {
     var testing = this.state.testingCards;
     var done = this.state.doneCards;
 
-    return ( <
-      div className = 'container' >
+    return (
+      <div className='container'>
+        <div className='row'>
+          <div className='col-xs-10 col-xs-offset-1'>
+            <TeamName startgame={this.init.bind(this)} visible={this.state.startScreen} />
+            <Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
+            <Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363} />
+            <Sidebar handleClick={this.init.bind(this)} />
+            <ReleasePlan day={this.state.today} sprint={this.state.sprint} totalSprints={this.state.totalSprints} />
+          </div>
+        </div>
+        <div className='well' >
+          <div className='row' >
+            <div className='col-xs-3' >
 
-      <
-      div className = 'row' >
-      <
-      div className = 'col-xs-10 col-xs-offset-1' >
-      <
-      TeamName startgame = {
-        this.init.bind(this)
-      }
-      visible = {
-        this.state.startScreen
-      }
-      /> <
-      Retrospective done = {
-        () => this.setState({
-          retrospective: false
-        })
-      }
-      visible = {
-        this.state.retrospective
-      }
-      /> <
-      Gameover done = {
-        this.init.bind(this)
-      }
-      visible = {
-        this.state.gameover
-      }
-      score = {
-        36363636363
-      }
-      /> <
-      Sidebar / >
-      <
-      ReleasePlan day = {
-        this.state.today
-      }
-      sprint = {
-        this.state.sprint
-      }
-      totalSprints = {
-        this.state.totalSprints
-      }
-      /> <
-      /div> <
-      /div>
+              <div className='row' >
+                <div className='btn-group btn-group-vertical' >
 
-      <
-      div className = 'well' >
-      <
-      div className = 'row' >
-      <
-      div className = 'col-xs-3' >
+                  <Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
+                  <ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
+                </div>
+              </div>
+              <div className='row' >
+                <h3> {this.state.teamname} </h3>
+              </div>
+            </div>
+            <EmployeeCol employees={this.state.employeesA} score={this.state.AScore} move={this.moveEmployee.bind(this)} allowedToMove={!this.state.workDone} />
+            <EmployeeCol employees={this.state.employeesD} score={this.state.DScore} move={this.moveEmployee.bind(this)} allowedToMove={!this.state.workDone} />
+            <EmployeeCol employees={this.state.employeesT} score={this.state.TScore} move={this.moveEmployee.bind(this)} allowedToMove={!this.state.workDone} />
+          </div>
+        </div>
 
-      <
-      div className = 'row' >
-      <
-      div className = 'btn-group btn-group-vertical' >
-      <
-      NewGameBtn handleClick = {
-        this.init.bind(this)
-      }
-      /> <
-      Dice disabled = {
-        this.state.workDone
-      }
-      roll = {
-        this.rollDice.bind(this)
-      }
-      /> <
-      ProgressBtn enabled = {
-        this.state.workDone
-      }
-      handleClick = {
-        this.nextDay.bind(this)
-      }
-      /> <
-      /div> <
-      /div> <
-      div className = 'row' >
-      <
-      h3 > {
-        this.state.teamname
-      } < /h3> <
-      /div> <
-      /div> <
-      EmployeeCol employees = {
-        this.state.employeesA
-      }
-      score = {
-        this.state.AScore
-      }
-      move = {
-        this.moveEmployee.bind(this)
-      }
-      allowedToMove = {!this.state.workDone
-      }
-      /> <
-      EmployeeCol employees = {
-        this.state.employeesD
-      }
-      score = {
-        this.state.DScore
-      }
-      move = {
-        this.moveEmployee.bind(this)
-      }
-      allowedToMove = {!this.state.workDone
-      }
-      /> <
-      EmployeeCol employees = {
-        this.state.employeesT
-      }
-      score = {
-        this.state.TScore
-      }
-      move = {
-        this.moveEmployee.bind(this)
-      }
-      allowedToMove = {!this.state.workDone
-      }
-      /> <
-      /div> <
-      /div>
+        <div className='row' >
 
-      <
-      div className = 'row' >
-
-      <
-      Column title = 'Backlog'
-      cards = {
-        this.createCards(backlog)
-      }
-      offset = 'col-xs-offset-1' / >
-      <
-      Column title = 'Analysis'
-      cards = {
-        this.createCards(analysis)
-      }
-      color = '#79d6ea'
-      targetVal = 'analysis' / >
-      <
-      Column title = 'Development'
-      cards = {
-        this.createCards(development)
-      }
-      color = 'lightgray'
-      targetVal = 'development' / >
-      <
-      Column title = 'Testing'
-      cards = {
-        this.createCards(testing)
-      }
-      color = 'lightpink'
-      targetVal = 'testing' / >
-      <
-      DoneColumn title = 'Done'
-      cards = {
-        this.createCards(done)
-      }
-      targetVal = 'money'
-      update = {
-        this.updateTotalScore.bind(this)
-      }
-      points = {
-        this.state.totalScore
-      }
-      /> <
-      /div>
-
-      <
-      /div>
+          <Column title='Backlog' cards={this.createCards(backlog)} offset='col-xs-offset-1' />
+          <Column title='Analysis' cards={this.createCards(analysis)} color='#79d6ea' targetVal='analysis' />
+          <Column title='Development' cards={this.createCards(development)} color='lightgray' targetVal='development' />
+          <Column title='Testing' cards={this.createCards(testing)} color='lightpink' targetVal='testing' />
+          <DoneColumn title='Done' cards={this.createCards(done)} targetVal='money' update={this.updateTotalScore.bind(this)} points={this.state.totalScore} />
+        </div>
+      </div>
     )
   }
 }

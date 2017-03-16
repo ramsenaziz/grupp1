@@ -20,6 +20,7 @@ import ReleasePlan from './ReleasePlan.js';
 import Gameover from './Gameover.js';
 import TeamName from './TeamName.js';
 import DoneColumn from './DoneColumn';
+import Instructions from './Instructions';
 
 
 class App extends Component {
@@ -490,6 +491,8 @@ class App extends Component {
           <Column title='Testing' cards={this.createCards(testing)} color = 'lightpink' targetVal='testing'/>
           <DoneColumn title='Done' cards={this.createCards(done)} targetVal='money' update={this.updateTotalScore.bind(this)} points={this.state.totalScore} />
         </div>
+
+        <Instructions />
       </div>
     )
   }

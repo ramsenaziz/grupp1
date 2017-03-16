@@ -19,6 +19,7 @@ import Retrospective from './Retrospective.js';
 import ReleasePlan from './ReleasePlan.js';
 import Gameover from './Gameover.js';
 import TeamName from './TeamName.js';
+import Instruction from './Instructions.js';
 
 class App extends Component {
   constructor() {
@@ -417,7 +418,6 @@ class App extends Component {
           <Column title='Testing' cards={this.createCards(testing)} />
           <Column title='Done' cards={this.createCards(done)} />
         </div>
-
       </div>
     )
   }

@@ -1,6 +1,4 @@
-﻿-- Adminer 4.2.5 MySQL dump
-
-SET NAMES utf8;
+﻿SET NAMES utf8;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
@@ -162,5 +160,3 @@ INSERT INTO `games` (`id`, `game_id`, `teamname`, `sprint`, `currentday`, `highs
 (19,	'HwLBd',	'polisen',	1,	1,	0,	'2017-03-06 11:47:50',	NULL),
 (20,	'mgLie',	'polisen',	1,	1,	0,	'2017-03-06 11:50:44',	NULL),
 (21,	'dQygM',	'polisen',	1,	1,	0,	'2017-03-06 11:51:39',	NULL);
-
--- 2017-03-07 15:30:12

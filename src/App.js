@@ -446,41 +446,47 @@ class App extends Component {
 						<ReleasePlan day={this.state.today} sprint={this.state.sprint} totalSprints={this.state.totalSprints} />
 					</div>
 				</div>
-
-        <div className='well'>
-          <div className='row'>
-            <div className='col-xs-3'>
-            	<div className='row'>
-            		<div className='btn-group btn-group-vertical'>
-                	<NewGameBtn handleClick={this.init.bind(this)} />
-                	<Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
-                	<ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
-              	</div>
-            	</div>
-              <div className='row'>
-          			<h3>{this.state.teamname}</h3>
-          		</div>
-            </div>
-            <EmployeeCol
-              employees={this.state.employeesA}
-              score={this.state.AScore}
-              move={this.moveEmployee.bind(this)}
-              allowedToMove={!this.state.workDone}
-            />
-            <EmployeeCol
-              employees={this.state.employeesD}
-              score={this.state.DScore}
-              move={this.moveEmployee.bind(this)}
-              allowedToMove={!this.state.workDone}
-            />
-            <EmployeeCol
-              employees={this.state.employeesT}
-              score={this.state.TScore}
-              move={this.moveEmployee.bind(this)}
-              allowedToMove={!this.state.workDone}
-            />
-          </div>
-        </div>
+				
+			<div className='row box-row'>
+			
+				<div className='col-xs-2 col-xs-offset-1'>
+				<div className='box first-box'>
+					<div className='btn-group btn-group-vertical'>
+						<NewGameBtn handleClick={this.init.bind(this)} />
+						<Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
+						<ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
+					</div>
+					<h3>{this.state.teamname}</h3>
+					</div>
+				</div>
+				
+				<EmployeeCol
+					employees={this.state.employeesA}
+					score={this.state.AScore}
+					move={this.moveEmployee.bind(this)}
+					allowedToMove={!this.state.workDone}
+				/>
+				
+				<EmployeeCol
+					employees={this.state.employeesD}
+					score={this.state.DScore}
+					move={this.moveEmployee.bind(this)}
+					allowedToMove={!this.state.workDone}
+				/>
+				
+				<EmployeeCol
+					employees={this.state.employeesT}
+					score={this.state.TScore}
+					move={this.moveEmployee.bind(this)}
+					allowedToMove={!this.state.workDone}
+				/>
+				
+					
+				<div className='col-xs-2'>
+					<div className='box last-box'></div>
+				</div>
+				
+			</div>
 
         <div className='row' >
           <Column title='Backlog' cards={this.createCards(backlog)} offset='col-xs-offset-1'/>

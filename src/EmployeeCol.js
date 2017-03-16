@@ -14,6 +14,7 @@ class EmployeeCol extends Component {
     var classes = 'EmployeeCol col-xs-2 ' + offset;
     return (
       <div className={classes}>
+       <div className='box'>
         <h4
           style={{
             // borderRadius:'10px',
@@ -27,6 +28,7 @@ class EmployeeCol extends Component {
           }}>
           <strong> Score: {this.props.score}</strong></h4>
         {this.renderEmployees()}
+				</div>
       </div>
     )
   }

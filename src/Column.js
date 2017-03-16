@@ -10,21 +10,6 @@ class Column extends Component {
 		}
 	}
 	
-	//componentWillReceiveProps(nextProps) {
-	//	if (nextProps != this.props) {
-	//		var title = this.props.title;
-	//		var cards = nextProps.cards;
-	//		var key = this.props.targetVal;
-	//		var total = 0;
-	//		if (title != 'Backlog') {
-	//			cards.forEach(card => {
-	//				total += Number(card.props[key]);
-	//			})
-	//		}
-	//		this.setState({ totalPoints: total });
-	//	}
-	//}
-	
 	totalPoints() {
 		var title = this.props.title;
 		var cards = this.props.cards;

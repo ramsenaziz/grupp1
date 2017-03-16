@@ -5,12 +5,12 @@
 	border-radius: 8px;
   width:80%;
   margin-left:20px;
-  box-shadow: 7px 7px 5px gray;
-  background-color: black;
+  /*box-shadow: 7px 7px 5px #999999;*/
+  background-color: #999;
   
 }
 
-.head {
+.Card-head {
   /*background-color: #46a28d;*/
   border-radius: 5px;
   margin-top: 4px;
@@ -19,7 +19,7 @@
   color: white;
 }
 
-.head > div {
+.Card-head > div {
 	font-weight: 600;
 	text-transform: uppercase;
 }
@@ -30,9 +30,9 @@
 .btn-secondary{
   height:35px;
   margin-bottom:5px;
-  color:white;
-  border: 6px solid black;
-  background-color: red;
+  color:black;
+  /*border: 1px solid black;*/
+  background-color:#79d6ea;
   margin-top: -7px;
   padding-top:3px;
 }
@@ -42,11 +42,11 @@
  border: 1px solid black;
  background-color: red;
 }
-
 .move {
  border: 2px solid white;
  color:white;
- background-color:red;
+ background-color:#449d44;
+ 
  margin-left: 80px;
  margin-bottom: 0px;
  /*border-radius: 100%;*/
@@ -54,4 +54,14 @@
     -ms-transform: rotate(-7deg); /* IE 9 */
     -webkit-transform: rotate(-7deg); /* Chrome, Safari, Opera */
     transform: rotate(-7deg);
+}
+
+.Card-progress {
+	background-color: #555555;
+}
+
+.Card-progress span {
+	color: #555;
+	font-size: 16px;
+	font-weight: bolder;
 }

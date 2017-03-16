@@ -1,12 +1,14 @@
 import "./css/Sidebar.css";
+import axios from 'axios';
 import React, { Component } from 'react';
 
 class Sidebar extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             sidebarOpen: false,
-            hamburger: false
+            hamburger: false,
+            highscore: []
         };
     }
     sideMenu() {
@@ -15,17 +17,33 @@ class Sidebar extends Component {
             hamburger: !this.state.hamburger
         });
     }
+
+    componentDidMount() {
+        axios.get('http://localhost/grupp1/src/api/?/highscore').then((response) => {
+            console.log(response.data);
+
+            var highscore = response.data.map((obj, i) => {
+                var teamAndScore = [obj.teamname, obj.highscore].join(" : ");
+
+                return (<li>{teamAndScore}</li>);
+            });
+            this.setState({ highscore: highscore });
+        });
+    }
     render() {
         var sidebarClass = this.state.sidebarOpen ? 'sidebar sb-open' : 'sidebar sb-close';
         var hamburgericon = this.state.hamburger ? 'sidebarBtn c-hamburger c-hamburger--htx is-active' : 'sidebarBtn c-hamburger c-hamburger--htx';
-        /*var glyph = this.state.sidebarOpen ? 'glyphicon glyphicon-chevron-right' : 'glyphicon glyphicon-chevron-left';*/
+        var highscore = this.state.highscore;
         return (
             <div className={sidebarClass} >
                 <button onClick={this.sideMenu.bind(this)}
                     className={hamburgericon}>
                     <span></span>
                 </button>
-                <div>Now you can see me!</div>
+                <h2>Highscore</h2>
+                <div className='well'>
+                    <ol>{highscore}</ol>
+                </div>
             </div>
         )
     }

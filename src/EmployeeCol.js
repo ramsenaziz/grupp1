@@ -6,9 +6,8 @@ class EmployeeCol extends Component {
 
   renderEmployees() {
     return this.props.employees.map(employee =>
-      (<Employee key={employee.id} me={employee} move={this.props.move} />))
+      (<Employee key={employee.id} me={employee} move={this.props.move} allowedToMove={this.props.allowedToMove}/>))
   }
-
 
   render() {
     var offset = this.props.offset;
@@ -17,12 +16,12 @@ class EmployeeCol extends Component {
       <div className={classes}>
         <h4
           style={{
-            borderRadius:'10px',
+            // borderRadius:'10px',
             width:'110px',
             paddingTop:'3px',
-            background: 'red',
-            color: 'white',
-            border:'black 5px solid',
+            // background: 'red',
+            color: 'gray',
+            // border:'black 5px solid',
             paddingBottom:'3px',
             marginLeft:'23px',
           }}>

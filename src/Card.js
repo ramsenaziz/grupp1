@@ -5,7 +5,7 @@ class Card extends Component {
   render() {
     var btnStyle = { display: "block" };
 
-    if (this.props.location === 1 && this.props.analysis > 0) {
+    if (this.props.location === 1 && this.props.analysis > 0 || this.props.location === 4) {
       btnStyle.display = "none";
     }
 
@@ -16,49 +16,40 @@ class Card extends Component {
     if (this.props.location === 3 && this.props.testing > 0) {
       btnStyle.display = "none";
     }
+		
+		var ABarWidth = this.props.analysis * 10;
+		var DBarWidth = this.props.development * 10;
+		var TBarWidth = this.props.testing * 10;
 
     return (
       <div className='Card col-xs-12'>
-        <div className='row head'>
+        <div className='row Card-head'>
           <div className='col-xs-8'>{this.props.title}</div>
           <div className='col-xs-2'>
             {this.props.money ? '$' + this.props.money : ''}
           </div>
         </div>
+				
+        <div className="progress Card-progress">
+					<div className="progress-bar" role="progressbar" aria-valuemin="0" 
+					aria-valuemax="100" style={{width: ABarWidth + '%', backgroundColor: '#79d6ea'}}>
+						<span>{this.props.analysis}</span>
+					</div>
+				</div>
 
-        <p style={{
-          width: 67,
-          marginTop: 5,
-          marginLeft:0,
-          // border: '1px solid black',
-          borderRadius: 5,
-          paddingLeft: 20,
-          backgroundColor: 'gray',
-          color: 'white',
-        }}> A: {this.props.analysis} </p>
+				<div className="progress Card-progress">
+					<div className="progress-bar" role="progressbar" aria-valuemin="0" 
+					aria-valuemax="100" style={{width: DBarWidth + '%', backgroundColor: 'lightgrey'}}>
+						<span>{this.props.development}</span>
+					</div>
+				</div>
 
-        <p style={{
-          width:67,
-          marginTop: 5,
-          marginLeft: 0,
-          // border: '5px dotted black',
-          borderRadius: 5,
-          paddingLeft: 20,
-          backgroundColor: 'goldenrod',
-          color: 'white',
-        }}>D: {this.props.development}</p>
-
-        <p style={{
-          width: 67,
-          marginTop: 5,
-          marginLeft: 0,
-          marginBottom:20,
-          // border: '1px dotted black',
-          borderRadius: 5,
-          paddingLeft: 20,
-          background: 'coral',
-          color: 'white',
-        }}>T: {this.props.testing}</p>
+        <div className="progress Card-progress">
+					<div className="progress-bar" role="progressbar" aria-valuemin="0" 
+					aria-valuemax="100" style={{width: TBarWidth + '%', backgroundColor: 'lightpink'}}>
+						<span>{this.props.testing}</span>
+					</div>
+				</div>
 
         <button className="btn btn-xs btn-success move"
           style={btnStyle} onClick={() => this.props.Click(this)}>move  <span className="glyphicon glyphicon-arrow-right"></span></button>

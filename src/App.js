@@ -404,7 +404,6 @@ class App extends Component {
 				<div className='col-xs-2 col-xs-offset-1'>
 				<div className='box first-box'>
 					<div className='btn-group btn-group-vertical'>
-						<NewGameBtn handleClick={this.init.bind(this)} />
 						<Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
 						<ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
 					</div>

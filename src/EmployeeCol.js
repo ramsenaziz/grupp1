@@ -17,16 +17,13 @@ class EmployeeCol extends Component {
        <div className='box'>
         <h4
           style={{
-            // borderRadius:'10px',
             width:'110px',
             paddingTop:'3px',
-            // background: 'red',
             color: 'gray',
-            // border:'black 5px solid',
             paddingBottom:'3px',
             marginLeft:'23px',
           }}>
-          <strong> Score: {this.props.score}</strong></h4>
+          <strong> Points: {this.props.score}</strong></h4>
         {this.renderEmployees()}
 				</div>
       </div>

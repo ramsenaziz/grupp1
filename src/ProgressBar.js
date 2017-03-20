@@ -8,7 +8,7 @@ class ProgressBar extends Component {
 			<div className="progress ProgressBar">
 				<div className="progress-bar" role="progressbar" aria-valuemin="0" 
 				aria-valuemax="100" style={progress}>
-					<span>{this.props.day}. Sprint {this.props.sprint}/{this.props.totalSprints}</span>
+					<span>{this.props.day}</span>
 				</div>
 			</div>
 		);

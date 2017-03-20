@@ -11,13 +11,13 @@ class Employee extends Component {
 		var source = './images/';
 		switch(this.props.me.role) {
 			case '1':
-				source += 'ana.png';
+				source += 'ana2.png';
 				break;
 			case '2':
 				source += 'dev.png';
 				break;
 			case '3':
-				source += 'test.png';
+				source += 'test2.png';
 				break;
 			default:
 				source += 'ana.png';
@@ -26,6 +26,7 @@ class Employee extends Component {
 		return (
 			<div className='Employee'>
 				<img
+					alt='employee'
 					src={require(source)}
 					style={{opacity: this.props.allowedToMove ? '1' : '0.6'}}
 					onClick={() => {this.handleClick(this)}}

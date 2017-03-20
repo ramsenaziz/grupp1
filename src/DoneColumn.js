@@ -15,21 +15,9 @@ class DoneColumn extends Column {
 			this.props.update(total);
 		}
 	}
-	//
-	//totalPoints() {
-	//	var title = this.props.title;
-	//	var cards = this.props.cards;
-	//	var key = this.props.targetVal;
-	//	var total = 0;
-	//	if (title != 'Backlog') {
-	//		cards.forEach(card => {
-	//			total += Number(card.props[key]);
-	//		})
-	//	}
-	//}
 	
 	render() {
-		var style = {backgroundColor: this.props.color, color:'black'};
+		var style = {backgroundColor: this.props.color};
 	return (
       <div className='col-xs-2 Column'>
 				<div className='row Column-title' style={style}>{this.props.title} ${this.props.points}</div>

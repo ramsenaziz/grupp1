@@ -1,3 +1,10 @@
+body {
+	background: -webkit-linear-gradient(#fff, #eee, #ccc);
+	background: -o-linear-gradient(#fff, #eee, #ccc);
+	background: linear-gradient(#fff, #eee, #ccc);
+	height: 100vh;
+}
+
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -14,8 +21,26 @@
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background: rgba( 91, 91, 91, 0.454 ); 
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: rgba( 66, 66, 66, 0.454 ); 
+}
+
+.game-status {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	color: #444;
+}
+
+.status-box {
+	background: #dddddd;
+	border: 1px solid #c4c4c4;
+	padding: 5px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+
+.button-group {
+	float: right;
 }

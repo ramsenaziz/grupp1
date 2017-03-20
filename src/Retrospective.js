@@ -6,20 +6,7 @@ class Retrospective extends Component {
 	constructor() {
 		super();
 		this.state = {
-			time: 300,
 			visible: false
-		}
-	}
-
-	tick() {
-		var time = this.state.time - 1;
-		this.setState({ time: time });
-	}
-
-	componentDidMount() {
-		if (this.props.visible) {
-			var timer = setInterval(this.tick.bind(this), 1000);
-			this.setState({ timer: timer });
 		}
 	}
 
@@ -44,7 +31,6 @@ class Retrospective extends Component {
 						<br />
 						Click "Next Sprint" when you are ready to continue.
 					</p>
-					<p>{this.state.time}</p>
 					<button
 					style={{
 						width:'330px',
@@ -52,7 +38,6 @@ class Retrospective extends Component {
 						onClick={this.props.done} className='btn btn-primary'>Next Sprint!</button>
 				</div>
 			</div>
-
 		)
 	}
 }

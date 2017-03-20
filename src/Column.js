@@ -24,7 +24,7 @@ class Column extends Component {
 	}
 	
   render() {
-		var style = {backgroundColor: this.props.color, color:'black'};
+		var style = {backgroundColor: this.props.color};
 		var className = 'col-xs-2 Column ' + this.props.offset;
 	return (
       <div className={className}>

@@ -60,9 +60,7 @@ class App extends Component {
     this.handleCardClick = this.handleCardClick.bind(this);
 
   }
-<<<<<<< HEAD
-  //key is A:, D: or T: on the card.
-=======
+
 
   componentDidMount() {
     //axios.get("http://localhost/grupp1/src/api/?/game/MRAtn").then(response => {
@@ -82,7 +80,7 @@ class App extends Component {
 
 
   //key is analysis, development or testing.
->>>>>>> API
+
   //pos is position of the card in the column
   reducePoints(column, points, key, pos = 0) {
 
@@ -393,55 +391,55 @@ class App extends Component {
 
     return (
       <div className='container'>
-      	<div className='row'>
-      		<div className='col-xs-10 col-xs-offset-1'>
-						<TeamName startgame={this.init.bind(this)} visible={this.state.startScreen} />
-						<Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
-						<Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363} />
-						<Sidebar />
-						<ReleasePlan day={this.state.today} sprint={this.state.sprint} totalSprints={this.state.totalSprints} />
-					</div>
-				</div>
-				
-			<div className='row box-row'>
-			
-				<div className='col-xs-2 col-xs-offset-1'>
-				<div className='box first-box'>
-					<div className='btn-group btn-group-vertical'>
-						<Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
-						<ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
-					</div>
-					<h3>{this.state.teamname}</h3>
-					</div>
-				</div>
-				
-				<EmployeeCol
-					employees={this.state.employeesA}
-					score={this.state.AScore}
-					move={this.moveEmployee.bind(this)}
-					allowedToMove={!this.state.workDone}
-				/>
-				
-				<EmployeeCol
-					employees={this.state.employeesD}
-					score={this.state.DScore}
-					move={this.moveEmployee.bind(this)}
-					allowedToMove={!this.state.workDone}
-				/>
-				
-				<EmployeeCol
-					employees={this.state.employeesT}
-					score={this.state.TScore}
-					move={this.moveEmployee.bind(this)}
-					allowedToMove={!this.state.workDone}
-				/>
-				
-					
-				<div className='col-xs-2'>
-					<div className='box last-box'></div>
-				</div>
-				
-			</div>
+        <div className='row'>
+          <div className='col-xs-10 col-xs-offset-1'>
+            <TeamName startgame={this.init.bind(this)} visible={this.state.startScreen} />
+            <Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
+            <Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363} />
+            <Sidebar />
+            <ReleasePlan day={this.state.today} sprint={this.state.sprint} totalSprints={this.state.totalSprints} />
+          </div>
+        </div>
+
+        <div className='row box-row'>
+
+          <div className='col-xs-2 col-xs-offset-1'>
+            <div className='box first-box'>
+              <div className='btn-group btn-group-vertical'>
+                <Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
+                <ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
+              </div>
+              <h3>{this.state.teamname}</h3>
+            </div>
+          </div>
+
+          <EmployeeCol
+            employees={this.state.employeesA}
+            score={this.state.AScore}
+            move={this.moveEmployee.bind(this)}
+            allowedToMove={!this.state.workDone}
+          />
+
+          <EmployeeCol
+            employees={this.state.employeesD}
+            score={this.state.DScore}
+            move={this.moveEmployee.bind(this)}
+            allowedToMove={!this.state.workDone}
+          />
+
+          <EmployeeCol
+            employees={this.state.employeesT}
+            score={this.state.TScore}
+            move={this.moveEmployee.bind(this)}
+            allowedToMove={!this.state.workDone}
+          />
+
+
+          <div className='col-xs-2'>
+            <div className='box last-box'></div>
+          </div>
+
+        </div>
 
         <div className='row' >
 
@@ -452,7 +450,7 @@ class App extends Component {
           <DoneColumn title='Done' cards={this.createCards(done)} targetVal='money' update={this.updateTotalScore.bind(this)} points={this.state.totalScore} />
         </div>
         <Instructions />
-        
+
       </div>
     )
   }

@@ -2,12 +2,34 @@ import React, { Component } from 'react';
 import './css/Column.css';
 
 class Column extends Component {
+	
+	constructor(props) {
+		super(props);
+		this.state = {
+			totalPoints: 0
+		}
+	}
+	
+	totalPoints() {
+		var title = this.props.title;
+		var cards = this.props.cards;
+		var key = this.props.targetVal;
+		var total = 0;
+		if (title != 'Backlog') {
+			cards.forEach(card => {
+				total += Number(card.props[key]);
+			})
+			return total;
+		}
+	}
+	
   render() {
-
-    return (
-      <div className='col-xs-2 Column'>
-        <div className='row title'>{this.props.title}</div>
-        {this.props.cards}
+		var style = {backgroundColor: this.props.color, color:'black'};
+		var className = 'col-xs-2 Column ' + this.props.offset;
+	return (
+      <div className={className}>
+				<div className='row Column-title' style={style}>{this.props.title} {this.totalPoints()}</div>
+				<div className='row Column-body'>{this.props.cards}</div>
       </div>
     )
   }

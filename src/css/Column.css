@@ -1,41 +1,43 @@
 .Column {
-  border: 2px solid #ccc;
   height: 400px;
+  border-radius: 5px;
+	overflow: hidden;
+  border: 1px solid #b5b5b5;
+  background-color:white;
+}
+
+.Column-title {
+  text-align: center;
+  font-family: 'Questrial', sans-serif;
+  font-size: 20px;
+  background-color: white;  /*#46a28d;*/
+	height: 30px;
+	box-shadow: 0 3px 5px #555;
+  color:black;
+  padding-bottom: 5px;
+  border: 0px solid black;
+  margin-top: 0px;
+}
+
+.Column-body {
+	padding-top: 5px;
+	height: 90%;
   overflow-y: scroll;
-  border-radius: 7px;
 }
 
-.title {
-  text-align: center;
-  font-weight: bold;
-  background-color: #e8bb79;
-  margin-bottom: 5px;
-}
+/*div.row.Column-body {
+  background-color: white;
+}*/
 
-.DayRow {
-  height: 30px;
-  width:100%;
-  border: 1px solid rgb(94, 101, 103);
-  margin-bottom: 15px;
-  margin-top: 15px;
-  padding-top: 3px;
-  text-align: center;
-  color:rgb(84, 79, 80);
-  font-family:monospace;;
-  border-radius: 5px;
-  background-color: rgb(217, 223, 228);
+/*[title~='Analysis'] {
+  color: black;
+  margin-bottom: 45px;
+  padding-top: 30px;
+}*/
+
+div.row.Column-title [title~=Analysis] {
+  color: black;
+  margin-bottom: 4000px;
 
 }
-.PlayerRow{
-  height: 30px;
-  width:100%;
-  /*border: 1px solid rgb(94, 101, 103);*/
-  margin-bottom: 25px;
-  margin-top: 15px;
-  padding-top: 3px;
-  text-align: center;
-  color:rgb(84, 79, 80);
-  font-family:monospace;;
-  border-radius: 5px;
 
-}

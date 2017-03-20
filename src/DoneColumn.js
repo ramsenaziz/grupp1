@@ -17,7 +17,7 @@ class DoneColumn extends Column {
 	}
 	
 	render() {
-		var style = {backgroundColor: this.props.color, color:'black'};
+		var style = {backgroundColor: this.props.color};
 	return (
       <div className='col-xs-2 Column'>
 				<div className='row Column-title' style={style}>{this.props.title} ${this.props.points}</div>

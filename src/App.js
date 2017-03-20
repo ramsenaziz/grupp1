@@ -181,7 +181,10 @@ class App extends Component {
       sprint: sprint,
       workDone: false,
       retrospective: retrospective,
-      gameover: gameover
+      gameover: gameover,
+			AScore: 0,
+			DScore: 0,
+			TScore: 0
     });
 
     axios.post("http://localhost/grupp1/src/api/?/games/" + this.state.gameID,
@@ -413,7 +416,7 @@ class App extends Component {
               	<h3 className='game-status'>{this.state.teamname}</h3>
 							</div>
              	<div className='status-box'>
-              	<h4 className='game-status game-status-small'>Sprint {this.state.sprint}/{this.state.totalSprints}</h4>
+              	<h4 className='game-status'>Sprint {this.state.sprint}/{this.state.totalSprints}</h4>
 							</div>
             </div>
           </div>
@@ -442,7 +445,7 @@ class App extends Component {
 
           <div className='col-xs-2'>
             <div className='box last-box'>
-            	<div className='btn-group btn-group-vertical'>
+            	<div className='btn-group btn-group-vertical button-group'>
                 <Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
                 <ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
               </div>

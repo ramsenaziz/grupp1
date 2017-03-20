@@ -6,20 +6,21 @@ import querystring from 'querystring';
 import './css/App.css';
 import './css/index.css';
 import './css/Card.css';
-import Sidebar from './Sidebar.js';
-import Column from './Column.js';
-import Card from './Card.js';
-import MCard from './MCard.js';
-import DCard from './DCard.js';
-import Dice from './Dice.js';
-import ProgressBtn from './ProgressBtn.js';
-import EmployeeCol from './EmployeeCol.js';
-import Retrospective from './Retrospective.js';
-import ReleasePlan from './ReleasePlan.js';
-import Gameover from './Gameover.js';
-import TeamName from './TeamName.js';
+import Sidebar from './Sidebar';
+import Column from './Column';
+import Card from './Card';
+import MCard from './MCard';
+import DCard from './DCard';
+import Dice from './Dice';
+import ProgressBtn from './ProgressBtn';
+import EmployeeCol from './EmployeeCol';
+import Retrospective from './Retrospective';
+import ReleasePlan from './ReleasePlan';
+import Gameover from './Gameover';
+import TeamName from './TeamName';
 import DoneColumn from './DoneColumn';
 import Instructions from './Instructions';
+import Backlog from './Backlog';
 
 
 class App extends Component {
@@ -311,6 +312,7 @@ class App extends Component {
         return (
           <Card key={card.id}
             title={types[0] + card.number}
+            type={card.type}
             id={card.id}
             money={card.money}
             analysis={card.apoint}
@@ -324,6 +326,7 @@ class App extends Component {
           <MCard key={card.id}
             id={card.id}
             title={types[1] + card.number}
+            type={card.type}
             analysis={card.apoint}
             development={card.dpoint}
             testing={card.tpoint}
@@ -336,6 +339,7 @@ class App extends Component {
           <DCard key={card.id}
             id={card.id}
             title={types[2] + card.number}
+            type={card.type}
             analysis={card.apoint}
             development={card.dpoint}
             testing={card.tpoint}
@@ -405,11 +409,12 @@ class App extends Component {
 
           <div className='col-xs-2 col-xs-offset-1'>
             <div className='box first-box'>
-              <div className='btn-group btn-group-vertical'>
-                <Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
-                <ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
-              </div>
-              <h3>{this.state.teamname}</h3>
+             	<div className='status-box'>
+              	<h3 className='game-status'>{this.state.teamname}</h3>
+							</div>
+             	<div className='status-box'>
+              	<h4 className='game-status game-status-small'>Sprint {this.state.sprint}/{this.state.totalSprints}</h4>
+							</div>
             </div>
           </div>
 
@@ -436,14 +441,18 @@ class App extends Component {
 
 
           <div className='col-xs-2'>
-            <div className='box last-box'></div>
+            <div className='box last-box'>
+            	<div className='btn-group btn-group-vertical'>
+                <Dice disabled={this.state.workDone} roll={this.rollDice.bind(this)} />
+                <ProgressBtn enabled={this.state.workDone} handleClick={this.nextDay.bind(this)} />
+              </div>
+            </div>
           </div>
 
         </div>
 
         <div className='row' >
-
-          <Column title='Backlog' cards={this.createCards(backlog)} offset='col-xs-offset-1' />
+         	<Backlog cards={this.createCards(backlog)} />
           <Column title='Analysis' cards={this.createCards(analysis)} color='#79d6ea' targetVal='analysis' />
           <Column title='Development' cards={this.createCards(development)} color='lightgray' targetVal='development' />
           <Column title='Testing' cards={this.createCards(testing)} color='lightpink' targetVal='testing' />

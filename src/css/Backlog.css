@@ -1,0 +1,18 @@
+.card-stack > div {
+	position: absolute;
+}
+
+.card-stack-us > div{
+	top: 35px;
+	left: 0;
+}
+
+.card-stack-m > div{
+	top: 155px;
+	left: 0;
+}
+
+.card-stack-d > div{
+	top: 275px;
+	left: 0;
+}

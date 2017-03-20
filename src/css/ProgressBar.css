@@ -1,5 +1,6 @@
 .ProgressBar {
 	height: 30px;
+	background: #9cbed2;
 }
 
 .ProgressBar span {

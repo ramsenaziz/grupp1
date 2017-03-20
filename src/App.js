@@ -6,6 +6,7 @@ import querystring from 'querystring';
 import './css/App.css';
 import './css/index.css';
 import './css/Card.css';
+import './css/Buttons.css';
 import Sidebar from './Sidebar.js';
 import Column from './Column.js';
 import Card from './Card.js';

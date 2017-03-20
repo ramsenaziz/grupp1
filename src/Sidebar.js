@@ -24,9 +24,16 @@ class Sidebar extends Component {
             console.log(response.data);
 
             var highscore = response.data.map((obj, i) => {
-                var teamAndScore = [obj.teamname, obj.highscore].join(" : ");
-
-                return (<li>{teamAndScore}</li>);
+                /*var teamAndScore = [obj.teamname, obj.highscore].join(" | ");*/
+                var classname;
+                if (i === 0) {
+                    classname = "gold";
+                } else if (i === 1) {
+                    classname = "silver";
+                } else if (i === 2) {
+                    classname = "bronze";
+                }
+                return (<tr><td className={classname}></td><td>{obj.teamname}</td><td>{obj.highscore}</td></tr>);
             });
             this.setState({ highscore: highscore });
         });
@@ -43,9 +50,11 @@ class Sidebar extends Component {
                 </button>
                 <NewGameBtn handleClick={this.props.handleClick} />
                 <h2>Highscore</h2>
-                <div className='well'>
-                    <ol>{highscore}</ol>
-                </div>
+                <table className='table table-bordered'>
+                    <tbody>
+                        {highscore}
+                    </tbody>
+                </table>
             </div>
         )
     }

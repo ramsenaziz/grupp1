@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class NewGameBtn extends Component {
   render() {
     return (
-      <button type='button' className='btn btn-secondary' onClick={this.props.handleClick}><strong>New Game</strong></button>
+      <button type='button' className='btn btn-lg newgame' onClick={this.props.handleClick}><strong>New Game</strong></button>
     )
   }
 }

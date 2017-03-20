@@ -19,7 +19,7 @@ class Instructions extends Component {
 	componentDidMount() {
 	    axios.get('http://localhost/grupp1/src/api/?/instructions').then((response) => {
 	        var instructions = response.data.map((obj, i) => {
-	            return (<div><h3>{obj.title}</h3>
+	            return (<div key={obj.id}><h3>{obj.title}</h3>
 	            	<p>{obj.description}</p>
 	            	</div>);
 	        });

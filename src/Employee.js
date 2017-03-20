@@ -26,6 +26,7 @@ class Employee extends Component {
 		return (
 			<div className='Employee'>
 				<img
+					alt='employee'
 					src={require(source)}
 					style={{opacity: this.props.allowedToMove ? '1' : '0.6'}}
 					onClick={() => {this.handleClick(this)}}

@@ -204,14 +204,23 @@ class App extends Component {
     if (AScore.length > 0) {
       AScore = AScore.reduce((a, b) => a + b);
     }
+		else {
+			AScore = 0;
+		}
     var DScore = this.state.employeesD.map(employee => this.random(6));
     if (DScore.length > 0) {
       DScore = DScore.reduce((a, b) => a + b);
     }
+		else {
+			DScore = 0;
+		}
     var TScore = this.state.employeesT.map(employee => this.random(6));
     if (TScore.length > 0) {
       TScore = TScore.reduce((a, b) => a + b);
     }
+		else {
+			TScore = 0;
+		}
 
     var analysis = this.reducePoints(this.state.analysisCards, AScore, 'apoint');
     var development = this.reducePoints(this.state.developmentCards, DScore, 'dpoint');

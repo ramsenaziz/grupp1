@@ -16,3 +16,6 @@
 	top: 275px;
 	left: 0;
 }
+.owerflow {
+	overflow-y: hidden;
+}

@@ -6,10 +6,11 @@ class DoneColumn extends Column {
 	
 	componentWillReceiveProps(nextProps) {
 		var cards = nextProps.cards;
-		var key = this.props.targetVal;
 		var total = 0;
 		cards.forEach(card => {
-			total += Number(card.props[key]);
+			if (card.props.money) {
+				total += Number(card.props.money);
+			}	
 		})
 		if (total > this.props.points) {
 			this.props.update(total);

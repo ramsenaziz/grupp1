@@ -19,9 +19,11 @@ class Instructions extends Component {
 	componentDidMount() {
 	    axios.get('http://localhost/grupp1/src/api/?/instructions').then((response) => {
 	        var instructions = response.data.map((obj, i) => {
-	            return (<div key={obj.id}><h3>{obj.title}</h3>
-	            	<p>{obj.description}</p>
-	            	</div>);
+						return (<div key={obj.id}><h3>{obj.title}</h3>
+							<p>{obj.description.split('\n').map((item, key) => {
+								return <span key={key}>{item}<br /></span>
+							})}</p>
+							</div>);
 	        });
 	        this.setState({ instructions: instructions});
 	    });
@@ -34,16 +36,16 @@ class Instructions extends Component {
 		<div>
 	  		<div className="glyphicon glyphicon-question-sign instructions"
 	  			onClick={this.displayInstructions.bind(this)}>
-	  			
+
 	  		</div>
-	  		
+
 	  		<div className="background" style={style} onClick={this.displayInstructions.bind(this)}>
 		  		<div className="text-container well" style={style}>
 		  		{this.state.instructions} Click on the screen to exit.
 	  			</div>
   			</div>
 
-  		</div>    
+  		</div>
   	)
   }
 }

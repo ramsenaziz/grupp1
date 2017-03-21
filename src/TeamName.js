@@ -12,21 +12,16 @@ class TeamName extends Component {
 				<div
 					style={{
 						background: 'black',
-						color: 'white',
+						// color: 'white',
 						paddingTop: '0px',
-						paddingLeft: '40px',
-						paddingBottom: '20px',
+						// paddingLeft: '40px',
+						// paddingBottom: '20px',
 						border: '5px white solid',
 					}}
 					className='retrospective well well-lg'>
 
 					<h2>Enter a teamname</h2>
 					<input
-						style={{
-							backgroundColor: 'black',
-							marginTop: '10px',
-							paddingLeft: '10px',
-						}}
 						ref={node => { input = node; }}
 					/>
 
@@ -39,7 +34,9 @@ class TeamName extends Component {
 							this.props.startgame(input.value);
 						}}> New Game
 					</button>
-					<button className='btn btn-default'> <span className='glyphicon glyphicon-cog' aria-hidden='true'></span></button>
+					<button className='btn btn-default'>
+						<span className='glyphicon glyphicon-cog' aria-hidden='true'>
+					</span></button>
 				</div>
 			</div>
 

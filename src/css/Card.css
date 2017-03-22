@@ -27,19 +27,12 @@
 /* New game button. Roll dice button. Next day button */
 
 .btn-secondary {
-	height: 35px;
-	margin-bottom: 5px;
+	/*height: 35px;*/
+	/*margin-bottom: 5px;*/
 	color: black;
-	/*border: 1px solid black;*/
 	background-color: #79d6ea;
-	margin-top: -7px;
-	padding-top: 3px;
-}
-
-.btn-primary {
-	margin-bottom: 5px;
-	border: 1px solid black;
-	background-color: red;
+	/*margin-top: -7px;*/
+	/*padding-top: 3px;*/
 }
 
 .move {
@@ -50,7 +43,6 @@
 	color: white;
 	background-color: #449d44;
 	margin-bottom: -14px;
-	/*	margin-top: -14px;*/
 	-ms-transform: rotate(-7deg);
 	/* IE 9 */
 	-webkit-transform: rotate(-7deg);

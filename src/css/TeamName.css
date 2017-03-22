@@ -1,0 +1,30 @@
+.teamname {
+	text-align: center;
+}
+
+.teamname button {
+	height: 2.5em;
+}
+
+.teamname input[type='text'] {
+	font-size: 2em;
+	text-align: inherit;
+	margin-bottom: 0.5em;
+}
+
+.teamname-drawer {
+	margin-top: 1em;
+	height: 0;
+	-webkit-transition: height 0.6s;
+	transition: height 0.6s;
+	background: #aaa;
+	overflow: hidden;
+}
+
+.teamname-drawer.active {
+	height: 70px;
+}
+
+.teamname-drawer label {
+	margin-top: 10px;
+}

@@ -36,6 +36,11 @@ class App extends Component {
       testingCards: [],
       doneCards: [],
 
+      //Cards to be rendered
+      usAmount: 60,
+      dAmount: 5,
+      mAmount: 7,
+
       //Release plan
       today: 0,
       sprint: 1,
@@ -61,25 +66,6 @@ class App extends Component {
     this.handleCardClick = this.handleCardClick.bind(this);
 
   }
-
-
-  componentDidMount() {
-    //axios.get("http://localhost/grupp1/src/api/?/game/MRAtn").then(response => {
-    //	this.setState( {gameID: response.data} );
-    //})
-    //axios.get("http://localhost/grupp1/src/api/?/highscore").then((response) => {
-    //  console.log(response);
-    //});
-    //axios.get("http://localhost/grupp1/src/api/?/actioncard/vadsomhelst/game/" + this.state.gameID).then((response) => {
-    //  console.log(response);
-    //});
-    //axios.get("http://localhost/grupp1/src/api/?/game/" + this.state.gameID + "/employees").then((response) => {
-    //  console.log(response);
-    //});
-  }
-
-
-
   //key is analysis, development or testing.
 
   //pos is position of the card in the column
@@ -105,6 +91,10 @@ class App extends Component {
     return column;
   }
 
+  newGame() {
+    this.init(this.state.teamname);
+  }
+
   init(val) {
     axios.post("http://localhost/grupp1/src/api/?/games",
       querystring.stringify({
@@ -112,10 +102,8 @@ class App extends Component {
       })).then((response) => {
         this.setState({
           gameID: response.data,
-
           startScreen: false
         }, this.setupGame)
-
       });
   }
 
@@ -135,9 +123,9 @@ class App extends Component {
 
   setupGame() {
     var id = this.state.gameID;
-    this.cardGenerator(20, 0);
-    this.cardGenerator(7, 1);
-    this.cardGenerator(5, 2);
+    this.cardGenerator(this.state.usAmount, 0);
+    this.cardGenerator(this.state.mAmount, 1);
+    this.cardGenerator(this.state.dAmount, 2);
 
     this.getGame();
 
@@ -278,6 +266,10 @@ class App extends Component {
     });
   }
 
+  changeCardAmount(target, number) {
+    this.setState({ [target]: number});
+  }
+
   moveEmployee(emp) {
     var employee = emp.props.me;
     var newRole = Number(employee.currentrole);
@@ -409,10 +401,17 @@ class App extends Component {
       <div className='container'>
         <div className='row'>
           <div className='col-xs-10 col-xs-offset-1'>
-            <TeamName startgame={this.init.bind(this)} visible={this.state.startScreen} />
+            <TeamName
+              startgame={this.init.bind(this)}
+              visible={this.state.startScreen}
+              usAmount={this.state.usAmount}
+              dAmount={this.state.dAmount}
+              mAmount={this.state.mAmount}
+              handleChange={this.changeCardAmount.bind(this)}
+            />
             <Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
             <Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363} />
-            <Sidebar />
+            <Sidebar handleClick={this.newGame.bind(this)} />
             <ReleasePlan day={this.state.today} sprint={this.state.sprint} totalSprints={this.state.totalSprints} />
           </div>
         </div>

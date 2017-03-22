@@ -1,11 +1,18 @@
 .retrospective {
 	position: absolute;
-	color: #444;
+	color: #111;
+	background: #bbb;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 100;
 	width: 550px;
+	border: 5px white solid;
+	text-align: center;
+}
+
+.retrospective p {
+	font-size: 20px;
 }
 
 .retrospective input[type='number'] {
@@ -22,6 +29,6 @@
 	height: 100%;
 	left: 0;
 	top: 0;
-	background: rgba( 0, 0, 0, 0.778);
+	background: rgba( 0, 0, 0, 0.5);
 	z-index: 202;
 }

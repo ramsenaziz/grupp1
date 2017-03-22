@@ -16,20 +16,13 @@ class Retrospective extends Component {
 
 		return (
 			<div style={style} className='background'>
-				<div style={{
-					background: 'black',
-					color: 'white',
-					paddingTop: '0px',
-					paddingBottom: '10px',
-					border: '5px white solid',
-
-				}} className='retrospective well well-lg'>
+				<div className='retrospective well well-lg'>
 					<h2>Time for a retrospective!</h2>
 					<p>
 						How did this sprint go? <br />
-						What things could you improve in the next sprint?<br />
+						What could you improve in the next sprint?<br />
 						<br />
-						Click "Next Sprint" when you are ready to continue.
+						Click the button below when you are ready to continue.
 					</p>
 					<button
 					style={{

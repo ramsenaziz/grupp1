@@ -20,13 +20,7 @@ class TeamName extends Component {
 		let input;
 		return (
 			<div style={style} className='background'>
-				<div
-					style={{
-						background: '#bbb',
-						paddingTop: '0px',
-						border: '5px white solid',
-					}}
-					className='retrospective teamname well well-lg'>
+				<div className='retrospective teamname well well-lg'>
 					<div className='row'>
 						<div className='col-xs-8 col-xs-offset-2'>
 							<div className='row'>

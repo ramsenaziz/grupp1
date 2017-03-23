@@ -13,29 +13,28 @@ class Sidebar extends Component {
         };
     }
     sideMenu() {
+        if (!this.state.sidebarOpen) {
+            axios.get('http://localhost/grupp1/src/api/?/highscore').then((response) => {
+
+                var highscore = response.data.map((obj, i) => {
+                    /*var teamAndScore = [obj.teamname, obj.highscore].join(" | ");*/
+                    var classname;
+                    if (i === 0) {
+                        classname = "gold";
+                    } else if (i === 1) {
+                        classname = "silver";
+                    } else if (i === 2) {
+                        classname = "bronze";
+                    }
+                    return (<tr><td className={classname}></td><td>{obj.teamname}</td><td>{obj.highscore}</td></tr>);
+                });
+                this.setState({ highscore: highscore });
+            });
+        }
+
         this.setState({
             sidebarOpen: !this.state.sidebarOpen,
             hamburger: !this.state.hamburger
-        });
-    }
-
-    componentDidMount() {
-        axios.get('http://localhost/grupp1/src/api/?/highscore').then((response) => {
-            console.log(response.data);
-
-            var highscore = response.data.map((obj, i) => {
-                /*var teamAndScore = [obj.teamname, obj.highscore].join(" | ");*/
-                var classname;
-                if (i === 0) {
-                    classname = "gold";
-                } else if (i === 1) {
-                    classname = "silver";
-                } else if (i === 2) {
-                    classname = "bronze";
-                }
-                return (<tr><td className={classname}></td><td>{obj.teamname}</td><td>{obj.highscore}</td></tr>);
-            });
-            this.setState({ highscore: highscore });
         });
     }
     render() {

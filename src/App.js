@@ -102,7 +102,16 @@ class App extends Component {
       })).then((response) => {
         this.setState({
           gameID: response.data,
-          startScreen: false
+          startScreen: false,
+          backlogCards: [],
+          analysisCards: [],
+          developmentCards: [],
+          testingCards: [],
+          doneCards: [],
+          AScore: 0,
+          DScore: 0,
+          TScore: 0,
+          gameover: false
         }, this.setupGame)
       });
   }

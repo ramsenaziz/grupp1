@@ -48,6 +48,7 @@ class Sidebar extends Component {
                     className={hamburgericon}>
                     <span></span>
                 </button>
+                <br/>
                 <NewGameBtn handleClick={this.props.handleClick} />
                 <h2>Highscore</h2>
                 <table className='table table-bordered'>

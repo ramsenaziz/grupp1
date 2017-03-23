@@ -173,6 +173,10 @@ class App extends Component {
       }
     }
 
+    if (this.state.doneCards.length === (this.state.dAmount + this.state.usAmount + this.state.mAmount)) {
+      gameover = true;
+    }
+
     this.setState({
       today: day,
       sprint: sprint,
@@ -276,7 +280,7 @@ class App extends Component {
   }
 
   changeCardAmount(target, number) {
-    this.setState({ [target]: number});
+    this.setState({ [target]: Number(number)});
   }
 
   moveEmployee(emp) {
@@ -419,7 +423,7 @@ class App extends Component {
               handleChange={this.changeCardAmount.bind(this)}
             />
             <Retrospective done={() => this.setState({ retrospective: false })} visible={this.state.retrospective} />
-            <Gameover done={this.init.bind(this)} visible={this.state.gameover} score={36363636363} />
+            <Gameover done={this.newGame.bind(this)} visible={this.state.gameover} score={this.state.totalScore} />
             <Sidebar handleClick={this.newGame.bind(this)} />
             <ReleasePlan day={this.state.today} sprint={this.state.sprint} totalSprints={this.state.totalSprints} />
           </div>
